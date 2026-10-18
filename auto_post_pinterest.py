@@ -17,7 +17,7 @@ PINS = [
         "image": str(WORKSPACE_DIR / "pin1.jpg"),
         "title": "Cozy Aesthetic Bedroom Lighting Ideas | Warm Minimalist Decor Finds",
         "desc": "Transform your bedroom into a peaceful sanctuary with these warm minimalist lighting ideas and aesthetic nightstand essentials. Discover soft ambient lamps, cozy textures, and intentional bedroom decor finds to elevate your evening routine. Explore the curated collection on Aesthetic Haven Studio.",
-        "link": "https://agentwell.vercel.app/#room-decor",
+        "link": "https://agentwell.agency/#room-decor",
         "board": "Aesthetic Room Decor & Lighting"
     },
     {
@@ -25,7 +25,7 @@ PINS = [
         "image": str(WORKSPACE_DIR / "pin2.jpg"),
         "title": "Minimalist Smart Kitchen Gadgets | Aesthetic Countertop Essentials",
         "desc": "Keep your kitchen countertops clean, functional, and calming with these curated smart kitchen finds. From minimalist matte kettles to space-saving organizers, discover practical tools designed for modern daily rituals. Check out the full edit at Aesthetic Haven Studio.",
-        "link": "https://agentwell.vercel.app/#smart-kitchen",
+        "link": "https://agentwell.agency/#smart-kitchen",
         "board": "Smart Kitchen Gadgets & Hacks"
     },
     {
@@ -33,7 +33,7 @@ PINS = [
         "image": str(WORKSPACE_DIR / "pin3.jpg"),
         "title": "Minimalist iPad Digital Planner Template | Daily Productivity & Routines",
         "desc": "Bring calm intentionality to your schedule with our warm aesthetic digital daily planner for iPad & GoodNotes. Features daily habit trackers, structured time blocks, and a clutter-free design crafted for focused living. Download yours today on Aesthetic Haven Studio.",
-        "link": "https://agentwell.vercel.app/#digital-planners",
+        "link": "https://agentwell.agency/#digital-planners",
         "board": "Digital Planners & iPad Aesthetics"
     },
     {
@@ -41,7 +41,7 @@ PINS = [
         "image": str(WORKSPACE_DIR / "pin4.jpg"),
         "title": "Warm Neutral Wall Art Gallery Prints | Scandinavian Minimalist Posters",
         "desc": "Elevate your living room walls with timeless neutral wall art prints and minimalist line illustrations. Easy-to-download printable art sets that add subtle depth and elegance to any gallery wall. Explore all curated art prints at Aesthetic Haven Studio.",
-        "link": "https://agentwell.vercel.app/#wall-art",
+        "link": "https://agentwell.agency/#wall-art",
         "board": "Printable Wall Art & Decor"
     }
 ]
