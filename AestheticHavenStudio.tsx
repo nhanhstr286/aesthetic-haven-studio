@@ -39,7 +39,7 @@ const PRODUCTS: ProductCard[] = [
     tag: '★ 4.9 (1.8k)',
     ctaText: 'View on Amazon',
     ctaUrl: 'https://amzn.to/4zzEs1h',
-    imageUrl: 'https://m.media-amazon.com/images/I/81bgKHOSSWL.jpg',
+    imageUrl: 'https://m.media-amazon.com/images/I/71VbY3g+WxL._AC_SL1500_.jpg',
     isExternal: true,
   },
   {
