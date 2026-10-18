@@ -425,7 +425,7 @@ function getQueueText() {
 }
 
 // 1. Reply Keyboard message triggers
-bot.hears('🟢 Trạng thái hệ thống', async (ctx) => {
+bot.hears(['🟢 Trạng thái hệ thống', 'Trạng thái hệ thống', /trạng thái/i, '/status'], async (ctx) => {
   const cdp = await checkCdpAlive();
   await ctx.reply(getSystemStatusText(cdp), {
     parse_mode: 'HTML',
@@ -433,7 +433,7 @@ bot.hears('🟢 Trạng thái hệ thống', async (ctx) => {
   });
 });
 
-bot.hears('🚀 Đăng bài ngay', async (ctx) => {
+bot.hears(['🚀 Đăng bài ngay', 'Đăng bài ngay', /đăng bài/i, '/post'], async (ctx) => {
   await ctx.reply(
     `🚀 <b>CHỌN NGÁCH BÀI VIẾT CẦN ĐĂNG LÊN PINTEREST:</b>\n\nChạm vào một trong các nút bên dưới. OpenClaw sẽ lập tức chạy headless browser, thực hiện đăng bài và gửi ảnh chụp màn hình xác nhận cho bạn.`,
     {
@@ -443,7 +443,7 @@ bot.hears('🚀 Đăng bài ngay', async (ctx) => {
   );
 });
 
-bot.hears('⏰ Bật tự động 24/7', async (ctx) => {
+bot.hears(['⏰ Bật tự động 24/7', 'Bật tự động 24/7', /bật tự động/i, '/auto_on'], async (ctx) => {
   if (isAutoEnabled && autoTimer) {
     await ctx.reply('ℹ️ Chế độ tự động 24/7 vốn <b>đang được BẬT</b> rồi anh/chị nhé!', {
       parse_mode: 'HTML',
@@ -460,7 +460,7 @@ bot.hears('⏰ Bật tự động 24/7', async (ctx) => {
   );
 });
 
-bot.hears('⏸️ Tạm dừng', async (ctx) => {
+bot.hears(['⏸️ Tạm dừng', 'Tạm dừng', /tạm dừng/i, '/auto_off'], async (ctx) => {
   isAutoEnabled = false;
   if (autoTimer) {
     clearInterval(autoTimer);
@@ -472,7 +472,7 @@ bot.hears('⏸️ Tạm dừng', async (ctx) => {
   );
 });
 
-bot.hears('📋 Xem hàng đợi', async (ctx) => {
+bot.hears(['📋 Xem hàng đợi', 'Xem hàng đợi', /hàng đợi/i, '/queue'], async (ctx) => {
   await ctx.reply(getQueueText(), {
     parse_mode: 'HTML',
     reply_markup: MAIN_KEYBOARD
@@ -596,7 +596,7 @@ bot.on('callback_query', async (ctx) => {
 // 3. Fallback message handler to show keyboard on any interaction or /start
 bot.on('message', async (ctx) => {
   const text = ctx.message.text || '';
-  if (['🟢 Trạng thái hệ thống', '🚀 Đăng bài ngay', '⏰ Bật tự động 24/7', '⏸️ Tạm dừng', '📋 Xem hàng đợi'].includes(text)) {
+  if (/trạng thái|đăng bài|bật tự động|tạm dừng|hàng đợi|\/status|\/post|\/queue|\/auto/i.test(text)) {
     return; // Handled by bot.hears
   }
 
@@ -691,8 +691,20 @@ async function init() {
   const cdp = await checkCdpAlive();
   console.log(`[OpenClaw] Initial CDP Status: ${cdp.alive ? 'Online (' + cdp.browser + ')' : 'Offline (will auto-spawn on demand)'}`);
 
+  // Clear any active webhook to prevent 409 Conflict with long-polling
+  try {
+    if (bot.api && typeof bot.api.deleteWebhook === 'function') {
+      await bot.api.deleteWebhook({ drop_pending_updates: false });
+      console.log('[OpenClaw] Telegram webhook cleared successfully for polling mode.');
+    }
+  } catch (err) {
+    console.warn('[OpenClaw] Webhook cleanup notice:', err.message);
+  }
+
   // Start polling Telegram updates
-  bot.startPolling();
+  bot.startPolling().catch(err => {
+    console.error('[OpenClaw Polling Fatal Error]:', err.message || err);
+  });
   console.log('[OpenClaw] Telegram long-polling active. Waiting for button clicks/messages...');
 
   // Start auto scheduler if enabled
