@@ -1,0 +1,23 @@
+{
+  "name": "aesthetic-haven-studio",
+  "version": "1.0.0",
+  "description": "Aesthetic Haven Studio – Curated Living, Warm Spaces & Digital Lifestyle. High-converting Pinterest bridge page for agentwell.agency.",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "aesthetic",
+    "curation",
+    "pinterest-bridge",
+    "link-in-bio",
+    "affiliate"
+  ],
+  "author": "Aesthetic Haven Studio",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^18.0.8",
+    "node-telegram-bot-api": "^2.1.0",
+    "playwright": "^1.64.1",
+    "pm2": "^7.0.4"
+  }
+}

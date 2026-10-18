@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Chrome profiles & browser data
+chrome_user_data/
+chrome_profile/
+*.png
+
+# Environment variables
+.env
+.env.local
+
+# Vercel & PM2 logs
+.vercel/
+logs/
+*.log
+
+# Bundles & temp artifacts
+*.tar.gz
+*.lnk
+verify_live.py
+debug_html.py
+check_edge.py
+check_vercel.py

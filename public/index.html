@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta name="p:domain_verify" content="9d8f6dbda3e40d6c84bd1481ddb48ee3"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Aesthetic Haven Studio | Curated Living, Warm Spaces & Digital Lifestyle</title>
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="Curated warm minimalist home decor, smart kitchen aesthetics, digital planners, and printable wall art. Transform your space and daily rituals.">
+  <meta name="keywords" content="aesthetic room decor, warm minimalism, pinterest finds, digital planner goodnotes, notion dashboard, printable wall art, smart kitchen gadget">
+  <meta name="author" content="Aesthetic Haven Studio">
+  
+  <!-- Pinterest & Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Aesthetic Haven Studio – Curated Living & Warm Spaces">
+  <meta property="og:description" content="Discover handpicked aesthetic room decor, smart kitchen finds, digital iPad planners, and minimalist prints.">
+  <meta property="og:url" content="https://agentwell.agency">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="pinterest-rich-pin" content="true">
+  
+  <!-- Google Fonts: Playfair Display (Serif) & Plus Jakarta Sans (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN with customized theme config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: {
+              DEFAULT: '#FAF8F5',
+              50: '#FDFCFB',
+              100: '#FAF8F5',
+              200: '#F4EFEA',
+              300: '#EAE3DA'
+            },
+            borderWarm: '#EAE6DF',
+            charcoal: {
+              DEFAULT: '#1F1F1F',
+              muted: '#625E59',
+              light: '#8C857B'
+            },
+            terracotta: {
+              DEFAULT: '#B85D43',
+              light: '#F8EFEA',
+              border: '#E8D2C7'
+            },
+            olive: {
+              DEFAULT: '#556B2F',
+              light: '#EFF2EB',
+              border: '#D9E2D2'
+            },
+            sage: {
+              DEFAULT: '#4A6B5B',
+              light: '#EEF3F0',
+              border: '#D2E2D8'
+            },
+            honey: {
+              DEFAULT: '#9E7444',
+              light: '#F8F3EA',
+              border: '#EBDDC9'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'Inter', '-apple-system', 'sans-serif']
+          },
+          boxShadow: {
+            'warm-sm': '0 2px 8px -2px rgba(31, 31, 31, 0.04), 0 1px 4px -1px rgba(31, 31, 31, 0.02)',
+            'warm-md': '0 8px 24px -4px rgba(31, 31, 31, 0.06), 0 4px 12px -2px rgba(31, 31, 31, 0.03)',
+            'warm-xl': '0 18px 36px -6px rgba(31, 31, 31, 0.08), 0 8px 16px -4px rgba(31, 31, 31, 0.04)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Base Reset & Smooth Render */
+    html {
+      background-color: #FAF8F5;
+      color: #1F1F1F;
+      scrollbar-gutter: stable;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Modern container query & line clamp fallback */
+    .clamp-1 {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      line-clamp: 1;
+      overflow: clip;
+    }
+    
+    .clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      overflow: clip;
+    }
+
+    /* Subdued custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAF8F5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D8D2C7;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #B5AEA1;
+    }
+
+    /* Fade-in transition for filtered cards */
+    .card-item {
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .card-item.hidden-card {
+      display: none;
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  </style>
+
+  <!-- Structured Data: Organization & CollectionPage Schema for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Aesthetic Haven Studio",
+    "description": "Curated Living, Warm Spaces & Digital Lifestyle. Handpicked aesthetic home decor, smart kitchen hacks, digital planners, and printable art.",
+    "url": "https://agentwell.agency",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Aesthetic Haven Studio",
+      "logo": "https://agentwell.agency/logo.png"
+    }
+  }
+  </script>
+</head>
+<body class="bg-cream font-sans text-charcoal min-h-screen flex flex-col selection:bg-terracotta-light selection:text-terracotta">
+
+  <!-- Top Announcement Bar / Traffic Hook -->
+  <aside aria-label="Announcement" class="w-full bg-[#F3EFE9] border-b border-borderWarm py-2 px-4 text-center text-xs tracking-wider text-charcoal-muted uppercase font-medium flex items-center justify-center gap-2">
+    <span>✨ Autumn 2026 Pinterest Trend Curation</span>
+    <span class="inline-block w-1 h-1 rounded-full bg-terracotta"></span>
+    <span class="hidden sm:inline">Handpicked for warm, intentional sanctuaries</span>
+  </aside>
+
+  <!-- Main Sticky Nav / Brand Header -->
+  <header class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-borderWarm transition-all duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo & Monogram -->
+      <a href="#top" class="group flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-charcoal rounded-full p-1" aria-label="Aesthetic Haven Studio Home">
+        <div class="w-10 h-10 rounded-full border border-charcoal/20 bg-cream-200 flex items-center justify-center font-serif text-charcoal font-semibold text-sm tracking-tight shadow-sm group-hover:border-charcoal group-hover:bg-cream-300 transition-all duration-200">
+          AH
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif text-lg font-medium tracking-tight text-charcoal leading-none group-hover:text-charcoal-muted transition-colors">Aesthetic Haven</span>
+          <span class="text-[10px] uppercase tracking-widest text-charcoal-light font-medium mt-0.5">Studio</span>
+        </div>
+      </a>
+
+      <!-- Quick Social & Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Pinterest Badge Button -->
+        <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-terracotta-light text-terracotta border border-terracotta-border hover:bg-terracotta hover:text-white transition-all duration-200 shadow-sm" title="Follow us on Pinterest">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.365-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146 1.124.347 2.317.535 3.554.535 6.627 0 12-5.373 12-12C24.017 5.367 18.644 0 12.017 0z"/>
+          </svg>
+          <span class="hidden xs:inline">Pinterest</span>
+        </a>
+
+        <!-- Share Bridge Page Button -->
+        <button id="shareButton" type="button" aria-label="Share this studio hub" class="w-8 h-8 rounded-full border border-borderWarm bg-white hover:bg-cream-200 flex items-center justify-center text-charcoal-muted hover:text-charcoal transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="max-w-4xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-8 text-center">
+    
+    <!-- Editorial Monogram Badge -->
+    <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-borderWarm bg-cream-200 text-charcoal font-serif text-2xl sm:text-3xl font-normal mb-5 shadow-warm-sm">
+      AH
+    </div>
+
+    <!-- Main Title -->
+    <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-charcoal mb-3">
+      Aesthetic Haven Studio
+    </h1>
+
+    <!-- Subtitle / Tagline -->
+    <p class="font-sans text-sm sm:text-base font-normal tracking-wide text-charcoal-muted max-w-xl mx-auto leading-relaxed">
+      Curated Living, Warm Spaces & Digital Lifestyle
+    </p>
+
+    <!-- Editorial Warm Intro -->
+    <p class="mt-2 text-xs sm:text-sm text-charcoal-light max-w-lg mx-auto">
+      Handpicked essentials designed to bring tranquility, natural warmth, and intention to your daily rituals.
+    </p>
+
+    <!-- Category Pills / Filter Buttons -->
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5" role="tablist" aria-label="Product Categories">
+      <button 
+        type="button" 
+        data-filter="all"
+        class="filter-btn active-pill px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-charcoal text-cream shadow-sm"
+        aria-selected="true">
+        All Finds
+      </button>
+
+      <button 
+        type="button" 
+        data-filter="room-decor"
+        class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-white border border-borderWarm text-charcoal hover:bg-cream-200 hover:border-charcoal/30 shadow-sm"
+        aria-selected="false">
+        ✨ Room Decor & Lighting
+      </button>
+
+      <button 
+        type="button" 
+        data-filter="smart-kitchen"
+        class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-white border border-borderWarm text-charcoal hover:bg-cream-200 hover:border-charcoal/30 shadow-sm"
+        aria-selected="false">
+        🍳 Smart Kitchen Finds
+      </button>
+
+      <button 
+        type="button" 
+        data-filter="digital-planners"
+        class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-white border border-borderWarm text-charcoal hover:bg-cream-200 hover:border-charcoal/30 shadow-sm"
+        aria-selected="false">
+        📱 Digital Planners & iPad
+      </button>
+
+      <button 
+        type="button" 
+        data-filter="wall-art"
+        class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 bg-white border border-borderWarm text-charcoal hover:bg-cream-200 hover:border-charcoal/30 shadow-sm"
+        aria-selected="false">
+        🖼️ Printable Wall Art
+      </button>
+    </div>
+
+  </section>
+
+  <!-- Showcase Grid -->
+  <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 pb-16 w-full">
+
+    <!-- Category 1: Aesthetic Room Decor & Lighting -->
+    <div id="decor" class="scroll-mt-24"></div>
+    <section id="section-room-decor" class="category-section mb-12 sm:mb-16">
+      <div class="flex items-center justify-between mb-5 border-b border-borderWarm pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-terracotta text-lg">✨</span>
+          <h2 class="font-serif text-xl sm:text-2xl font-medium tracking-tight text-charcoal">
+            Aesthetic Room Decor & Lighting
+          </h2>
+        </div>
+        <span class="text-xs text-charcoal-light uppercase tracking-wider font-medium">Board 01</span>
+      </div>
+
+      <!-- Featured Sanctuary Piece: Curator's Choice Spotlight Block -->
+      <article class="card-item group mb-6 bg-gradient-to-br from-white via-[#FAF8F5] to-[#F5EFE8] border-2 border-terracotta/30 rounded-2xl p-5 sm:p-7 shadow-warm-md hover:shadow-warm-xl hover:border-terracotta/60 transition-all duration-300 relative overflow-hidden" data-category="room-decor">
+        <!-- Subtle Decorative Background Glow -->
+        <div class="absolute -top-12 -right-12 w-48 h-48 bg-terracotta/5 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex flex-col md:flex-row items-center gap-6 lg:gap-8 relative z-10">
+          <!-- Product Image Container -->
+          <div class="relative w-full md:w-5/12 flex-shrink-0 aspect-[4/3] md:aspect-square rounded-xl overflow-hidden bg-[#EFECE6] border border-borderWarm/90 shadow-sm">
+            <img 
+              src="public/assets/products/ceramic_mushroom_lamp.jpg" 
+              alt="Retro Ceramic Mushroom Table Lamp with warm 2700K ambient glow" 
+              width="600" 
+              height="600"
+              loading="eager"
+              fetchpriority="high"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              onerror="this.onerror=null; this.src='https://m.media-amazon.com/images/I/81bgKHOSSWL.jpg';"
+            >
+            <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-bold bg-terracotta text-white shadow-xs">
+                ★ Curator's Choice
+              </span>
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-white/95 text-charcoal border border-borderWarm backdrop-blur-sm shadow-xs">
+                Prime Available
+              </span>
+            </div>
+            <div class="absolute bottom-3 right-3">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-black/70 text-white backdrop-blur-md">
+                ★ 4.9 (1,840+)
+              </span>
+            </div>
+          </div>
+
+          <!-- Product Details & Conversion Area -->
+          <div class="w-full md:w-7/12 flex flex-col justify-between space-y-3.5">
+            <div>
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="inline-flex items-center text-[10px] uppercase tracking-widest font-bold text-terracotta bg-terracotta-light px-2.5 py-0.5 rounded border border-terracotta-border">
+                  ✨ Featured Sanctuary Piece
+                </span>
+                <span class="text-xs text-charcoal-light font-medium">• Editor's Pick</span>
+              </div>
+              <h3 class="font-serif text-xl sm:text-2xl font-medium text-charcoal leading-snug group-hover:text-terracotta transition-colors">
+                Retro Ceramic Mushroom Table Lamp (Warm 2700K Glow)
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal-muted mt-2 leading-relaxed">
+                Handcrafted fluted ceramic base with a soft frosted mushroom glass dome. Emits a restorative 2700K sunset ambient glow designed to ease bedtime eyestrain, banish the harsh overhead light, and transform your nightstand into an intentional evening retreat.
+              </p>
+
+              <!-- Feature Highlights Grid -->
+              <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-borderWarm/60 text-[11px] text-charcoal-light">
+                <div class="flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5 text-terracotta flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  <span>3-Level Warm Dimming</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5 text-terracotta flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  <span>Matte Off-White Ceramic</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5 text-terracotta flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  <span>Zero Blue Light Glare</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5 text-terracotta flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  <span>Compact Bedside Profile</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Price & Call to Action -->
+            <div class="pt-3 border-t border-borderWarm/80 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div class="flex items-baseline gap-2.5">
+                <span class="font-serif text-2xl sm:text-3xl font-bold text-charcoal tracking-tight">$37.97</span>
+                <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-[#007185] bg-[#E7F4F5] px-2 py-0.5 rounded border border-[#007185]/20">
+                  <svg class="w-3 h-3 text-[#007185]" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  Prime Available
+                </span>
+              </div>
+
+              <a 
+                href="https://amzn.to/4zzEs1h" 
+                target="_blank" 
+                rel="noopener noreferrer nofollow" 
+                class="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold bg-charcoal text-cream hover:bg-terracotta active:scale-[0.98] transition-all duration-200 shadow-sm hover:shadow-warm-xl group/btn"
+                aria-label="View Retro Ceramic Mushroom Table Lamp on Amazon">
+                <span>View on Amazon</span>
+                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            </div>
+
+            <!-- In-Card Amazon Associates Disclosure -->
+            <div class="pt-1 text-[10px] sm:text-[11px] text-charcoal-light leading-relaxed">
+              <span>As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+
+        <!-- Card 1: Sunset Projection Lamp -->
+        <article class="card-item group bg-white border border-borderWarm rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-charcoal/30 hover:shadow-warm-xl hover:-translate-y-1 transition-all duration-300" data-category="room-decor">
+          <div>
+            <!-- Image Frame 4:3 -->
+            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" 
+                alt="Sunset Projection Lamp casting golden warm light in a modern bedroom" 
+                width="800" 
+                height="600"
+                loading="eager"
+                fetchpriority="high"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              >
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-terracotta-light text-terracotta border border-terracotta-border backdrop-blur-sm shadow-xs">
+                  LIGHTING
+                </span>
+              </div>
+              <div class="absolute bottom-3 right-3">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md">
+                  ★ 4.9 (2.4k)
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="space-y-1.5">
+              <h3 class="font-serif text-lg font-medium text-charcoal group-hover:text-terracotta transition-colors">
+                Sunset Projection Lamp
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed clamp-1">
+                Golden hour ambient glow with 360° rotation for bedroom, desk & living sanctuaries.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4 mt-2 border-t border-borderWarm/60 flex items-center justify-between">
+            <span class="text-xs text-charcoal-light font-medium">Amazon Verified Find</span>
+            <a 
+              href="https://amazon.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-terracotta transition-colors duration-200 shadow-sm group-hover:shadow-md"
+              aria-label="View Sunset Projection Lamp on Amazon">
+              <span>View on Amazon</span>
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: Nordic Wabi-Sabi Ceramic Vase -->
+        <article class="card-item group bg-white border border-borderWarm rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-charcoal/30 hover:shadow-warm-xl hover:-translate-y-1 transition-all duration-300" data-category="room-decor">
+          <div>
+            <!-- Image Frame 4:3 -->
+            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=800&q=80" 
+                alt="Nordic Wabi-Sabi Ceramic Vase with dried botanicals" 
+                width="800" 
+                height="600"
+                loading="eager"
+                fetchpriority="high"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              >
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-sage-light text-sage border border-sage-border backdrop-blur-sm shadow-xs">
+                  ACCENTS
+                </span>
+              </div>
+              <div class="absolute bottom-3 right-3">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md">
+                  Studio Favorite
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="space-y-1.5">
+              <h3 class="font-serif text-lg font-medium text-charcoal group-hover:text-sage transition-colors">
+                Nordic Wabi-Sabi Ceramic Vase
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed clamp-1">
+                Handcrafted matte off-white textured vessel sculpted for dried pampas & eucalyptus.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4 mt-2 border-t border-borderWarm/60 flex items-center justify-between">
+            <span class="text-xs text-charcoal-light font-medium">Curated Vessel</span>
+            <a 
+              href="https://amazon.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-sage transition-colors duration-200 shadow-sm group-hover:shadow-md"
+              aria-label="Shop Nordic Wabi-Sabi Ceramic Vase Collection">
+              <span>Shop Collection</span>
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Lead Capture Form: Room Decor & Lighting -->
+      <div class="mt-6 p-5 sm:p-6 rounded-2xl bg-[#F6F3EC] border border-borderWarm/90 shadow-warm-xs">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div class="max-w-md">
+            <span class="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider font-semibold text-terracotta bg-terracotta-light px-2.5 py-0.5 rounded-md border border-terracotta-border mb-2">
+              ✨ Free PDF Guide
+            </span>
+            <h3 class="font-serif text-base sm:text-lg font-medium text-charcoal">
+              The Warm Minimalist Lighting & Sanctuary Guide
+            </h3>
+            <p class="text-xs text-charcoal-muted mt-1 leading-relaxed">
+              Curated Kelvin color temperatures, ambient lamp placements & cozy nightstand formulas.
+            </p>
+          </div>
+
+          <form class="lead-capture-form flex-shrink-0 w-full lg:w-auto" data-niche="Room Decor & Lighting">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input
+                type="text"
+                name="name"
+                autocomplete="name"
+                required
+                placeholder="First name"
+                aria-label="Your first name"
+                class="px-3.5 py-2.5 rounded-xl border border-borderWarm bg-white text-xs text-charcoal placeholder-charcoal-light/70 focus:outline-none focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all w-full sm:w-36"
+              >
+              <input
+                type="email"
+                name="email"
+                autocomplete="email"
+                inputmode="email"
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+                required
+                placeholder="your.email@example.com"
+                aria-label="Your email address"
+                class="px-3.5 py-2.5 rounded-xl border border-borderWarm bg-white text-xs text-charcoal placeholder-charcoal-light/70 focus:outline-none focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all w-full sm:w-52"
+              >
+              <button
+                type="submit"
+                class="submit-lead-btn inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-terracotta transition-all duration-200 shadow-sm hover:shadow active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap"
+              >
+                <span class="btn-text">Get Free Guide</span>
+                <svg class="btn-spinner hidden w-3.5 h-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="form-feedback mt-2 text-xs hidden"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Category 2: Smart Kitchen Gadgets & Hacks -->
+    <div id="kitchen" class="scroll-mt-24"></div>
+    <section id="section-smart-kitchen" class="category-section mb-12 sm:mb-16">
+      <div class="flex items-center justify-between mb-5 border-b border-borderWarm pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-olive text-lg">🍳</span>
+          <h2 class="font-serif text-xl sm:text-2xl font-medium tracking-tight text-charcoal">
+            Smart Kitchen Gadgets & Hacks
+          </h2>
+        </div>
+        <span class="text-xs text-charcoal-light uppercase tracking-wider font-medium">Board 02</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+
+        <!-- Card 1: Rechargeable Gravity Salt & Pepper Grinder -->
+        <article class="card-item group bg-white border border-borderWarm rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-charcoal/30 hover:shadow-warm-xl hover:-translate-y-1 transition-all duration-300" data-category="smart-kitchen">
+          <div>
+            <!-- Image Frame 4:3 -->
+            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80" 
+                alt="Rechargeable Gravity Electric Salt and Pepper Mill on modern kitchen counter" 
+                width="800" 
+                height="600"
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              >
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-olive-light text-olive border border-olive-border backdrop-blur-sm shadow-xs">
+                  SMART KITCHEN
+                </span>
+              </div>
+              <div class="absolute bottom-3 right-3">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md">
+                  Viral TikTok / Pin
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="space-y-1.5">
+              <h3 class="font-serif text-lg font-medium text-charcoal group-hover:text-olive transition-colors">
+                Rechargeable Gravity Grinder Set
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed clamp-1">
+                One-handed automatic tilt operation with warm LED illumination & ceramic cores.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4 mt-2 border-t border-borderWarm/60 flex items-center justify-between">
+            <span class="text-xs text-charcoal-light font-medium">Type-C Fast Charge</span>
+            <a 
+              href="https://amazon.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-olive transition-colors duration-200 shadow-sm group-hover:shadow-md"
+              aria-label="View Rechargeable Gravity Salt and Pepper Grinder on Amazon">
+              <span>View on Amazon</span>
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: Minimalist Magnetic Spice Rack Organizer -->
+        <article class="card-item group bg-white border border-borderWarm rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-charcoal/30 hover:shadow-warm-xl hover:-translate-y-1 transition-all duration-300" data-category="smart-kitchen">
+          <div>
+            <!-- Image Frame 4:3 -->
+            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?auto=format&fit=crop&w=800&q=80" 
+                alt="Minimalist Magnetic Spice Rack Organizer mounted cleanly" 
+                width="800" 
+                height="600"
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              >
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-honey-light text-honey border border-honey-border backdrop-blur-sm shadow-xs">
+                  ORGANIZATION
+                </span>
+              </div>
+              <div class="absolute bottom-3 right-3">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md">
+                  No Drilling
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="space-y-1.5">
+              <h3 class="font-serif text-lg font-medium text-charcoal group-hover:text-honey transition-colors">
+                Magnetic Spice Rack Organizer
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed clamp-1">
+                Heavy-duty matte carbon steel shelving attaches seamlessly to refrigerator sides.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4 mt-2 border-t border-borderWarm/60 flex items-center justify-between">
+            <span class="text-xs text-charcoal-light font-medium">Holds up to 15 lbs</span>
+            <a 
+              href="https://amazon.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-honey transition-colors duration-200 shadow-sm group-hover:shadow-md"
+              aria-label="Explore Minimalist Magnetic Spice Rack Organizer">
+              <span>Explore</span>
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Lead Capture Form: Smart Kitchen Finds -->
+      <div class="mt-6 p-5 sm:p-6 rounded-2xl bg-[#F6F3EC] border border-borderWarm/90 shadow-warm-xs">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div class="max-w-md">
+            <span class="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider font-semibold text-olive bg-olive-light px-2.5 py-0.5 rounded-md border border-olive-border mb-2">
+              🍳 Free Cheatsheet
+            </span>
+            <h3 class="font-serif text-base sm:text-lg font-medium text-charcoal">
+              Smart Countertop Organization Cheatsheet
+            </h3>
+            <p class="text-xs text-charcoal-muted mt-1 leading-relaxed">
+              Space-saving spice grids, clutter-free layouts & minimalist kitchen morning rituals.
+            </p>
+          </div>
+
+          <form class="lead-capture-form flex-shrink-0 w-full lg:w-auto" data-niche="Smart Kitchen Finds">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input
+                type="text"
+                name="name"
+                autocomplete="name"
+                required
+                placeholder="First name"
+                aria-label="Your first name"
+                class="px-3.5 py-2.5 rounded-xl border border-borderWarm bg-white text-xs text-charcoal placeholder-charcoal-light/70 focus:outline-none focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all w-full sm:w-36"
+              >
+              <input
+                type="email"
+                name="email"
+                autocomplete="email"
+                inputmode="email"
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+                required
+                placeholder="your.email@example.com"
+                aria-label="Your email address"
+                class="px-3.5 py-2.5 rounded-xl border border-borderWarm bg-white text-xs text-charcoal placeholder-charcoal-light/70 focus:outline-none focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all w-full sm:w-52"
+              >
+              <button
+                type="submit"
+                class="submit-lead-btn inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-olive transition-all duration-200 shadow-sm hover:shadow active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap"
+              >
+                <span class="btn-text">Get Free Guide</span>
+                <svg class="btn-spinner hidden w-3.5 h-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="form-feedback mt-2 text-xs hidden"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Category 3: Digital Planners & iPad Aesthetics -->
+    <div id="planners" class="scroll-mt-24"></div>
+    <section id="section-digital-planners" class="category-section mb-12 sm:mb-16">
+      <div class="flex items-center justify-between mb-5 border-b border-borderWarm pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-sage text-lg">📱</span>
+          <h2 class="font-serif text-xl sm:text-2xl font-medium tracking-tight text-charcoal">
+            Digital Planners & iPad Aesthetics
+          </h2>
+        </div>
+        <span class="text-xs text-charcoal-light uppercase tracking-wider font-medium">Board 03</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+
+        <!-- Card 1: Undated Life & Wellness Digital Planner for GoodNotes -->
+        <article class="card-item group bg-white border border-borderWarm rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-charcoal/30 hover:shadow-warm-xl hover:-translate-y-1 transition-all duration-300" data-category="digital-planners">
+          <div>
+            <!-- Image Frame 4:3 -->
+            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" 
+                alt="Aesthetic iPad digital planner with stylus and neutral coffee cup" 
+                width="800" 
+                height="600"
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              >
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-sage-light text-sage border border-sage-border backdrop-blur-sm shadow-xs">
+                  DIGITAL DOWNLOAD
+                </span>
+              </div>
+              <div class="absolute bottom-3 right-3">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md">
+                  GoodNotes / Notability
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="space-y-1.5">
+              <h3 class="font-serif text-lg font-medium text-charcoal group-hover:text-sage transition-colors">
+                Undated Life & Wellness Planner
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed clamp-1">
+                Hyperlinked 400+ page aesthetic planner for iPad, habit trackers & mindful journaling.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4 mt-2 border-t border-borderWarm/60 flex items-center justify-between">
+            <span class="text-xs text-charcoal-light font-medium">Instant PDF Sync</span>
+            <a 
+              href="https://etsy.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-sage transition-colors duration-200 shadow-sm group-hover:shadow-md"
+              aria-label="Get Instant Access to Undated Life & Wellness Digital Planner">
+              <span>Get Instant Access</span>
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: Aesthetic Notion All-in-One Life Dashboard -->
+        <article class="card-item group bg-white border border-borderWarm rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-charcoal/30 hover:shadow-warm-xl hover:-translate-y-1 transition-all duration-300" data-category="digital-planners">
+          <div>
+            <!-- Image Frame 4:3 -->
+            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80" 
+                alt="Minimalist laptop displaying an organized Notion dashboard" 
+                width="800" 
+                height="600"
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              >
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-terracotta-light text-terracotta border border-terracotta-border backdrop-blur-sm shadow-xs">
+                  NOTION TEMPLATE
+                </span>
+              </div>
+              <div class="absolute bottom-3 right-3">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md">
+                  1-Click Duplicate
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="space-y-1.5">
+              <h3 class="font-serif text-lg font-medium text-charcoal group-hover:text-terracotta transition-colors">
+                Notion All-in-One Life Dashboard
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed clamp-1">
+                Warm minimalist workspace organizing daily routines, budgets, projects & vision boards.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4 mt-2 border-t border-borderWarm/60 flex items-center justify-between">
+            <span class="text-xs text-charcoal-light font-medium">Free Lifetime Updates</span>
+            <a 
+              href="https://notion.so" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-terracotta transition-colors duration-200 shadow-sm group-hover:shadow-md"
+              aria-label="Get Aesthetic Notion All-in-One Life Dashboard Template">
+              <span>Get Template</span>
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Lead Capture Form: Digital Planners & iPad -->
+      <div class="mt-6 p-5 sm:p-6 rounded-2xl bg-[#F6F3EC] border border-borderWarm/90 shadow-warm-xs">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div class="max-w-md">
+            <span class="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider font-semibold text-sage bg-sage-light px-2.5 py-0.5 rounded-md border border-sage-border mb-2">
+              📱 Free Sample Template
+            </span>
+            <h3 class="font-serif text-base sm:text-lg font-medium text-charcoal">
+              Claim Your Free Mindful Weekly Planner Sample
+            </h3>
+            <p class="text-xs text-charcoal-muted mt-1 leading-relaxed">
+              Hyperlinked aesthetic layout with habit trackers & daily time-blocking blocks (GoodNotes/PDF).
+            </p>
+          </div>
+
+          <form class="lead-capture-form flex-shrink-0 w-full lg:w-auto" data-niche="Digital Planners & iPad">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input
+                type="text"
+                name="name"
+                autocomplete="name"
+                required
+                placeholder="First name"
+                aria-label="Your first name"
+                class="px-3.5 py-2.5 rounded-xl border border-borderWarm bg-white text-xs text-charcoal placeholder-charcoal-light/70 focus:outline-none focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all w-full sm:w-36"
+              >
+              <input
+                type="email"
+                name="email"
+                autocomplete="email"
+                inputmode="email"
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+                required
+                placeholder="your.email@example.com"
+                aria-label="Your email address"
+                class="px-3.5 py-2.5 rounded-xl border border-borderWarm bg-white text-xs text-charcoal placeholder-charcoal-light/70 focus:outline-none focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all w-full sm:w-52"
+              >
+              <button
+                type="submit"
+                class="submit-lead-btn inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-sage transition-all duration-200 shadow-sm hover:shadow active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap"
+              >
+                <span class="btn-text">Get Free Sample</span>
+                <svg class="btn-spinner hidden w-3.5 h-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="form-feedback mt-2 text-xs hidden"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Category 4: Printable Wall Art & Decor -->
+    <div id="wallart" class="scroll-mt-24"></div>
+    <section id="section-wall-art" class="category-section mb-12 sm:mb-16">
+      <div class="flex items-center justify-between mb-5 border-b border-borderWarm pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-honey text-lg">🖼️</span>
+          <h2 class="font-serif text-xl sm:text-2xl font-medium tracking-tight text-charcoal">
+            Printable Wall Art & Decor
+          </h2>
+        </div>
+        <span class="text-xs text-charcoal-light uppercase tracking-wider font-medium">Board 04</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+
+        <!-- Card 1: Set of 3 Neutral Botanical Gallery Wall Prints -->
+        <article class="card-item group bg-white border border-borderWarm rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-charcoal/30 hover:shadow-warm-xl hover:-translate-y-1 transition-all duration-300" data-category="wall-art">
+          <div>
+            <!-- Image Frame 4:3 -->
+            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80" 
+                alt="Set of 3 Neutral Botanical Gallery Wall Prints framed above cozy sofa" 
+                width="800" 
+                height="600"
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              >
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-honey-light text-honey border border-honey-border backdrop-blur-sm shadow-xs">
+                  HIGH-RES 300 DPI PDF
+                </span>
+              </div>
+              <div class="absolute bottom-3 right-3">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md">
+                  5 Ratio Sizes
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="space-y-1.5">
+              <h3 class="font-serif text-lg font-medium text-charcoal group-hover:text-honey transition-colors">
+                Neutral Botanical Gallery Trio
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed clamp-1">
+                Warm earth-tone botanical line art pre-scaled for IKEA & standard frame dimensions.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4 mt-2 border-t border-borderWarm/60 flex items-center justify-between">
+            <span class="text-xs text-charcoal-light font-medium">Instant Digital Files</span>
+            <a 
+              href="https://etsy.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-honey transition-colors duration-200 shadow-sm group-hover:shadow-md"
+              aria-label="Download Set of 3 Neutral Botanical Gallery Wall Prints">
+              <span>Download Prints</span>
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2: Minimalist Bauhaus Geometric Poster Set -->
+        <article class="card-item group bg-white border border-borderWarm rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-charcoal/30 hover:shadow-warm-xl hover:-translate-y-1 transition-all duration-300" data-category="wall-art">
+          <div>
+            <!-- Image Frame 4:3 -->
+            <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4">
+              <img 
+                src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80" 
+                alt="Minimalist Bauhaus Geometric Poster Set in warm muted terracotta and olive" 
+                width="800" 
+                height="600"
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+              >
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] uppercase tracking-wider font-semibold bg-olive-light text-olive border border-olive-border backdrop-blur-sm shadow-xs">
+                  DIGITAL ART
+                </span>
+              </div>
+              <div class="absolute bottom-3 right-3">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md">
+                  Modern Gallery Look
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="space-y-1.5">
+              <h3 class="font-serif text-lg font-medium text-charcoal group-hover:text-olive transition-colors">
+                Bauhaus Geometric Poster Set
+              </h3>
+              <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed clamp-1">
+                Mid-century modern abstract shapes in warm terracotta, cream, olive, and charcoal.
+              </p>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4 mt-2 border-t border-borderWarm/60 flex items-center justify-between">
+            <span class="text-xs text-charcoal-light font-medium">Print-At-Home Ready</span>
+            <a 
+              href="https://etsy.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-olive transition-colors duration-200 shadow-sm group-hover:shadow-md"
+              aria-label="View Minimalist Bauhaus Geometric Poster Set Prints">
+              <span>View Prints</span>
+              <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Lead Capture Form: Printable Wall Art -->
+      <div class="mt-6 p-5 sm:p-6 rounded-2xl bg-[#F6F3EC] border border-borderWarm/90 shadow-warm-xs">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div class="max-w-md">
+            <span class="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider font-semibold text-honey bg-honey-light px-2.5 py-0.5 rounded-md border border-honey-border mb-2">
+              🖼️ 300 DPI Freebie
+            </span>
+            <h3 class="font-serif text-base sm:text-lg font-medium text-charcoal">
+              Download Free Neutral Botanical Art Print
+            </h3>
+            <p class="text-xs text-charcoal-muted mt-1 leading-relaxed">
+              Gallery-ready 300 DPI high-res files formatted for standard 4:5, 3:4 & 2:3 frames.
+            </p>
+          </div>
+
+          <form class="lead-capture-form flex-shrink-0 w-full lg:w-auto" data-niche="Printable Wall Art">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input
+                type="text"
+                name="name"
+                autocomplete="name"
+                required
+                placeholder="First name"
+                aria-label="Your first name"
+                class="px-3.5 py-2.5 rounded-xl border border-borderWarm bg-white text-xs text-charcoal placeholder-charcoal-light/70 focus:outline-none focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all w-full sm:w-36"
+              >
+              <input
+                type="email"
+                name="email"
+                autocomplete="email"
+                inputmode="email"
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+                required
+                placeholder="your.email@example.com"
+                aria-label="Your email address"
+                class="px-3.5 py-2.5 rounded-xl border border-borderWarm bg-white text-xs text-charcoal placeholder-charcoal-light/70 focus:outline-none focus:ring-1 focus:ring-charcoal focus:border-charcoal transition-all w-full sm:w-52"
+              >
+              <button
+                type="submit"
+                class="submit-lead-btn inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold bg-charcoal text-cream hover:bg-honey transition-all duration-200 shadow-sm hover:shadow active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap"
+              >
+                <span class="btn-text">Download Print</span>
+                <svg class="btn-spinner hidden w-3.5 h-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="form-feedback mt-2 text-xs hidden"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Bridge Newsletter / VIP Curation Box -->
+    <section class="mt-8 bg-white border border-borderWarm rounded-2xl p-6 sm:p-8 text-center shadow-warm-md">
+      <div class="max-w-md mx-auto space-y-3">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-cream-200 text-charcoal border border-borderWarm">
+          The Sunday Edit
+        </span>
+        <h3 class="font-serif text-2xl font-medium text-charcoal">
+          Get Secret Weekly Moodboards
+        </h3>
+        <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed">
+          Join 25,000+ Pinterest design lovers. Every Sunday, receive our private lookbook of trending warm spaces, discount codes & free digital freebies.
+        </p>
+        <form id="newsletterForm" class="pt-2 flex flex-col sm:flex-row gap-2 max-w-sm mx-auto">
+          <input 
+            type="email" 
+            required 
+            placeholder="Enter your email" 
+            class="w-full px-4 py-2.5 rounded-xl border border-borderWarm text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-charcoal bg-cream-50 placeholder:text-charcoal-light text-charcoal"
+          >
+          <button 
+            type="submit" 
+            class="px-5 py-2.5 rounded-xl bg-charcoal text-cream font-medium text-xs sm:text-sm hover:bg-terracotta transition-colors duration-200 whitespace-nowrap shadow-sm">
+            Join Studio
+          </button>
+        </form>
+        <p id="formFeedback" class="text-xs text-olive font-medium hidden">Thank you! Check your inbox for this week's aesthetic guide.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Legal & Footer -->
+  <footer class="w-full bg-[#F5F2EC] border-t border-borderWarm py-10 px-4 sm:px-6 mt-auto">
+    <div class="max-w-4xl mx-auto space-y-6 text-center">
+      
+      <!-- Brand & Navigation in Footer -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-borderWarm/80 pb-6">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-cream-200 border border-charcoal/20 flex items-center justify-center font-serif text-xs font-semibold">
+            AH
+          </div>
+          <span class="font-serif text-base font-medium text-charcoal">Aesthetic Haven Studio</span>
+        </div>
+
+        <nav class="flex flex-wrap items-center justify-center gap-4 text-xs text-charcoal-muted">
+          <a href="#top" class="hover:text-charcoal transition-colors">Back to Top</a>
+          <span>•</span>
+          <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" class="hover:text-terracotta transition-colors">Pinterest Boards</a>
+          <span>•</span>
+          <a href="mailto:hello@agentwell.agency" class="hover:text-charcoal transition-colors">Curator Contact</a>
+        </nav>
+      </div>
+
+      <!-- Legal Disclosure -->
+      <div class="max-w-2xl mx-auto space-y-3">
+        <p class="text-[11px] sm:text-xs text-charcoal-muted leading-relaxed font-normal">
+          <strong class="font-semibold text-charcoal">Amazon Affiliate Disclosure:</strong> Aesthetic Haven Studio is a participant in the Amazon Services LLC Associates Program. As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.
+        </p>
+        <p class="text-[11px] text-charcoal-light">
+          All images, mockups, and trade trademarks belong to their respective creators & brand owners. Prices and availability are subject to change.
+        </p>
+      </div>
+
+      <!-- Copyright -->
+      <div class="pt-2 text-xs text-charcoal-light">
+        <p>&copy; 2026 Aesthetic Haven Studio. All rights reserved.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Toast Notification element for copy / feedback -->
+  <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 z-50 bg-charcoal text-cream text-xs px-4 py-2.5 rounded-xl shadow-warm-xl flex items-center gap-2">
+    <svg class="w-4 h-4 text-olive-light" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+    </svg>
+    <span id="toastMsg">Link copied to clipboard!</span>
+  </div>
+
+  <!-- Interactive JavaScript: Filter Pills, Share & Smooth State -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Interactive Category Filtering
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const categorySections = document.querySelectorAll('.category-section');
+      const cards = document.querySelectorAll('.card-item');
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.getAttribute('data-filter');
+
+          // Update active button styles
+          filterButtons.forEach(b => {
+            b.classList.remove('bg-charcoal', 'text-cream');
+            b.classList.add('bg-white', 'text-charcoal', 'border', 'border-borderWarm');
+            b.setAttribute('aria-selected', 'false');
+          });
+
+          btn.classList.add('bg-charcoal', 'text-cream');
+          btn.classList.remove('bg-white', 'text-charcoal', 'border-borderWarm');
+          btn.setAttribute('aria-selected', 'true');
+
+          // Filter sections & cards
+          if (filter === 'all') {
+            categorySections.forEach(sec => sec.style.display = 'block');
+            cards.forEach(card => card.classList.remove('hidden-card'));
+          } else {
+            categorySections.forEach(sec => {
+              const secId = sec.getAttribute('id');
+              if (secId === `section-${filter}`) {
+                sec.style.display = 'block';
+                // Scroll smoothly to the section on mobile for optimal Pinterest landing UX
+                sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              } else {
+                sec.style.display = 'none';
+              }
+            });
+          }
+        });
+      });
+
+      // 2. Web Share / Copy Link handler
+      const shareButton = document.getElementById('shareButton');
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+
+      function showToast(message) {
+        toastMsg.textContent = message;
+        toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+          toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+        }, 3000);
+      }
+
+      if (shareButton) {
+        shareButton.addEventListener('click', async () => {
+          if (navigator.share) {
+            try {
+              await navigator.share({
+                title: 'Aesthetic Haven Studio',
+                text: 'Curated Living, Warm Spaces & Digital Lifestyle',
+                url: window.location.href
+              });
+            } catch (err) {
+              // User cancelled share or fallback to copy
+              copyUrl();
+            }
+          } else {
+            copyUrl();
+          }
+        });
+      }
+
+      function copyUrl() {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            showToast('Studio link copied to clipboard!');
+          }).catch(() => {
+            showToast('Link ready to share!');
+          });
+        } else {
+          showToast('Aesthetic Haven Studio – Link copied!');
+        }
+      }
+
+      // 3. Generic AJAX Lead Submission Helper
+      async function submitLead(payload, btn, spinner, btnText, feedbackEl, formEl) {
+        // Validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!payload.email || !emailRegex.test(payload.email)) {
+          feedbackEl.innerHTML = '<span class="text-terracotta font-medium">⚠️ Please enter a valid email address.</span>';
+          feedbackEl.classList.remove('hidden');
+          return;
+        }
+
+        // Loading state
+        btn.disabled = true;
+        if (spinner) spinner.classList.remove('hidden');
+        if (btnText) btnText.classList.add('opacity-40');
+        feedbackEl.classList.add('hidden');
+
+        try {
+          const res = await fetch('/api/lead-capture', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json();
+
+          if (res.ok && data.success) {
+            // Success State
+            formEl.innerHTML = `
+              <div class="p-3 bg-white/95 border border-olive/30 rounded-xl text-olive text-xs flex items-center gap-2.5 shadow-xs">
+                <svg class="w-4 h-4 flex-shrink-0 text-olive" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                </svg>
+                <span>✨ <strong>Thank you, ${escapeHtml(payload.name)}!</strong> Your free guide has been sent to <strong>${escapeHtml(payload.email)}</strong>.</span>
+              </div>
+            `;
+            showToast('✨ Thank you! Check your inbox for the free guide.');
+          } else {
+            throw new Error(data.error || 'Submission failed');
+          }
+        } catch (err) {
+          feedbackEl.innerHTML = `<span class="text-terracotta font-medium">⚠️ ${err.message || 'Something went wrong. Please try again.'}</span>`;
+          feedbackEl.classList.remove('hidden');
+          btn.disabled = false;
+          if (spinner) spinner.classList.add('hidden');
+          if (btnText) btnText.classList.remove('opacity-40');
+        }
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      // 4. Connect All Niche Lead Capture Forms
+      const leadForms = document.querySelectorAll('.lead-capture-form');
+      leadForms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const nameInput = form.querySelector('input[name="name"]');
+          const emailInput = form.querySelector('input[name="email"]');
+          const btn = form.querySelector('.submit-lead-btn');
+          const spinner = form.querySelector('.btn-spinner');
+          const btnText = form.querySelector('.btn-text');
+          const feedback = form.querySelector('.form-feedback');
+          const niche = form.getAttribute('data-niche') || 'General Living';
+
+          const payload = {
+            name: nameInput ? nameInput.value.trim() : 'Guest',
+            email: emailInput ? emailInput.value.trim() : '',
+            niche: niche,
+            source: 'pinterest'
+          };
+
+          submitLead(payload, btn, spinner, btnText, feedback, form);
+        });
+      });
+
+      // 5. Connect Footer Newsletter Form
+      const newsletterForm = document.getElementById('newsletterForm');
+      const formFeedback = document.getElementById('formFeedback');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const emailInput = newsletterForm.querySelector('input[type="email"]');
+          const btn = newsletterForm.querySelector('button[type="submit"]');
+          const email = emailInput ? emailInput.value.trim() : '';
+
+          const payload = {
+            name: 'VIP Member',
+            email: email,
+            niche: 'The Sunday Edit VIP',
+            source: 'footer-newsletter'
+          };
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!email || !emailRegex.test(email)) {
+            showToast('⚠️ Please enter a valid email address.');
+            return;
+          }
+
+          btn.disabled = true;
+          try {
+            const res = await fetch('/api/lead-capture', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            newsletterForm.reset();
+            formFeedback.classList.remove('hidden');
+            showToast('✨ Welcome to Aesthetic Haven Studio VIP!');
+          } catch (err) {
+            showToast('⚠️ Could not subscribe. Please try again.');
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
