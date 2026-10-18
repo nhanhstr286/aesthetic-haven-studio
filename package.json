@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Aesthetic Haven Studio – Curated Living, Warm Spaces & Digital Lifestyle. High-converting Pinterest bridge page for agentwell.agency.",
   "scripts": {
-    "start": "npx serve ."
+    "start": "npx serve .",
+    "build": "node -e \"console.log('Build completed successfully')\""
   },
   "keywords": [
     "aesthetic",

@@ -73,6 +73,20 @@ const PRODUCTS: ProductCard[] = [
 
   // Board 02: Smart Kitchen Gadgets & Hacks
   {
+    id: 'smart-kitchen-kettle',
+    category: 'smart-kitchen',
+    badge: '★ EDITOR\'S CHOICE',
+    badgeStyle: 'olive',
+    title: 'Retro Electric Gooseneck Kettle (Matte Cream White)',
+    description: 'Precision pour-over spout, 1200W rapid boiling, auto shut-off, and minimalist matte Scandinavian finish for calm morning rituals.',
+    subtext: '$49.99 • Prime Available',
+    tag: '★ 4.8 (2,410+)',
+    ctaText: 'View on Amazon',
+    ctaUrl: 'https://amzn.to/4zzEs1h',
+    imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80',
+    isExternal: true,
+  },
+  {
     id: 'gravity-grinder',
     category: 'smart-kitchen',
     badge: 'SMART KITCHEN',
@@ -132,6 +146,20 @@ const PRODUCTS: ProductCard[] = [
   },
 
   // Board 04: Printable Wall Art & Decor
+  {
+    id: 'printable-wall-art-frame',
+    category: 'wall-art',
+    badge: '★ ESSENTIAL FIND',
+    badgeStyle: 'honey',
+    title: 'Solid Natural Oak Wood Frame (12x16 with Mat)',
+    description: 'Crafted from 100% solid North American white oak with high-definition shatterproof plexiglass. Designed to display art prints and gallery walls seamlessly.',
+    subtext: '$24.99 • Prime Available',
+    tag: '★ 4.7 (980+)',
+    ctaText: 'View on Amazon',
+    ctaUrl: 'https://amzn.to/4zzEs1h',
+    imageUrl: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',
+    isExternal: true,
+  },
   {
     id: 'botanical-prints',
     category: 'wall-art',

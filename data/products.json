@@ -1,0 +1,56 @@
+[
+  {
+    "id": "ceramic-mushroom-lamp",
+    "category": "Room Decor & Lighting",
+    "badge": "★ CURATOR'S CHOICE",
+    "title": "Retro Ceramic Mushroom Table Lamp (Warm 2700K Glow)",
+    "description": "Handcrafted fluted ceramic base with a soft frosted mushroom glass dome. Emits a restorative 2700K sunset ambient glow designed to ease bedtime eyestrain, banish the harsh overhead light, and transform your nightstand into an intentional evening retreat.",
+    "price": "$37.97",
+    "primeAvailable": true,
+    "features": [
+      "3-Level Warm Dimming",
+      "Matte Off-White Ceramic",
+      "Zero Blue Light Glare",
+      "Compact Bedside Profile"
+    ],
+    "rating": "4.9 (1,840+)",
+    "image": "https://m.media-amazon.com/images/I/71VbY3g+WxL._AC_SL1500_.jpg",
+    "affiliateUrl": "https://amzn.to/4zzEs1h"
+  },
+  {
+    "id": "smart-kitchen-kettle",
+    "category": "Smart Kitchen Finds",
+    "badge": "★ EDITOR'S CHOICE",
+    "title": "Retro Electric Gooseneck Kettle (Matte Cream White)",
+    "description": "Precision pour-over spout, 1200W rapid boiling, auto shut-off, and minimalist matte Scandinavian finish for calm morning rituals.",
+    "price": "$49.99",
+    "primeAvailable": true,
+    "features": [
+      "304 Food-Grade Stainless Steel",
+      "Ergonomic Counterbalanced Handle",
+      "Precision Gooseneck Flow",
+      "1200W Rapid Heating"
+    ],
+    "rating": "4.8 (2,410+)",
+    "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80",
+    "affiliateUrl": "https://amzn.to/4zzEs1h"
+  },
+  {
+    "id": "printable-wall-art-frame",
+    "category": "Printable Wall Art",
+    "badge": "★ ESSENTIAL FIND",
+    "title": "Solid Natural Oak Wood Frame (12x16 with Mat)",
+    "description": "Crafted from 100% solid North American white oak with high-definition shatterproof plexiglass. Designed to display art prints and gallery walls seamlessly.",
+    "price": "$24.99",
+    "primeAvailable": true,
+    "features": [
+      "100% Solid Natural White Oak",
+      "Dual-Size Mat (12x16 to 8.5x11)",
+      "Shatterproof HD Acrylic Plexiglass",
+      "Ready to Hang Vertical & Horizontal"
+    ],
+    "rating": "4.7 (980+)",
+    "image": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
+    "affiliateUrl": "https://amzn.to/4zzEs1h"
+  }
+]
