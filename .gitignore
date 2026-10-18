@@ -22,3 +22,5 @@ verify_live.py
 debug_html.py
 check_edge.py
 check_vercel.py
+
+chrome_test/
