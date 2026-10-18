@@ -1,4 +1,4 @@
-export interface PhysicalProduct {
+export interface Product {
   id: string;
   category: string;
   badge: string;
@@ -6,13 +6,15 @@ export interface PhysicalProduct {
   description: string;
   price: string;
   primeAvailable: boolean;
+  priceNote?: string;
+  isDigital?: boolean;
   features: string[];
   rating: string;
   image: string;
   affiliateUrl: string;
 }
 
-export const PRODUCTS: PhysicalProduct[] = [
+export const PRODUCTS: Product[] = [
   {
     id: "ceramic-mushroom-lamp",
     category: "Room Decor & Lighting",
@@ -21,6 +23,7 @@ export const PRODUCTS: PhysicalProduct[] = [
     description: "Handcrafted fluted ceramic base with a soft frosted mushroom glass dome. Emits a restorative 2700K sunset ambient glow designed to ease bedtime eyestrain, banish the harsh overhead light, and transform your nightstand into an intentional evening retreat.",
     price: "$37.97",
     primeAvailable: true,
+    priceNote: "(Price may vary on Amazon)",
     features: [
       "3-Level Warm Dimming",
       "Matte Off-White Ceramic",
@@ -39,6 +42,7 @@ export const PRODUCTS: PhysicalProduct[] = [
     description: "Precision pour-over spout, 1200W rapid boiling, auto shut-off, and minimalist matte Scandinavian finish for calm morning rituals.",
     price: "$49.99",
     primeAvailable: true,
+    priceNote: "(Price may vary on Amazon)",
     features: [
       "304 Food-Grade Stainless Steel",
       "Ergonomic Counterbalanced Handle",
@@ -50,6 +54,25 @@ export const PRODUCTS: PhysicalProduct[] = [
     affiliateUrl: "https://amzn.to/4zzEs1h" 
   },
   {
+    id: "digital-planner-ipad",
+    category: "Digital Planners & iPad",
+    badge: "★ DIGITAL DOWNLOAD • INSTANT ACCESS",
+    title: "Minimalist Life & Focus Digital Planner (Goodnotes & iPad Compatible)",
+    description: "Hyperlinked 2026 daily, weekly, and monthly lifestyle planner designed for iPad & tablet users. Minimalist aesthetic with zero clutter to organize routines, habit trackers, and personal goals effortlessly.",
+    price: "$12.99",
+    primeAvailable: false,
+    isDigital: true,
+    features: [
+      "Hyperlinked Tabs for Effortless Navigation",
+      "Compatible with Goodnotes, Notability & iPad",
+      "Undated & Dated 2026 Minimalist Layouts",
+      "Includes 50+ Matching Aesthetic Digital Stickers"
+    ],
+    rating: "4.9 (1,840+)",
+    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
+    affiliateUrl: "https://gumroad.com"
+  },
+  {
     id: "printable-wall-art-frame",
     category: "Printable Wall Art",
     badge: "★ ESSENTIAL FIND",
@@ -57,6 +80,7 @@ export const PRODUCTS: PhysicalProduct[] = [
     description: "Crafted from 100% solid North American white oak with high-definition shatterproof plexiglass. Designed to display art prints and gallery walls seamlessly.",
     price: "$24.99",
     primeAvailable: true,
+    priceNote: "(Price may vary on Amazon)",
     features: [
       "100% Solid Natural White Oak",
       "Dual-Size Mat (12x16 to 8.5x11)",

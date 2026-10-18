@@ -117,6 +117,20 @@ const PRODUCTS: ProductCard[] = [
 
   // Board 03: Digital Planners & iPad Aesthetics
   {
+    id: 'digital-planner-ipad',
+    category: 'digital-planners',
+    badge: '★ DIGITAL DOWNLOAD',
+    badgeStyle: 'sage',
+    title: 'Minimalist Life & Focus Digital Planner (Goodnotes & iPad Compatible)',
+    description: 'Hyperlinked 2026 daily, weekly, and monthly lifestyle planner designed for iPad & tablet users. Minimalist aesthetic with zero clutter to organize routines, habit trackers, and personal goals effortlessly.',
+    subtext: '$12.99 • Instant Access',
+    tag: '★ 4.9 (1,840+)',
+    ctaText: 'Get Instant Access',
+    ctaUrl: 'https://gumroad.com',
+    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+    isExternal: true,
+  },
+  {
     id: 'digital-planner',
     category: 'digital-planners',
     badge: 'DIGITAL DOWNLOAD',
@@ -330,7 +344,12 @@ export default function AestheticHavenStudio() {
               className="group bg-white border border-[#EAE6DF] rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-[#1F1F1F]/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
               <div>
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4">
+                <a
+                  href={product.ctaUrl}
+                  target={product.isExternal ? '_blank' : undefined}
+                  rel={product.isExternal ? (product.ctaUrl.includes('amzn.to') ? 'noopener noreferrer nofollow' : 'noopener noreferrer') : undefined}
+                  className="block relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#EFECE6] mb-4"
+                >
                   <img
                     src={product.imageUrl}
                     alt={product.title}
@@ -353,11 +372,18 @@ export default function AestheticHavenStudio() {
                       </span>
                     </div>
                   )}
-                </div>
+                </a>
 
                 <div className="space-y-1.5">
                   <h3 className="font-serif text-lg font-medium text-[#1F1F1F]">
-                    {product.title}
+                    <a
+                      href={product.ctaUrl}
+                      target={product.isExternal ? '_blank' : undefined}
+                      rel={product.isExternal ? (product.ctaUrl.includes('amzn.to') ? 'noopener noreferrer nofollow' : 'noopener noreferrer') : undefined}
+                      className="hover:underline transition-all"
+                    >
+                      {product.title}
+                    </a>
                   </h3>
                   <p className="text-xs sm:text-sm text-[#625E59] leading-relaxed line-clamp-1">
                     {product.description}
