@@ -54,23 +54,24 @@ export const PRODUCTS: Product[] = [
     affiliateUrl: "https://amzn.to/4zzEs1h" 
   },
   {
-    id: "digital-planner-ipad",
+    id: "aesthetic-tech-cases",
     category: "Digital Planners & iPad",
-    badge: "★ DIGITAL DOWNLOAD • INSTANT ACCESS",
-    title: "Minimalist Life & Focus Digital Planner (Goodnotes & iPad Compatible)",
-    description: "Hyperlinked 2026 daily, weekly, and monthly lifestyle planner designed for iPad & tablet users. Minimalist aesthetic with zero clutter to organize routines, habit trackers, and personal goals effortlessly.",
-    price: "$12.99",
-    primeAvailable: false,
-    isDigital: true,
+    badge: "★ TRENDING FIND • PRIME AVAILABLE",
+    title: "Aesthetic Pastel Magnetic iPad Case with Pencil Holder & Matching iPhone Cover",
+    description: "Ultra-slim pastel protective folio case featuring a built-in Apple Pencil slot, multi-angle folding stand, and auto sleep/wake. Paired with minimalist shockproof aesthetics for your daily tech setup.",
+    price: "$21.99",
+    primeAvailable: true,
+    isDigital: false,
+    priceNote: "(Price may vary on Amazon)",
     features: [
-      "Hyperlinked Tabs for Effortless Navigation",
-      "Compatible with Goodnotes, Notability & iPad",
-      "Undated & Dated 2026 Minimalist Layouts",
-      "Includes 50+ Matching Aesthetic Digital Stickers"
+      "Built-in Apple Pencil Slot with Wireless Charging Support",
+      "Multi-Angle Tri-Fold Stand for Typing & Sketching",
+      "Auto Sleep/Wake Smart Folio Cover",
+      "Soft-Touch Pastel Matte Finish with Corner Impact Protection"
     ],
-    rating: "4.9 (1,840+)",
-    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
-    affiliateUrl: "https://gumroad.com"
+    rating: "4.8 (3,620+)",
+    image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80",
+    affiliateUrl: "https://amzn.to/4zzEs1h"
   },
   {
     id: "printable-wall-art-frame",

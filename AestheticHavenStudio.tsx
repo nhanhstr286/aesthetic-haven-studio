@@ -22,7 +22,7 @@ const CATEGORIES = [
   { id: 'all', label: 'All Finds', icon: '' },
   { id: 'room-decor', label: '✨ Room Decor & Lighting', icon: '✨' },
   { id: 'smart-kitchen', label: '🍳 Smart Kitchen Finds', icon: '🍳' },
-  { id: 'digital-planners', label: '📱 Digital Planners & iPad', icon: '📱' },
+  { id: 'digital-planners', label: '📱 Aesthetic Tech & iPad Accessories', icon: '📱' },
   { id: 'wall-art', label: '🖼️ Printable Wall Art', icon: '🖼️' },
 ];
 
@@ -117,17 +117,17 @@ const PRODUCTS: ProductCard[] = [
 
   // Board 03: Digital Planners & iPad Aesthetics
   {
-    id: 'digital-planner-ipad',
+    id: 'aesthetic-tech-cases',
     category: 'digital-planners',
-    badge: '★ DIGITAL DOWNLOAD',
+    badge: '★ TRENDING FIND',
     badgeStyle: 'sage',
-    title: 'Minimalist Life & Focus Digital Planner (Goodnotes & iPad Compatible)',
-    description: 'Hyperlinked 2026 daily, weekly, and monthly lifestyle planner designed for iPad & tablet users. Minimalist aesthetic with zero clutter to organize routines, habit trackers, and personal goals effortlessly.',
-    subtext: '$12.99 • Instant Access',
-    tag: '★ 4.9 (1,840+)',
-    ctaText: 'Get Instant Access',
-    ctaUrl: 'https://gumroad.com',
-    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+    title: 'Aesthetic Pastel Magnetic iPad Case with Pencil Holder & Matching iPhone Cover',
+    description: 'Ultra-slim pastel protective folio case featuring a built-in Apple Pencil slot, multi-angle folding stand, and auto sleep/wake. Paired with minimalist shockproof aesthetics for your daily tech setup.',
+    subtext: '$21.99 • Prime Available',
+    tag: '★ 4.8 (3,620+)',
+    ctaText: 'View on Amazon',
+    ctaUrl: 'https://amzn.to/4zzEs1h',
+    imageUrl: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80',
     isExternal: true,
   },
   {
@@ -392,13 +392,20 @@ export default function AestheticHavenStudio() {
               </div>
 
               <div className="pt-4 mt-2 border-t border-[#EAE6DF]/60 flex items-center justify-between">
-                <span className="text-xs text-[#8C857B] font-medium">
-                  {product.subtext}
-                </span>
+                <div>
+                  <span className="text-xs text-[#8C857B] font-medium block">
+                    {product.subtext}
+                  </span>
+                  {product.subtext.includes('$') && (
+                    <span className="text-[10px] text-[#8C857B]/80 font-normal block">
+                      (Price may vary on Amazon)
+                    </span>
+                  )}
+                </div>
                 <a
                   href={product.ctaUrl}
                   target={product.isExternal ? '_blank' : undefined}
-                  rel={product.isExternal ? 'noopener noreferrer' : undefined}
+                  rel={product.isExternal ? (product.ctaUrl.includes('amzn.to') ? 'noopener noreferrer nofollow' : 'noopener noreferrer') : undefined}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-[#1F1F1F] text-[#FAF8F5] hover:bg-[#B85D43] transition-colors duration-200 shadow-sm"
                 >
                   <span>{product.ctaText}</span>
