@@ -25,47 +25,47 @@ if (!BOT_TOKEN) {
 
 const bot = new Bot(BOT_TOKEN);
 
-// Queue of 4 Core Pinterest Pins
+// Queue of 4 Core Q4 Holiday & Winter Season Pinterest Pins
 const PIN_QUEUE = [
   {
     key: 'decor',
-    name: 'Room Decor & Lighting',
+    name: 'Cozy Bedroom Essentials for Winter',
     image: path.join(__dirname, 'pin1.jpg'),
-    title: 'Cozy Aesthetic Bedroom Lighting Ideas | Warm Minimalist Decor Finds',
-    desc: 'Transform your bedroom into a peaceful sanctuary with these warm minimalist lighting ideas and aesthetic nightstand essentials. Discover soft ambient lamps, cozy textures, and intentional bedroom decor finds to elevate your evening routine. Explore the curated collection on Aesthetic Haven Studio.',
+    title: 'Cozy Bedroom Essentials for Winter | Warm Minimalist Holiday Sanctuary',
+    desc: 'Transform your winter bedroom into the ultimate cozy haven with layered warm amber lighting, plush textures, and calming bedside essentials. Discover restorative evening sanctuary styling tips at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
     link: 'https://agentwell.agency#decor',
     board: 'Aesthetic Room Decor & Lighting',
     icon: '✨'
   },
   {
     key: 'kitchen',
-    name: 'Smart Kitchen Finds',
+    name: 'Aesthetic Holiday Gift Guide',
     image: path.join(__dirname, 'pin2.jpg'),
-    title: 'Minimalist Smart Kitchen Gadgets | Aesthetic Countertop Essentials',
-    desc: 'Keep your kitchen countertops clean, functional, and calming with these curated smart kitchen finds. From minimalist matte kettles to space-saving organizers, discover practical tools designed for modern daily rituals. Check out the full edit at Aesthetic Haven Studio.',
-    link: 'https://agentwell.agency#kitchen',
+    title: 'Aesthetic Holiday Gift Guide | Curated Warm Kitchen & Home Finds Under $50',
+    desc: 'Gift something they will actually cherish and use daily. From matte gooseneck kettles to minimalist stone organizers, explore our curated holiday gift guide for lovers of intentional, warm aesthetic living.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
+    link: 'https://agentwell.agency#smart-kitchen',
     board: 'Smart Kitchen Gadgets & Hacks',
-    icon: '🍳'
+    icon: '🎁'
   },
   {
     key: 'planner',
-    name: 'Digital Planners & iPad',
+    name: 'Minimalist Christmas Gifts',
     image: path.join(__dirname, 'pin3.jpg'),
-    title: 'Minimalist iPad Digital Planner Template | Daily Productivity & Routines',
-    desc: 'Bring calm intentionality to your schedule with our warm aesthetic digital daily planner for iPad & GoodNotes. Features daily habit trackers, structured time blocks, and a clutter-free design crafted for focused living. Download yours today on Aesthetic Haven Studio.',
-    link: 'https://agentwell.agency#planners',
+    title: 'Minimalist Christmas Gifts | Digital Planner & Mindful Lifestyle Dashboard',
+    desc: 'Give the gift of peace, intentionality, and calm organization. Our warm aesthetic digital daily planner for iPad & GoodNotes helps reset daily routines ahead of the new year. Download your copy instantly at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
+    link: 'https://agentwell.agency#digital-planners',
     board: 'Digital Planners & iPad Aesthetics',
-    icon: '📱'
+    icon: '🎄'
   },
   {
     key: 'wallart',
-    name: 'Printable Wall Art',
+    name: 'Warm & Cozy Living Room Makeover',
     image: path.join(__dirname, 'pin4.jpg'),
-    title: 'Warm Neutral Wall Art Gallery Prints | Scandinavian Minimalist Posters',
-    desc: 'Elevate your living room walls with timeless neutral wall art prints and minimalist line illustrations. Easy-to-download printable art sets that add subtle depth and elegance to any gallery wall. Explore all curated art prints at Aesthetic Haven Studio.',
-    link: 'https://agentwell.agency#wallart',
+    title: 'Warm & Cozy Living Room Makeover | Scandinavian Holiday Art & Neutral Decor',
+    desc: 'Give your living room walls an instant festive winter glow with neutral printable wall art gallery sets and subtle organic ceramics. Simple, clutter-free Scandinavian holiday styling made effortless at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
+    link: 'https://agentwell.agency#wall-art',
     board: 'Printable Wall Art & Decor',
-    icon: '🖼️'
+    icon: '🕯️'
   }
 ];
 
@@ -99,15 +99,15 @@ const MAIN_KEYBOARD = {
 const NICHE_INLINE_KEYBOARD = {
   inline_keyboard: [
     [
-      { text: '✨ Room Decor & Lighting', callback_data: 'niche_decor' },
-      { text: '🍳 Smart Kitchen Finds', callback_data: 'niche_kitchen' }
+      { text: '✨ Cozy Bedroom Essentials for Winter', callback_data: 'niche_decor' },
+      { text: '🎁 Aesthetic Holiday Gift Guide', callback_data: 'niche_kitchen' }
     ],
     [
-      { text: '📱 Digital Planners & iPad', callback_data: 'niche_planner' },
-      { text: '🖼️ Printable Wall Art', callback_data: 'niche_wallart' }
+      { text: '🎄 Minimalist Christmas Gifts', callback_data: 'niche_planner' },
+      { text: '🕯️ Warm & Cozy Living Room Makeover', callback_data: 'niche_wallart' }
     ],
     [
-      { text: '⚡ Đăng toàn bộ 4 ngách (Batch Run)', callback_data: 'niche_all' }
+      { text: '⚡ Đăng toàn bộ 4 bài Q4 Holiday (Batch Run)', callback_data: 'niche_all' }
     ]
   ]
 };

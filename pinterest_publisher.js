@@ -7,11 +7,15 @@
 
 const fs = require('fs');
 const path = require('path');
+const http = require('http');
+const { spawn } = require('child_process');
 const { chromium } = require('playwright');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const CDP_HOST = process.env.CDP_HOST || '127.0.0.1';
 const CDP_PORT = process.env.CDP_PORT || 9222;
+const CHROME_PATH = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+const CHROME_USER_DATA = path.resolve(__dirname, 'chrome_user_data');
 const QUEUE_FILE = path.join(__dirname, 'pinterest_queue.json');
 const STATE_FILE = path.join(__dirname, 'pinterest_storage_state.json');
 const LOGS_DIR = path.join(__dirname, 'logs');
@@ -20,6 +24,59 @@ const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 if (!fs.existsSync(LOGS_DIR)) {
   fs.mkdirSync(LOGS_DIR, { recursive: true });
+}
+
+function checkCdpAlive() {
+  return new Promise((resolve) => {
+    const req = http.get(`http://${CDP_HOST}:${CDP_PORT}/json/version`, { timeout: 1500 }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try {
+          const json = JSON.parse(data);
+          resolve({ alive: true, browser: json.Browser || 'Chrome' });
+        } catch {
+          resolve({ alive: true, browser: 'Chrome' });
+        }
+      });
+    });
+    req.on('error', () => resolve({ alive: false }));
+    req.on('timeout', () => { req.destroy(); resolve({ alive: false }); });
+  });
+}
+
+async function ensureChromeRunning() {
+  const cdp = await checkCdpAlive();
+  if (cdp.alive) {
+    return;
+  }
+
+  console.log('[OpenClaw] Chrome CDP not detected. Spawning Chrome daemon with persistent profile...');
+  const args = [
+    `--remote-debugging-port=${CDP_PORT}`,
+    '--remote-allow-origins=*',
+    `--user-data-dir=${CHROME_USER_DATA}`,
+    '--headless=new',
+    '--no-sandbox',
+    '--disable-gpu',
+    '--disable-dev-shm-usage',
+    'https://www.pinterest.com'
+  ];
+
+  const proc = spawn(CHROME_PATH, args, {
+    detached: true,
+    stdio: 'ignore'
+  });
+  proc.unref();
+
+  for (let i = 0; i < 15; i++) {
+    await new Promise(r => setTimeout(r, 1000));
+    const check = await checkCdpAlive();
+    if (check.alive) {
+      console.log(`[OpenClaw] Chrome started successfully on port ${CDP_PORT}`);
+      return;
+    }
+  }
 }
 
 // Telegram notifier helper using native fetch
@@ -92,10 +149,25 @@ async function publishPin(pinItem) {
     throw new Error(`File ảnh không tồn tại: ${imageFullPath}`);
   }
 
-  // 1. Kết nối qua CDP 9222
-  console.log(`[1/6] Kết nối Chromium qua CDP: http://${CDP_HOST}:${CDP_PORT}...`);
-  const browser = await chromium.connectOverCDP(`http://${CDP_HOST}:${CDP_PORT}`);
-  const context = browser.contexts()[0] || await browser.newContext();
+  // 1. Kết nối qua CDP 9222 hoặc khởi chạy tự động
+  let browser = null;
+  let context = null;
+  const cdp = await checkCdpAlive();
+
+  if (cdp.alive) {
+    console.log(`[1/6] Kết nối Chromium qua CDP: http://${CDP_HOST}:${CDP_PORT}...`);
+    browser = await chromium.connectOverCDP(`http://${CDP_HOST}:${CDP_PORT}`);
+    context = browser.contexts()[0] || await browser.newContext();
+  } else {
+    console.log(`[1/6] CDP không mở, khởi chạy Chromium với authenticated cookies...`);
+    browser = await chromium.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+    });
+    context = await browser.newContext({
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
+    });
+  }
 
   // Nạp session Pinterest
   if (fs.existsSync(STATE_FILE)) {
@@ -152,9 +224,9 @@ async function publishPin(pinItem) {
       }
     }
 
-    // 5. Điền Description (kèm hashtag từ tags)
+    // 5. Điền Description (kèm hashtag từ tags nếu chưa có)
     let fullDesc = pinItem.description;
-    if (pinItem.tags && pinItem.tags.length > 0) {
+    if (pinItem.tags && pinItem.tags.length > 0 && !fullDesc.includes('#')) {
       const hashtags = pinItem.tags.slice(0, 6).map(t => '#' + t.replace(/\s+/g, '')).join(' ');
       fullDesc += '\n\n' + hashtags;
     }
@@ -282,7 +354,8 @@ async function publishPin(pinItem) {
 
   } finally {
     try {
-      await page.close();
+      if (page) await page.close();
+      if (browser && !cdp.alive) await browser.close();
     } catch {}
   }
 }
@@ -292,13 +365,10 @@ async function main() {
   const args = process.argv.slice(2);
   const queue = loadQueue();
 
-  // Mode: Test single pin immediately (e.g. decor_pin_01)
-  const pinIdToPublish = args[0] || 'decor_pin_01';
-
-  let targetPin = queue.find(p => p.id === pinIdToPublish);
-  if (!targetPin) {
-    targetPin = queue.find(p => p.status === 'ready');
-  }
+  const pinIdToPublish = args[0];
+  let targetPin = pinIdToPublish
+    ? queue.find(p => p.id === pinIdToPublish)
+    : queue.find(p => p.status === 'ready');
 
   if (!targetPin) {
     console.log('Không có Pin nào ở trạng thái "ready" để đăng.');

@@ -15,36 +15,37 @@ PINS = [
     {
         "id": 1,
         "image": str(WORKSPACE_DIR / "pin1.jpg"),
-        "title": "Cozy Aesthetic Bedroom Lighting Ideas | Warm Minimalist Decor Finds",
-        "desc": "Transform your bedroom into a peaceful sanctuary with these warm minimalist lighting ideas and aesthetic nightstand essentials. Discover soft ambient lamps, cozy textures, and intentional bedroom decor finds to elevate your evening routine. Explore the curated collection on Aesthetic Haven Studio.",
-        "link": "https://agentwell.agency/#room-decor",
+        "title": "Cozy Bedroom Essentials for Winter | Warm Minimalist Holiday Sanctuary",
+        "desc": "Transform your winter bedroom into the ultimate cozy haven with layered warm amber lighting, plush textures, and calming bedside essentials. Discover restorative evening sanctuary styling tips at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
+        "link": "https://agentwell.agency#decor",
         "board": "Aesthetic Room Decor & Lighting"
     },
     {
         "id": 2,
         "image": str(WORKSPACE_DIR / "pin2.jpg"),
-        "title": "Minimalist Smart Kitchen Gadgets | Aesthetic Countertop Essentials",
-        "desc": "Keep your kitchen countertops clean, functional, and calming with these curated smart kitchen finds. From minimalist matte kettles to space-saving organizers, discover practical tools designed for modern daily rituals. Check out the full edit at Aesthetic Haven Studio.",
-        "link": "https://agentwell.agency/#smart-kitchen",
+        "title": "Aesthetic Holiday Gift Guide | Curated Warm Kitchen & Home Finds Under $50",
+        "desc": "Gift something they will actually cherish and use daily. From matte gooseneck kettles to minimalist stone organizers, explore our curated holiday gift guide for lovers of intentional, warm aesthetic living.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
+        "link": "https://agentwell.agency#smart-kitchen",
         "board": "Smart Kitchen Gadgets & Hacks"
     },
     {
         "id": 3,
         "image": str(WORKSPACE_DIR / "pin3.jpg"),
-        "title": "Minimalist iPad Digital Planner Template | Daily Productivity & Routines",
-        "desc": "Bring calm intentionality to your schedule with our warm aesthetic digital daily planner for iPad & GoodNotes. Features daily habit trackers, structured time blocks, and a clutter-free design crafted for focused living. Download yours today on Aesthetic Haven Studio.",
-        "link": "https://agentwell.agency/#digital-planners",
+        "title": "Minimalist Christmas Gifts | Digital Planner & Mindful Lifestyle Dashboard",
+        "desc": "Give the gift of peace, intentionality, and calm organization. Our warm aesthetic digital daily planner for iPad & GoodNotes helps reset daily routines ahead of the new year. Download your copy instantly at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
+        "link": "https://agentwell.agency#digital-planners",
         "board": "Digital Planners & iPad Aesthetics"
     },
     {
         "id": 4,
         "image": str(WORKSPACE_DIR / "pin4.jpg"),
-        "title": "Warm Neutral Wall Art Gallery Prints | Scandinavian Minimalist Posters",
-        "desc": "Elevate your living room walls with timeless neutral wall art prints and minimalist line illustrations. Easy-to-download printable art sets that add subtle depth and elegance to any gallery wall. Explore all curated art prints at Aesthetic Haven Studio.",
-        "link": "https://agentwell.agency/#wall-art",
+        "title": "Warm & Cozy Living Room Makeover | Scandinavian Holiday Art & Neutral Decor",
+        "desc": "Give your living room walls an instant festive winter glow with neutral printable wall art gallery sets and subtle organic ceramics. Simple, clutter-free Scandinavian holiday styling made effortless at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
+        "link": "https://agentwell.agency#wall-art",
         "board": "Printable Wall Art & Decor"
     }
 ]
+
 
 def ensure_chrome_running():
     import urllib.request
