@@ -24,3 +24,6 @@ check_edge.py
 check_vercel.py
 
 chrome_test/
+__pycache__/
+*.pyc
+

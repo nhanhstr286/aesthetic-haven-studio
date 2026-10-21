@@ -4,6 +4,8 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/collections/:slug", "destination": "/collections/:slug.html" },
+    { "source": "/curated/:slug", "destination": "/curated/:slug.html" },
     { "source": "/public/(.*)", "destination": "/$1" }
   ],
   "headers": [

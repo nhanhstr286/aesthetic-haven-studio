@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title id="pageTitle">Curated Living Lookbook | Aesthetic Haven Studio</title>
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" id="metaDescription" content="An editorial curation exploring intentional home design, ambient lighting, and tactile natural textures for mindful living spaces.">
+  <meta name="author" content="Aesthetic Haven Studio">
+  <link rel="canonical" id="canonicalLink" href="https://agentwell.agency/curated/">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Pinterest & Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" id="ogTitle" content="Curated Living Lookbook | Aesthetic Haven Studio">
+  <meta property="og:description" id="ogDesc" content="Handpicked design essentials, ambient glow formulas, and mindful room aesthetics.">
+  <meta property="og:url" id="ogUrl" content="https://agentwell.agency/curated/">
+  <meta property="og:image" id="ogImage" content="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="pinterest-rich-pin" content="true">
+  
+  <!-- Google Fonts: Playfair Display (Serif) & Plus Jakarta Sans (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN with synchronized design system -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: {
+              DEFAULT: '#FAF8F5',
+              50: '#FDFCFB',
+              100: '#FAF8F5',
+              200: '#F4EFEA',
+              300: '#EAE3DA'
+            },
+            borderWarm: '#EAE6DF',
+            charcoal: {
+              DEFAULT: '#1F1F1F',
+              muted: '#625E59',
+              light: '#8C857B'
+            },
+            terracotta: {
+              DEFAULT: '#B85D43',
+              light: '#F8EFEA',
+              border: '#E8D2C7'
+            },
+            olive: {
+              DEFAULT: '#556B2F',
+              light: '#EFF2EB',
+              border: '#D9E2D2'
+            },
+            sage: {
+              DEFAULT: '#4A6B5B',
+              light: '#EEF3F0',
+              border: '#D2E2D8'
+            },
+            honey: {
+              DEFAULT: '#9E7444',
+              light: '#F8F3EA',
+              border: '#EBDDC9'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'Inter', '-apple-system', 'sans-serif']
+          },
+          boxShadow: {
+            'warm-sm': '0 2px 8px -2px rgba(31, 31, 31, 0.04), 0 1px 4px -1px rgba(31, 31, 31, 0.02)',
+            'warm-md': '0 8px 24px -4px rgba(31, 31, 31, 0.06), 0 4px 12px -2px rgba(31, 31, 31, 0.03)',
+            'warm-xl': '0 18px 36px -6px rgba(31, 31, 31, 0.08), 0 8px 16px -4px rgba(31, 31, 31, 0.04)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      background-color: #FAF8F5;
+      color: #1F1F1F;
+      scrollbar-gutter: stable;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAF8F5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D8D2C7;
+      border-radius: 9999px;
+    }
+  </style>
+
+  <!-- Structured Data: Dynamic Article Schema -->
+  <script type="application/ld+json" id="schemaArticle">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Curated Living Room Decor: An Editorial Curation",
+    "description": "An editorial guide exploring intentional aesthetics, ambient lighting, and tactile natural textures.",
+    "author": {
+      "@type": "Organization",
+      "name": "Aesthetic Haven Studio",
+      "url": "https://agentwell.agency"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Aesthetic Haven Studio",
+      "logo": "https://agentwell.agency/logo.png"
+    }
+  }
+  </script>
+</head>
+<body class="bg-cream font-sans text-charcoal min-h-screen flex flex-col selection:bg-terracotta-light selection:text-terracotta">
+
+  <!-- Top Announcement Bar -->
+  <aside aria-label="Announcement" class="w-full bg-[#F3EFE9] border-b border-borderWarm py-2 px-4 text-center text-xs tracking-wider text-charcoal-muted uppercase font-medium flex items-center justify-center gap-2">
+    <span>✨ Editorial Curation Series</span>
+    <span class="inline-block w-1 h-1 rounded-full bg-terracotta"></span>
+    <span class="hidden sm:inline">Handpicked for intentional, warm sanctuaries</span>
+  </aside>
+
+  <!-- Main Sticky Nav / Brand Header -->
+  <header class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-borderWarm transition-all duration-300">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo & Monogram -->
+      <a href="/" class="group flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-charcoal rounded-full p-1" aria-label="Aesthetic Haven Studio Home">
+        <div class="w-10 h-10 rounded-full border border-charcoal/20 bg-cream-200 flex items-center justify-center font-serif text-charcoal font-semibold text-sm tracking-tight shadow-sm group-hover:border-charcoal group-hover:bg-cream-300 transition-all duration-200">
+          AH
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif text-lg font-medium tracking-tight text-charcoal leading-none group-hover:text-charcoal-muted transition-colors">Aesthetic Haven</span>
+          <span class="text-[10px] uppercase tracking-widest text-charcoal-light font-medium mt-0.5">Studio</span>
+        </div>
+      </a>
+
+      <!-- Quick Nav & Pinterest Badge -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="/" class="text-xs font-medium text-charcoal-muted hover:text-charcoal transition-colors px-3 py-1.5 rounded-full hover:bg-cream-200">
+          ← All Curations
+        </a>
+        <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-terracotta-light text-terracotta border border-terracotta-border hover:bg-terracotta hover:text-white transition-all duration-200 shadow-sm" title="Pin on Pinterest">
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.332 1.365-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146 1.124.347 2.317.535 3.554.535 6.627 0 12-5.373 12-12C24.017 5.367 18.644 0 12.017 0z"/>
+          </svg>
+          <span class="hidden xs:inline">Save Pin</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Editorial Bridge Content Container -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-12">
+    
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-charcoal-light">
+      <a href="/" class="hover:text-charcoal transition-colors">Studio</a>
+      <span>/</span>
+      <a href="/#section-room-decor" class="hover:text-charcoal transition-colors">Curated Lookbooks</a>
+      <span>/</span>
+      <span id="breadcrumbCurrent" class="text-charcoal font-medium">Warm Minimalist Living Room</span>
+    </nav>
+
+    <!-- Header & Editorial Intro Section (150-200 Words Editorial) -->
+    <section class="space-y-6">
+      <div class="space-y-2">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-cream-200 text-charcoal border border-borderWarm">
+          <span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span>
+          Curated Editorial Lookbook
+        </span>
+        <h1 id="articleTitle" class="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-charcoal leading-tight">
+          The Warm Minimalist Living Room: An Editorial Guide to Slow Spaces & Tactile Textures
+        </h1>
+        <p class="text-xs uppercase tracking-wider text-charcoal-light font-medium pt-1">
+          Curated by Aesthetic Haven Studio Editorial Board • Autumn / Winter 2026 Focus
+        </p>
+      </div>
+
+      <!-- Editorial Curation Text (Precisely 157 words of inspirational, high-value decor journalism) -->
+      <div id="articleBody" class="prose prose-stone max-w-none text-charcoal-muted leading-relaxed space-y-4 text-sm sm:text-base border-l-2 border-terracotta/40 pl-4 sm:pl-6 bg-cream-50/60 py-3 rounded-r-xl">
+        <p>
+          Creating a living space that feels simultaneously grounded and transcendent is an exercise in restraint, tactile honesty, and intentional warmth. In contemporary interior curation, warm minimalism transcends sterile modernism by replacing stark monochrome surfaces with breathable organic textures, gentle earthen undertones, and layered illumination.
+        </p>
+        <p>
+          Rather than filling a room with fleeting decorative novelties, an editorial sanctuary is anchored by three harmonious pillars: tactile materiality, unhurried negative space, and low-temperature ambient lighting. When natural linen, textured bouclé, and honed travertine stone interact under a soft 2700K evening glow, the living room transforms from a mere functional pass-through into an intimate sanctuary for slow living and mindful unwinding.
+        </p>
+        <p>
+          In this curated edit, our studio designers have isolated the three transformative elements necessary to achieve this serene balance in your own home. Each handpicked piece has been evaluated for tactile longevity, sustainable craftsmanship, and its unique ability to bring restorative calm to high-traffic living environments without sacrificing elevated visual sophistication.
+        </p>
+      </div>
+    </section>
+
+    <!-- Large Perspective Visual Showcase Frame (Khung trưng bày phối cảnh lớn) -->
+    <section class="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-borderWarm shadow-warm-md bg-white p-2 sm:p-4">
+      <div class="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden bg-cream-200 group">
+        <img 
+          id="heroImage"
+          src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=85" 
+          alt="Curated Living Space Visual Showcase" 
+          class="w-full h-full object-cover object-center transform group-hover:scale-[1.02] transition-transform duration-700 ease-out"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-black/20 pointer-events-none"></div>
+        <div class="absolute top-4 left-4 sm:top-6 sm:left-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-medium bg-white/90 backdrop-blur-md text-charcoal border border-white/40 shadow-sm">
+            ✨ Studio Perspective Moodboard
+          </span>
+        </div>
+        <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-cream">
+          <p id="heroCaptionTitle" class="font-serif text-base sm:text-xl font-medium tracking-tight">The 2700K Twilight Harmony</p>
+          <p id="heroCaptionSubtitle" class="text-xs text-cream/80 max-w-lg mt-0.5 sm:mt-1 hidden xs:block">Natural oak flooring paired with ribbed ceramic glow and sculptural bouclé seating.</p>
+        </div>
+      </div>
+      <div class="pt-3 px-2 flex flex-col sm:flex-row items-start sm:items-center justify-between text-[11px] text-charcoal-light gap-1">
+        <span>Curated space arrangement • Handpicked pieces with architectural intention</span>
+        <span class="font-mono">Coordinates: AH-CURATED-STUDIO</span>
+      </div>
+    </section>
+
+    <!-- Curated Recommendations Section (2-3 items with 'Why We Chose This') -->
+    <section class="space-y-8">
+      <div class="border-b border-borderWarm pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+        <div>
+          <span class="text-xs font-semibold tracking-wider text-terracotta uppercase">Editorial Selection</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-medium text-charcoal mt-1">Curated Recommendations</h2>
+        </div>
+        <p class="text-xs text-charcoal-light">Foundational decor items selected for timeless longevity</p>
+      </div>
+
+      <div id="recommendationsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        
+        <!-- Product 1 -->
+        <article class="bg-white rounded-2xl border border-borderWarm p-5 sm:p-6 flex flex-col justify-between shadow-warm-sm hover:shadow-warm-md transition-all duration-300">
+          <div class="space-y-4">
+            <div class="w-full aspect-square rounded-xl overflow-hidden bg-cream-200 border border-borderWarm/60 relative group">
+              <img 
+                src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80" 
+                alt="Fluted Ceramic Ambient Lamp" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-cream/90 backdrop-blur-sm text-charcoal border border-borderWarm">
+                AMBIENT GLOW
+              </span>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-xs text-charcoal-light mb-1">
+                <span>Handmade Stoneware</span>
+                <span class="font-medium text-charcoal">2700K Warm Bulb</span>
+              </div>
+              <h3 class="font-serif text-lg font-medium text-charcoal leading-snug">
+                Fluted Ceramic Ambient Lamp
+              </h3>
+            </div>
+            <div class="bg-cream-100 rounded-xl p-3.5 border border-borderWarm/70 text-xs text-charcoal-muted leading-relaxed space-y-1">
+              <p class="font-semibold text-charcoal text-[11px] uppercase tracking-wider flex items-center gap-1">
+                <span>✨</span> Why We Chose This:
+              </p>
+              <p>
+                Eliminates harsh overhead glare with a soft, diffused 2700K ambient pool. The tactile matte ceramic base grounds the side table, while the pleated linen shade introduces timeless European warmth.
+              </p>
+            </div>
+          </div>
+          <div class="pt-5 border-t border-borderWarm/70 mt-5 space-y-2.5">
+            <a 
+              href="https://www.amazon.com/dp/B09V7S6W3D?tag=agentwell02-20" 
+              target="_blank" 
+              rel="sponsored nofollow noopener noreferrer" 
+              class="w-full py-3 px-4 rounded-xl bg-charcoal hover:bg-terracotta text-cream text-xs sm:text-sm font-medium tracking-wide flex items-center justify-center gap-2 transition-colors duration-200 shadow-sm"
+              aria-label="View Fluted Ceramic Ambient Lamp on Amazon"
+            >
+              <span>View Product on Amazon</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <p class="text-[10px] text-charcoal-light text-center leading-tight">
+              As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.
+            </p>
+          </div>
+        </article>
+
+        <!-- Product 2 -->
+        <article class="bg-white rounded-2xl border border-borderWarm p-5 sm:p-6 flex flex-col justify-between shadow-warm-sm hover:shadow-warm-md transition-all duration-300">
+          <div class="space-y-4">
+            <div class="w-full aspect-square rounded-xl overflow-hidden bg-cream-200 border border-borderWarm/60 relative group">
+              <img 
+                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80" 
+                alt="Japandi Bouclé Accent Chair" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-cream/90 backdrop-blur-sm text-charcoal border border-borderWarm">
+                TACTILE TEXTURE
+              </span>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-xs text-charcoal-light mb-1">
+                <span>Textured Weave</span>
+                <span class="font-medium text-charcoal">Solid Wood Legs</span>
+              </div>
+              <h3 class="font-serif text-lg font-medium text-charcoal leading-snug">
+                Japandi Bouclé Accent Chair
+              </h3>
+            </div>
+            <div class="bg-cream-100 rounded-xl p-3.5 border border-borderWarm/70 text-xs text-charcoal-muted leading-relaxed space-y-1">
+              <p class="font-semibold text-charcoal text-[11px] uppercase tracking-wider flex items-center gap-1">
+                <span>✨</span> Why We Chose This:
+              </p>
+              <p>
+                Offers high-pile textural comfort that softens geometric living rooms. The curved back cradles natural posture for evening reading without dominating visual floor volume.
+              </p>
+            </div>
+          </div>
+          <div class="pt-5 border-t border-borderWarm/70 mt-5 space-y-2.5">
+            <a 
+              href="https://www.amazon.com/dp/B08N5M9Y8L?tag=agentwell02-20" 
+              target="_blank" 
+              rel="sponsored nofollow noopener noreferrer" 
+              class="w-full py-3 px-4 rounded-xl bg-charcoal hover:bg-terracotta text-cream text-xs sm:text-sm font-medium tracking-wide flex items-center justify-center gap-2 transition-colors duration-200 shadow-sm"
+              aria-label="View Japandi Bouclé Accent Chair on Amazon"
+            >
+              <span>View Product on Amazon</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <p class="text-[10px] text-charcoal-light text-center leading-tight">
+              As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.
+            </p>
+          </div>
+        </article>
+
+        <!-- Product 3 -->
+        <article class="bg-white rounded-2xl border border-borderWarm p-5 sm:p-6 flex flex-col justify-between shadow-warm-sm hover:shadow-warm-md transition-all duration-300">
+          <div class="space-y-4">
+            <div class="w-full aspect-square rounded-xl overflow-hidden bg-cream-200 border border-borderWarm/60 relative group">
+              <img 
+                src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=800&q=80" 
+                alt="Round Travertine Coffee Table" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wide bg-cream/90 backdrop-blur-sm text-charcoal border border-borderWarm">
+                NATURAL STONE
+              </span>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-xs text-charcoal-light mb-1">
+                <span>Honed Beige Stone</span>
+                <span class="font-medium text-charcoal">Low Pedestal Base</span>
+              </div>
+              <h3 class="font-serif text-lg font-medium text-charcoal leading-snug">
+                Round Travertine Coffee Table
+              </h3>
+            </div>
+            <div class="bg-cream-100 rounded-xl p-3.5 border border-borderWarm/70 text-xs text-charcoal-muted leading-relaxed space-y-1">
+              <p class="font-semibold text-charcoal text-[11px] uppercase tracking-wider flex items-center gap-1">
+                <span>✨</span> Why We Chose This:
+              </p>
+              <p>
+                Its natural travertine pores and warm beige veining bring permanence and grounded weight to the room center. Pairs flawlessly with ceramic accents and linen coffee table books.
+              </p>
+            </div>
+          </div>
+          <div class="pt-5 border-t border-borderWarm/70 mt-5 space-y-2.5">
+            <a 
+              href="https://www.amazon.com/dp/B09D3F87QL?tag=agentwell02-20" 
+              target="_blank" 
+              rel="sponsored nofollow noopener noreferrer" 
+              class="w-full py-3 px-4 rounded-xl bg-charcoal hover:bg-terracotta text-cream text-xs sm:text-sm font-medium tracking-wide flex items-center justify-center gap-2 transition-colors duration-200 shadow-sm"
+              aria-label="View Round Travertine Coffee Table on Amazon"
+            >
+              <span>View Product on Amazon</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <p class="text-[10px] text-charcoal-light text-center leading-tight">
+              As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Studio Newsletter / VIP Curation Box -->
+    <section class="bg-white border border-borderWarm rounded-2xl p-6 sm:p-8 text-center shadow-warm-md">
+      <div class="max-w-md mx-auto space-y-3">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-cream-200 text-charcoal border border-borderWarm">
+          The Sunday Edit
+        </span>
+        <h3 class="font-serif text-2xl font-medium text-charcoal">
+          Get Secret Weekly Moodboards
+        </h3>
+        <p class="text-xs sm:text-sm text-charcoal-muted leading-relaxed">
+          Join 25,000+ Pinterest design lovers. Every Sunday, receive our private lookbook of trending warm spaces, discount codes & free digital freebies.
+        </p>
+        <form id="templateNewsletterForm" class="pt-2 flex flex-col sm:flex-row gap-2 max-w-sm mx-auto">
+          <input 
+            type="email" 
+            required 
+            placeholder="Enter your email" 
+            class="w-full px-4 py-2.5 rounded-xl border border-borderWarm text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-charcoal bg-cream-50 placeholder:text-charcoal-light text-charcoal"
+          >
+          <button 
+            type="submit" 
+            class="px-5 py-2.5 rounded-xl bg-charcoal text-cream font-medium text-xs sm:text-sm hover:bg-terracotta transition-colors duration-200 whitespace-nowrap shadow-sm">
+            Join Studio
+          </button>
+        </form>
+        <p id="templateFormFeedback" class="text-xs text-olive font-medium hidden">✨ Thank you! Check your inbox for this week's aesthetic guide.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Legal & Footer -->
+  <footer class="w-full bg-[#F5F2EC] border-t border-borderWarm py-10 px-4 sm:px-6 mt-auto">
+    <div class="max-w-4xl mx-auto space-y-6 text-center">
+      
+      <!-- Brand & Navigation in Footer -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-borderWarm/80 pb-6">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-cream-200 border border-charcoal/20 flex items-center justify-center font-serif text-xs font-semibold">
+            AH
+          </div>
+          <span class="font-serif text-base font-medium text-charcoal">Aesthetic Haven Studio</span>
+        </div>
+
+        <nav class="flex flex-wrap items-center justify-center gap-4 text-xs text-charcoal-muted">
+          <a href="/" class="hover:text-charcoal transition-colors">Home Studio</a>
+          <span>•</span>
+          <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" class="hover:text-terracotta transition-colors">Pinterest Boards</a>
+          <span>•</span>
+          <a href="mailto:hello@agentwell.agency" class="hover:text-charcoal transition-colors">Curator Contact</a>
+          <span>•</span>
+          <a href="/privacy" class="hover:text-charcoal transition-colors font-medium text-charcoal">Privacy Policy</a>
+        </nav>
+      </div>
+
+      <!-- Legal Disclosure -->
+      <div class="max-w-2xl mx-auto space-y-3">
+        <p class="text-[11px] sm:text-xs text-charcoal-muted leading-relaxed font-normal">
+          <strong class="font-semibold text-charcoal">Amazon Affiliate Disclosure:</strong> Aesthetic Haven Studio is a participant in the Amazon Services LLC Associates Program. As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.
+        </p>
+        <p class="text-[11px] text-charcoal-light">
+          All images, mockups, and trade trademarks belong to their respective creators & brand owners. Prices and availability are subject to change.
+        </p>
+      </div>
+
+      <!-- Copyright -->
+      <div class="pt-2 text-xs text-charcoal-light">
+        <p>&copy; 2026 Aesthetic Haven Studio. All rights reserved.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Newsletter
+      const form = document.getElementById('templateNewsletterForm');
+      const feedback = document.getElementById('templateFormFeedback');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          feedback.classList.remove('hidden');
+          form.reset();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
