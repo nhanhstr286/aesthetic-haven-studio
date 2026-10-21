@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/public/(.*)", "destination": "/$1" }
   ],
   "headers": [
