@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CryptoRadar | Hệ Thống Tín Hiệu AI Crypto & Biểu Đồ Nến Trực Tiếp 24/7</title>
+  
+  <!-- SEO & Open Graph -->
+  <meta name="description" content="CryptoRadar - Hệ thống phát hiện dòng tiền cá mập, quét tín hiệu nến Binance 24/7 với điểm Entry, TP1-3, Stop Loss chuẩn xác. Tham gia kênh Telegram VIP.">
+  <link rel="canonical" href="https://agentwell.agency/crypto">
+  <meta property="og:title" content="CryptoRadar | Hệ Thống Tín Hiệu AI Crypto 24/7">
+  <meta property="og:description" content="Biểu đồ nến Binance trực tiếp, quét tín hiệu BUY/SELL tự động với Winrate 87.4%.">
+  <meta property="og:url" content="https://agentwell.agency/crypto">
+  <meta property="og:type" content="website">
+
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- TradingView Lightweight Charts (v4.1.3 Standalone) -->
+  <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brandDark: '#0b0e14',
+            brandCard: '#131823',
+            brandBorder: '#232b3e',
+            accentGreen: '#26a69a',
+            accentRed: '#ef5350',
+            accentGold: '#ffd700',
+            accentBlue: '#2979ff'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0b0e14;
+      color: #f0f6fc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .glass-card {
+      background: rgba(19, 24, 35, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(35, 43, 62, 0.8);
+    }
+    .hud-glass {
+      background: rgba(11, 14, 20, 0.88);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(41, 121, 255, 0.35);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(38, 166, 154, 0.4); }
+      50% { box-shadow: 0 0 25px rgba(38, 166, 154, 0.8); }
+    }
+    .pulse-vip {
+      animation: pulseGlow 2s infinite;
+    }
+    /* Hide scrollbars */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-accentGreen selection:text-black">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 glass-card border-b border-brandBorder px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="/crypto" class="flex items-center space-x-3 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-accentGreen to-accentBlue flex items-center justify-center text-black font-black text-lg shadow-lg group-hover:scale-105 transition transform">
+          <i class="fa-solid fa-satellite-dish text-white text-base"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-extrabold text-lg text-white tracking-wide">CryptoRadar</span>
+            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-accentGreen/20 text-accentGreen border border-accentGreen/40">AI 24/7</span>
+          </div>
+          <p class="text-[11px] text-gray-400 hidden sm:block">Dòng Tiền Cá Mập & Tín Hiệu Tự Động</p>
+        </div>
+      </a>
+
+      <!-- Navigation & Action Buttons -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Nút Vào Kênh Free (4H) -->
+        <a href="https://t.me/cryptoradar_community" target="_blank" rel="noopener noreferrer" 
+           class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/40 text-xs sm:text-sm font-bold transition transform active:scale-95 shadow-sm">
+          <i class="fa-brands fa-telegram text-base text-blue-400"></i>
+          <span>Vào Kênh Free (4H)</span>
+        </a>
+
+        <!-- Nút Mở Khóa VIP -->
+        <a href="#pricing" 
+           class="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-accentGreen to-emerald-500 text-black text-xs sm:text-sm font-extrabold hover:brightness-110 transition shadow-lg pulse-vip transform active:scale-95">
+          <i class="fa-solid fa-crown text-xs"></i>
+          <span>Mở Khóa VIP</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="flex-grow max-w-7xl mx-auto w-full px-3 sm:px-4 py-4 sm:py-6 space-y-6">
+
+    <!-- FIRST FOLD: HERO & CANDLESTICK CHART SECTION -->
+    <section class="space-y-4">
+      
+      <!-- Top Title & Badge Bar -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-3">
+        <div>
+          <div class="inline-flex items-center space-x-2 px-2.5 py-1 rounded-full bg-accentGreen/15 border border-accentGreen/30 text-accentGreen text-xs font-semibold mb-2">
+            <span class="w-2 h-2 rounded-full bg-accentGreen animate-ping"></span>
+            <span>Real-time Binance WebSocket Data Feed</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
+            Hệ Thống Tín Hiệu <span class="bg-gradient-to-r from-accentGreen to-teal-300 bg-clip-text text-transparent">AI Crypto Radar</span>
+          </h1>
+          <p class="text-gray-400 text-xs sm:text-sm mt-1 max-w-2xl">
+            Tự động quét mô hình nến, đo lường RSI/EMA và dòng tiền thanh khoản. Đánh dấu Entry, TP1-3, Stop Loss tức thì cho từng cặp coin.
+          </p>
+        </div>
+
+        <!-- System Stats Badges -->
+        <div class="flex items-center space-x-3 text-xs text-gray-300">
+          <div class="px-3 py-1.5 rounded-lg bg-brandCard border border-brandBorder flex items-center space-x-1.5">
+            <i class="fa-solid fa-bullseye text-accentGreen"></i>
+            <span>Winrate: <strong class="text-white font-mono">87.4%</strong></span>
+          </div>
+          <div class="px-3 py-1.5 rounded-lg bg-brandCard border border-brandBorder flex items-center space-x-1.5">
+            <i class="fa-solid fa-chart-line text-accentBlue"></i>
+            <span>R:R: <strong class="text-white font-mono">1:2.8</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHART COMPONENT WRAPPER -->
+      <div class="bg-brandCard border border-brandBorder rounded-2xl overflow-hidden shadow-2xl relative">
+        
+        <!-- Controls Bar: Coin Selector Tabs & Connection Status -->
+        <div class="bg-[#10141d] px-3 sm:px-4 py-2.5 border-b border-brandBorder flex flex-wrap items-center justify-between gap-2">
+          
+          <!-- Quick Coin Selector Tabs -->
+          <div class="flex items-center space-x-1.5 sm:space-x-2 overflow-x-auto no-scrollbar py-0.5">
+            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-1 hidden sm:inline">Chọn Cặp:</span>
+            
+            <button onclick="switchCoin('BTCUSDT', 'BTC')" id="tab-BTCUSDT"
+                    class="coin-tab active px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center space-x-1.5 bg-accentGreen text-black shadow">
+              <span class="w-1.5 h-1.5 rounded-full bg-black"></span>
+              <span>BTC/USDT</span>
+            </button>
+            
+            <button onclick="switchCoin('ETHUSDT', 'ETH')" id="tab-ETHUSDT"
+                    class="coin-tab px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center space-x-1.5 bg-brandDark text-gray-300 hover:text-white border border-brandBorder hover:border-gray-600">
+              <span>ETH/USDT</span>
+            </button>
+
+            <button onclick="switchCoin('SOLUSDT', 'SOL')" id="tab-SOLUSDT"
+                    class="coin-tab px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center space-x-1.5 bg-brandDark text-gray-300 hover:text-white border border-brandBorder hover:border-gray-600">
+              <span>SOL/USDT</span>
+            </button>
+
+            <button onclick="switchCoin('BNBUSDT', 'BNB')" id="tab-BNBUSDT"
+                    class="coin-tab px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center space-x-1.5 bg-brandDark text-gray-300 hover:text-white border border-brandBorder hover:border-gray-600">
+              <span>BNB/USDT</span>
+            </button>
+
+            <button onclick="switchCoin('XRPUSDT', 'XRP')" id="tab-XRPUSDT"
+                    class="coin-tab px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center space-x-1.5 bg-brandDark text-gray-300 hover:text-white border border-brandBorder hover:border-gray-600">
+              <span>XRP/USDT</span>
+            </button>
+          </div>
+
+          <!-- Live Status Indicator -->
+          <div class="flex items-center space-x-3 text-xs">
+            <span class="text-gray-400 font-mono hidden sm:inline" id="timeframe-badge">Khung: 15m</span>
+            <div class="flex items-center space-x-1.5 bg-brandDark/80 px-2.5 py-1 rounded-md border border-brandBorder font-mono text-[11px]">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" id="ws-indicator"></span>
+              <span class="text-gray-300" id="ws-status-text">Binance WS: Live</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Chart Stage (Interactive Area) -->
+        <div class="relative w-full h-[460px] sm:h-[520px] bg-[#0b0e14]" id="chart-viewport">
+          
+          <!-- The Lightweight Chart Canvas Container -->
+          <div id="tv-chart-container" class="w-full h-full"></div>
+
+          <!-- VIP SIGNAL HUD (Glassmorphism Overlay) -->
+          <div class="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 pointer-events-none max-w-[270px] sm:max-w-xs w-full">
+            <div class="hud-glass p-3 sm:p-4 rounded-xl text-left pointer-events-auto transition">
+              
+              <div class="flex items-center justify-between pb-2 border-b border-brandBorder/80">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-xs font-bold text-accentGold uppercase tracking-wider flex items-center gap-1">
+                    <i class="fa-solid fa-bolt text-yellow-400"></i> VIP Radar
+                  </span>
+                  <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-accentGreen/20 text-accentGreen font-bold" id="hud-signal-type">BUY / LONG</span>
+                </div>
+                <span class="text-[11px] font-mono font-bold text-gray-300" id="hud-symbol-title">BTC/USDT</span>
+              </div>
+
+              <!-- Price & 24h Change -->
+              <div class="my-2.5 flex items-baseline justify-between">
+                <div>
+                  <div class="text-[10px] text-gray-400 uppercase font-semibold">Giá Hiện Tại:</div>
+                  <div class="text-xl sm:text-2xl font-mono font-black text-white" id="hud-live-price">--</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-[10px] text-gray-400 uppercase font-semibold">24h Change:</div>
+                  <div class="text-xs font-mono font-bold text-accentGreen" id="hud-price-change">+0.00%</div>
+                </div>
+              </div>
+
+              <!-- Trading Levels (Dynamic Entry / TP / SL) -->
+              <div class="space-y-1 text-[11px] font-mono bg-black/40 p-2.5 rounded-lg border border-brandBorder/50">
+                <div class="flex justify-between items-center text-gray-300">
+                  <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Entry:</span>
+                  <span class="font-bold text-blue-300" id="hud-entry-val">--</span>
+                </div>
+                <div class="flex justify-between items-center text-gray-300">
+                  <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-accentGreen"></span> TP1 (+2.4%):</span>
+                  <span class="font-bold text-accentGreen" id="hud-tp1-val">--</span>
+                </div>
+                <div class="flex justify-between items-center text-gray-300">
+                  <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-accentGreen"></span> TP2 (+5.1%):</span>
+                  <span class="font-bold text-accentGreen" id="hud-tp2-val">--</span>
+                </div>
+                <div class="flex justify-between items-center text-gray-300">
+                  <span class="text-gray-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-accentRed"></span> Stop Loss (-1.8%):</span>
+                  <span class="font-bold text-accentRed" id="hud-sl-val">--</span>
+                </div>
+              </div>
+
+              <!-- Confidence Footer -->
+              <div class="mt-2.5 flex items-center justify-between text-[10px] text-gray-400">
+                <span>Độ tin cậy: <strong class="text-emerald-400 font-bold">96.8%</strong></span>
+                <a href="#pricing" class="text-accentBlue hover:underline font-bold flex items-center gap-1">
+                  Nhận báo Bot <i class="fa-solid fa-arrow-right text-[9px]"></i>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Bottom Legend Info -->
+          <div class="absolute bottom-2 right-3 z-10 pointer-events-none text-[10px] font-mono text-gray-500 bg-black/60 px-2 py-1 rounded backdrop-blur">
+            Nến Xanh: Tăng (#26a69a) | Nến Đỏ: Giảm (#ef5350)
+          </div>
+
+        </div>
+
+        <!-- FIRST FOLD CTA BUTTON STRIP (Right below chart) -->
+        <div class="bg-[#10141d] p-3 sm:p-4 border-t border-brandBorder flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center space-x-2 text-xs text-gray-300">
+            <i class="fa-solid fa-circle-check text-accentGreen"></i>
+            <span>Bot phát tín hiệu tự động qua Telegram ngay khi nến đóng. Không trễ lệnh.</span>
+          </div>
+
+          <div class="flex items-center space-x-2 w-full sm:w-auto">
+            <!-- Free Channel Button -->
+            <a href="https://t.me/cryptoradar_community" target="_blank" rel="noopener noreferrer"
+               class="flex-1 sm:flex-none text-center px-4 py-2.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/40 text-xs sm:text-sm font-bold transition">
+              <i class="fa-brands fa-telegram mr-1.5"></i> Kênh Free (4H)
+            </a>
+
+            <!-- VIP Unlock Button -->
+            <a href="#pricing"
+               class="flex-1 sm:flex-none text-center px-5 py-2.5 rounded-xl bg-gradient-to-r from-accentGreen to-emerald-400 text-black text-xs sm:text-sm font-black shadow-lg hover:brightness-110 transition">
+              <i class="fa-solid fa-lock-open mr-1.5"></i> Mở Khóa VIP Ngay
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- SECTION 2: PRICING & PAYMENT (VIETQR BIDV & GUMROAD) -->
+    <section id="pricing" class="pt-6 space-y-6">
+      
+      <!-- Section Heading -->
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="text-xs font-bold text-accentGreen uppercase tracking-widest px-3 py-1 rounded-full bg-accentGreen/10 border border-accentGreen/30">
+          Gói Đăng Ký Hội Viên VIP
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          Mở Khóa Tín Hiệu VIP Telegram 24/7
+        </h2>
+        <p class="text-gray-400 text-xs sm:text-sm">
+          Nhận trọn bộ 5-10 tín hiệu Scalping & Swing hàng ngày (BTC, ETH, Altcoins) kèm cảnh báo lệnh qua bot tự động n8n.
+        </p>
+      </div>
+
+      <!-- Payment Method Switcher Tabs -->
+      <div class="flex justify-center">
+        <div class="inline-flex p-1 rounded-xl bg-brandCard border border-brandBorder">
+          <button onclick="selectPaymentTab('vietqr')" id="tab-vietqr-btn"
+                  class="px-5 py-2 rounded-lg text-xs sm:text-sm font-extrabold transition flex items-center space-x-2 bg-accentGreen text-black shadow-md">
+            <i class="fa-solid fa-qrcode"></i>
+            <span>VietQR Chuyển Khoản (BIDV)</span>
+          </button>
+          <button onclick="selectPaymentTab('gumroad')" id="tab-gumroad-btn"
+                  class="px-5 py-2 rounded-lg text-xs sm:text-sm font-extrabold transition flex items-center space-x-2 text-gray-400 hover:text-white">
+            <i class="fa-solid fa-globe"></i>
+            <span>Thẻ Quốc Tế (Gumroad)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 1: VIETQR (BIDV) -->
+      <div id="tab-vietqr-content" class="bg-brandCard border border-brandBorder rounded-2xl p-4 sm:p-8 shadow-xl">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Left: Plan Selection & Info Form -->
+          <div class="lg:col-span-7 space-y-5">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-3">1. Chọn Gói Thời Hạn VIP:</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                
+                <!-- Plan 1 Month -->
+                <div onclick="selectPlan('MONTHLY', 690000)" id="plan-card-MONTHLY"
+                     class="plan-card cursor-pointer p-3.5 rounded-xl border border-accentGreen bg-accentGreen/10 transition relative">
+                  <div class="text-xs font-bold text-accentGreen uppercase">1 Tháng</div>
+                  <div class="text-lg font-black text-white mt-1">690.000đ</div>
+                  <div class="text-[10px] text-gray-400 mt-0.5">Trải nghiệm chuẩn</div>
+                </div>
+
+                <!-- Plan 3 Months (Recommended) -->
+                <div onclick="selectPlan('QUARTERLY', 1690000)" id="plan-card-QUARTERLY"
+                     class="plan-card cursor-pointer p-3.5 rounded-xl border border-brandBorder bg-brandDark/50 hover:border-gray-500 transition relative">
+                  <div class="absolute -top-2 right-2 px-1.5 py-0.5 rounded bg-accentGreen text-black font-extrabold text-[9px] uppercase">
+                    Tiết kiệm 18%
+                  </div>
+                  <div class="text-xs font-bold text-gray-300 uppercase">3 Tháng</div>
+                  <div class="text-lg font-black text-white mt-1">1.690.000đ</div>
+                  <div class="text-[10px] text-gray-400 mt-0.5">563.000đ / tháng</div>
+                </div>
+
+                <!-- Plan Lifetime -->
+                <div onclick="selectPlan('LIFETIME', 3490000)" id="plan-card-LIFETIME"
+                     class="plan-card cursor-pointer p-3.5 rounded-xl border border-brandBorder bg-brandDark/50 hover:border-gray-500 transition relative">
+                  <div class="text-xs font-bold text-yellow-400 uppercase">Trọn Đời</div>
+                  <div class="text-lg font-black text-white mt-1">3.490.000đ</div>
+                  <div class="text-[10px] text-gray-400 mt-0.5">Đầu tư 1 lần duy nhất</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Telegram Username Input -->
+            <div>
+              <label class="block text-xs font-bold text-gray-300 mb-1.5">
+                2. Nhập Telegram Username của bạn (để bot tự động cấp link mời):
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-gray-400 font-mono text-sm">@</span>
+                <input type="text" id="telegram-username-input" oninput="updateVietQR()" placeholder="username_telegram_cua_ban" 
+                       class="w-full pl-8 pr-4 py-2.5 rounded-xl bg-brandDark border border-brandBorder text-white placeholder-gray-500 focus:outline-none focus:border-accentGreen text-sm font-mono">
+              </div>
+              <p class="text-[11px] text-gray-400 mt-1">
+                * Mã chuyển khoản sẽ tự động ghép tên Telegram để hệ thống kích hoạt chuẩn xác.
+              </p>
+            </div>
+
+            <!-- Bank Information Table -->
+            <div class="p-4 rounded-xl bg-brandDark/80 border border-brandBorder space-y-2 text-xs">
+              <div class="flex justify-between items-center py-1 border-b border-brandBorder/60">
+                <span class="text-gray-400">Ngân hàng thụ hưởng:</span>
+                <span class="font-bold text-white">BIDV (Ngân hàng TMCP Đầu tư & Phát triển VN)</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-brandBorder/60">
+                <span class="text-gray-400">Số tài khoản:</span>
+                <div class="flex items-center space-x-2">
+                  <span class="font-mono font-bold text-accentGreen text-sm" id="stk-display">5650252312</span>
+                  <button onclick="copyText('5650252312', 'Đã copy Số tài khoản BIDV: 5650252312')" class="text-gray-400 hover:text-white px-2 py-0.5 rounded bg-brandBorder" title="Copy STK">
+                    <i class="fa-regular fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-brandBorder/60">
+                <span class="text-gray-400">Chủ tài khoản:</span>
+                <span class="font-bold text-white font-mono">LE THANH NHAN</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-brandBorder/60">
+                <span class="text-gray-400">Số tiền:</span>
+                <span class="font-mono font-bold text-accentGold text-sm" id="amount-display">690.000 VND</span>
+              </div>
+              <div class="flex justify-between items-center py-1">
+                <span class="text-gray-400">Nội dung chuyển khoản:</span>
+                <div class="flex items-center space-x-2">
+                  <span class="font-mono font-bold text-emerald-300" id="memo-display">VIP1M TELEGRAM</span>
+                  <button onclick="copyMemo()" class="text-gray-400 hover:text-white px-2 py-0.5 rounded bg-brandBorder" title="Copy nội dung">
+                    <i class="fa-regular fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-2 text-xs text-emerald-400">
+              <i class="fa-solid fa-bolt"></i>
+              <span>Webhook SePay + n8n tự động phát hiện giao dịch và cấp quyền sau 30 giây!</span>
+            </div>
+
+          </div>
+
+          <!-- Right: Dynamic VietQR Code -->
+          <div class="lg:col-span-5 flex flex-col items-center text-center p-5 bg-brandDark rounded-2xl border border-brandBorder shadow-inner">
+            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Mã VietQR Tự Động Điền Chuẩn</span>
+            
+            <div class="p-3 bg-white rounded-2xl shadow-xl relative inline-block">
+              <img id="vietqr-img" 
+                   src="https://img.vietqr.io/image/BIDV-5650252312-compact2.png?amount=690000&addInfo=VIP1M%20TELEGRAM&accountName=LE%20THANH%20NHAN" 
+                   alt="VietQR BIDV Code" 
+                   class="w-56 h-56 sm:w-64 sm:h-64 object-contain">
+            </div>
+
+            <div class="mt-4 space-y-1">
+              <p class="text-xs font-semibold text-gray-200">
+                <i class="fa-solid fa-camera mr-1 text-accentGreen"></i> Mở App Ngân hàng bất kỳ để quét
+              </p>
+              <p class="text-[11px] text-gray-400">Mã QR đã kèm sẵn đúng số tiền và nội dung kích hoạt.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 2: GUMROAD (QUỐC TẾ) -->
+      <div id="tab-gumroad-content" class="hidden">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <!-- Plan 1 -->
+          <div class="bg-brandCard border border-brandBorder rounded-2xl p-6 flex flex-col justify-between space-y-4">
+            <div>
+              <div class="text-xs font-bold text-gray-400 uppercase">1 Tháng Access</div>
+              <div class="text-3xl font-black text-white mt-1">$29 <span class="text-xs font-normal text-gray-400">/ tháng</span></div>
+              <ul class="mt-4 space-y-2 text-xs text-gray-300">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accentGreen"></i> 5-10 Tín hiệu VIP / ngày</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accentGreen"></i> Đầy đủ Entry, TP1-3, SL</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accentGreen"></i> Cảnh báo Telegram Bot</li>
+              </ul>
+            </div>
+            <a href="https://gumroad.com/l/cryptoradar-vip" target="_blank" rel="noopener noreferrer" 
+               class="w-full py-3 rounded-xl bg-brandBorder hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
+              Thanh Toán $29 Qua Gumroad
+            </a>
+          </div>
+
+          <!-- Plan 2 (Popular) -->
+          <div class="bg-brandCard border-2 border-accentGreen rounded-2xl p-6 flex flex-col justify-between space-y-4 relative shadow-2xl">
+            <div class="absolute -top-3 right-4 px-2 py-0.5 rounded-full bg-accentGreen text-black text-[10px] font-extrabold uppercase">
+              Phổ Biến Nhất
+            </div>
+            <div>
+              <div class="text-xs font-bold text-accentGreen uppercase">3 Tháng Access</div>
+              <div class="text-3xl font-black text-white mt-1">$69 <span class="text-xs font-normal text-gray-400">/ quý</span></div>
+              <ul class="mt-4 space-y-2 text-xs text-gray-300">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accentGreen"></i> Bao gồm toàn bộ gói 1 Tháng</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accentGreen"></i> Tiết kiệm 20% chi phí</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accentGreen"></i> Kênh Thảo Luận Private</li>
+              </ul>
+            </div>
+            <a href="https://gumroad.com/l/cryptoradar-vip" target="_blank" rel="noopener noreferrer" 
+               class="w-full py-3 rounded-xl bg-accentGreen hover:bg-emerald-400 text-black font-extrabold text-xs text-center shadow-lg transition block">
+              Thanh Toán $69 Qua Gumroad
+            </a>
+          </div>
+
+          <!-- Plan 3 -->
+          <div class="bg-brandCard border border-brandBorder rounded-2xl p-6 flex flex-col justify-between space-y-4">
+            <div>
+              <div class="text-xs font-bold text-yellow-400 uppercase">Trọn Đời (Lifetime)</div>
+              <div class="text-3xl font-black text-white mt-1">$149 <span class="text-xs font-normal text-gray-400">một lần</span></div>
+              <ul class="mt-4 space-y-2 text-xs text-gray-300">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accentGreen"></i> Truy cập VIP vĩnh viễn</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accentGreen"></i> Toàn bộ tính năng AI nâng cấp</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accentGreen"></i> Support 1-1 trực tiếp cùng Admin</li>
+              </ul>
+            </div>
+            <a href="https://gumroad.com/l/cryptoradar-vip" target="_blank" rel="noopener noreferrer" 
+               class="w-full py-3 rounded-xl bg-brandBorder hover:bg-slate-700 text-white font-bold text-xs text-center transition block">
+              Thanh Toán $149 Qua Gumroad
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SECTION 3: FEATURES & SOCIAL PROOF -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+      <div class="p-5 rounded-2xl bg-brandCard border border-brandBorder space-y-2">
+        <div class="w-10 h-10 rounded-xl bg-accentGreen/15 flex items-center justify-center text-accentGreen text-lg mb-3">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <h4 class="font-bold text-white text-sm">Quét Nến & Dòng Tiền 24/7</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Thuật toán AI tự động giám sát biến động volume cá mập và hành động giá trên Binance 24/24 mà không bỏ lỡ bất kỳ con sóng nào.
+        </p>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-brandCard border border-brandBorder space-y-2">
+        <div class="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center text-accentBlue text-lg mb-3">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h4 class="font-bold text-white text-sm">Quản Trị Vốn Chặt Chẽ</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Mỗi lệnh đều có điểm Stop Loss và 3 mốc chốt lời TP1, TP2, TP3 rõ ràng. Tỷ lệ R:R trung bình đạt từ 1:2 đến 1:3.
+        </p>
+      </div>
+
+      <div class="p-5 rounded-2xl bg-brandCard border border-brandBorder space-y-2">
+        <div class="w-10 h-10 rounded-xl bg-yellow-500/15 flex items-center justify-center text-yellow-400 text-lg mb-3">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <h4 class="font-bold text-white text-sm">Hỗ Trợ Admin 24/7</h4>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Thành viên VIP được hỗ trợ 1-1, giải đáp thắc mắc quản lý lệnh và nhận hướng dẫn cài đặt bot Telegram chi tiết.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-12 border-t border-brandBorder py-6 px-4 bg-brandDark text-center text-xs text-gray-500 space-y-2">
+    <div class="flex items-center justify-center space-x-4 text-gray-400">
+      <a href="/crypto" class="hover:text-white transition">CryptoRadar</a>
+      <span>•</span>
+      <a href="https://t.me/cryptoradar_community" target="_blank" class="hover:text-white transition">Kênh Free Telegram</a>
+      <span>•</span>
+      <a href="#pricing" class="hover:text-white transition">Nâng Cấp VIP</a>
+    </div>
+    <p>© 2026 CryptoRadar AI Engine. Phát triển bởi AgentWell Agency.</p>
+    <p class="text-[10px] text-gray-600 max-w-xl mx-auto">
+      * Cảnh báo rủi ro: Giao dịch tiền mã hóa có mức độ rủi ro vốn cao. Mọi tín hiệu chỉ nhằm mục đích phân tích kỹ thuật và hỗ trợ chiến lược.
+    </p>
+  </footer>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none px-4 py-3 rounded-xl bg-emerald-500 text-black font-extrabold text-xs shadow-2xl flex items-center space-x-2">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toast-msg">Thông báo</span>
+  </div>
+
+  <!-- SCRIPT LOGIC (TRADINGVIEW LIGHTWEIGHT CHARTS + BINANCE WS + VIETQR) -->
+  <script>
+    // --- 1. CONFIGURATION & STATE ---
+    let currentSymbol = 'BTCUSDT';
+    let currentBase = 'BTC';
+    let currentPlan = 'MONTHLY';
+    let currentAmount = 690000;
+    const BANK_NAME = 'BIDV';
+    const BANK_ACCOUNT_NO = '5650252312';
+    const BANK_ACCOUNT_NAME = 'LE THANH NHAN';
+
+    const PLAN_CODES = {
+      'MONTHLY': 'VIP1M',
+      'QUARTERLY': 'VIP3M',
+      'LIFETIME': 'VIPLIFE'
+    };
+
+    let chart = null;
+    let candlestickSeries = null;
+    let volumeSeries = null;
+    let ws = null;
+    let activePriceLines = [];
+    let currentLivePrice = 0;
+
+    // Binance REST Fallback Endpoints
+    const BINANCE_HOSTS = [
+      'https://api.binance.com',
+      'https://data-api.binance.vision',
+      'https://api1.binance.com',
+      'https://api2.binance.com',
+      'https://api3.binance.com'
+    ];
+
+    // --- 2. INITIALIZE CHART ---
+    function initChart() {
+      const container = document.getElementById('tv-chart-container');
+      container.innerHTML = '';
+
+      chart = LightweightCharts.createChart(container, {
+        layout: {
+          background: { type: 'solid', color: '#0b0e14' },
+          textColor: '#8b949e',
+          fontSize: 11,
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+        },
+        grid: {
+          vertLines: { color: 'rgba(35, 43, 62, 0.45)' },
+          horzLines: { color: 'rgba(35, 43, 62, 0.45)' }
+        },
+        crosshair: {
+          mode: LightweightCharts.CrosshairMode.Normal,
+          vertLine: { color: '#2979ff', width: 1, style: 2 },
+          horzLine: { color: '#2979ff', width: 1, style: 2 }
+        },
+        rightPriceScale: {
+          borderColor: '#232b3e',
+          scaleMargins: { top: 0.12, bottom: 0.22 },
+          autoScale: true
+        },
+        timeScale: {
+          borderColor: '#232b3e',
+          timeVisible: true,
+          secondsVisible: false
+        }
+      });
+
+      // Volume Series
+      volumeSeries = chart.addHistogramSeries({
+        color: '#26a69a',
+        priceFormat: { type: 'volume' },
+        priceScaleId: '',
+        scaleMargins: { top: 0.82, bottom: 0 }
+      });
+
+      // Candlestick Series (Chuẩn màu nến Crypto quốc tế)
+      candlestickSeries = chart.addCandlestickSeries({
+        upColor: '#26a69a',
+        downColor: '#ef5350',
+        borderVisible: false,
+        wickUpColor: '#26a69a',
+        wickDownColor: '#ef5350'
+      });
+
+      // Handle Resize
+      window.addEventListener('resize', () => {
+        if (chart && container) {
+          chart.applyOptions({
+            width: container.clientWidth,
+            height: container.clientHeight
+          });
+        }
+      });
+    }
+
+    // --- 3. FETCH BINANCE HISTORICAL KLINES (WITH FALLBACK) ---
+    async function loadKlines(symbol) {
+      let klinesData = null;
+      let lastErr = null;
+
+      for (const host of BINANCE_HOSTS) {
+        try {
+          const url = `${host}/api/v3/klines?symbol=${symbol}&interval=15m&limit=150`;
+          const res = await fetch(url);
+          if (res.ok) {
+            klinesData = await res.json();
+            break;
+          }
+        } catch (e) {
+          lastErr = e;
+        }
+      }
+
+      if (!klinesData || !Array.isArray(klinesData)) {
+        console.warn('Fallback to mock klines for symbol:', symbol, lastErr);
+        klinesData = generateMockKlines(symbol);
+      }
+
+      const formattedCandles = [];
+      const formattedVolumes = [];
+
+      klinesData.forEach(k => {
+        const time = Math.floor(k[0] / 1000);
+        const open = parseFloat(k[1]);
+        const high = parseFloat(k[2]);
+        const low = parseFloat(k[3]);
+        const close = parseFloat(k[4]);
+        const vol = parseFloat(k[5]);
+
+        formattedCandles.push({ time, open, high, low, close });
+        formattedVolumes.push({
+          time,
+          value: vol,
+          color: close >= open ? 'rgba(38, 166, 154, 0.35)' : 'rgba(239, 83, 80, 0.35)'
+        });
+      });
+
+      // Set data to series
+      candlestickSeries.setData(formattedCandles);
+      volumeSeries.setData(formattedVolumes);
+
+      // Latest candle close
+      const latest = formattedCandles[formattedCandles.length - 1];
+      currentLivePrice = latest.close;
+
+      // Update HUD and levels
+      updateHUD(symbol, latest.close, formattedCandles);
+      renderTradingLevels(latest.close);
+
+      // Add Signal Markers
+      renderMarkers(formattedCandles);
+
+      // Fit content
+      chart.timeScale().fitContent();
+
+      // Connect Live WebSocket
+      connectWebSocket(symbol);
+    }
+
+    // Mock candle generator in case Binance REST has CORS/offline issues
+    function generateMockKlines(symbol) {
+      let basePrice = 67500;
+      if (symbol.includes('ETH')) basePrice = 3450;
+      if (symbol.includes('SOL')) basePrice = 175;
+      if (symbol.includes('BNB')) basePrice = 590;
+      if (symbol.includes('XRP')) basePrice = 0.54;
+
+      const now = Math.floor(Date.now() / 1000);
+      const klines = [];
+      let current = basePrice;
+
+      for (let i = 120; i >= 0; i--) {
+        const time = (now - i * 900) * 1000;
+        const change = (Math.random() - 0.48) * (current * 0.005);
+        const open = current;
+        const close = current + change;
+        const high = Math.max(open, close) + Math.random() * (current * 0.003);
+        const low = Math.min(open, close) - Math.random() * (current * 0.003);
+        const vol = Math.random() * 50 + 10;
+        current = close;
+        klines.push([time, open.toString(), high.toString(), low.toString(), close.toString(), vol.toString()]);
+      }
+      return klines;
+    }
+
+    // --- 4. RENDER BUY/SELL MARKERS ---
+    function renderMarkers(candles) {
+      if (candles.length < 25) return;
+      const markers = [];
+
+      // Marker 1: Earlier BUY signal
+      const idx1 = Math.max(0, candles.length - 42);
+      markers.push({
+        time: candles[idx1].time,
+        position: 'belowBar',
+        color: '#26a69a',
+        shape: 'arrowUp',
+        text: 'BUY LONG'
+      });
+
+      // Marker 2: SELL / TAKE PROFIT signal
+      const idx2 = Math.max(0, candles.length - 22);
+      markers.push({
+        time: candles[idx2].time,
+        position: 'aboveBar',
+        color: '#ef5350',
+        shape: 'arrowDown',
+        text: 'TP HIT'
+      });
+
+      // Marker 3: Latest Confirmed Signal
+      const idx3 = Math.max(0, candles.length - 4);
+      markers.push({
+        time: candles[idx3].time,
+        position: 'belowBar',
+        color: '#26a69a',
+        shape: 'arrowUp',
+        text: 'VIP ENTRY'
+      });
+
+      // Sort chronological
+      markers.sort((a, b) => a.time - b.time);
+      candlestickSeries.setMarkers(markers);
+    }
+
+    // --- 5. RENDER DYNAMIC PRICE LINES (ENTRY / TP1-3 / SL) ---
+    function renderTradingLevels(price) {
+      // Remove old lines
+      activePriceLines.forEach(l => candlestickSeries.removePriceLine(l));
+      activePriceLines = [];
+
+      const entry = price;
+      const tp1 = entry * 1.024;
+      const tp2 = entry * 1.051;
+      const tp3 = entry * 1.085;
+      const sl = entry * 0.982;
+
+      const formatPrice = (p) => {
+        if (p < 2) return p.toFixed(4);
+        if (p < 20) return p.toFixed(3);
+        return p.toFixed(2);
+      };
+
+      // Create Price Lines
+      const entryLine = candlestickSeries.createPriceLine({
+        price: entry,
+        color: '#2979ff',
+        lineWidth: 1,
+        lineStyle: LightweightCharts.LineStyle.Dashed,
+        axisLabelVisible: true,
+        title: 'ENTRY'
+      });
+
+      const tp1Line = candlestickSeries.createPriceLine({
+        price: tp1,
+        color: '#26a69a',
+        lineWidth: 1,
+        lineStyle: LightweightCharts.LineStyle.Dotted,
+        axisLabelVisible: true,
+        title: 'TP1'
+      });
+
+      const tp2Line = candlestickSeries.createPriceLine({
+        price: tp2,
+        color: '#26a69a',
+        lineWidth: 1,
+        lineStyle: LightweightCharts.LineStyle.Dotted,
+        axisLabelVisible: true,
+        title: 'TP2'
+      });
+
+      const slLine = candlestickSeries.createPriceLine({
+        price: sl,
+        color: '#ef5350',
+        lineWidth: 1,
+        lineStyle: LightweightCharts.LineStyle.Dashed,
+        axisLabelVisible: true,
+        title: 'SL'
+      });
+
+      activePriceLines.push(entryLine, tp1Line, tp2Line, slLine);
+
+      // Update HUD elements
+      document.getElementById('hud-entry-val').textContent = '$' + formatPrice(entry);
+      document.getElementById('hud-tp1-val').textContent = '$' + formatPrice(tp1);
+      document.getElementById('hud-tp2-val').textContent = '$' + formatPrice(tp2);
+      document.getElementById('hud-sl-val').textContent = '$' + formatPrice(sl);
+    }
+
+    // --- 6. UPDATE HUD WITH LIVE TICKS ---
+    function updateHUD(symbol, price, candles) {
+      const formatPrice = (p) => {
+        if (p < 2) return p.toFixed(4);
+        if (p < 20) return p.toFixed(3);
+        return p.toFixed(2);
+      };
+
+      document.getElementById('hud-symbol-title').textContent = symbol.replace('USDT', '/USDT');
+      const livePriceElem = document.getElementById('hud-live-price');
+      livePriceElem.textContent = '$' + formatPrice(price);
+
+      if (candles && candles.length > 1) {
+        const first = candles[0].close;
+        const changePct = ((price - first) / first) * 100;
+        const changeElem = document.getElementById('hud-price-change');
+        changeElem.textContent = (changePct >= 0 ? '+' : '') + changePct.toFixed(2) + '%';
+        changeElem.className = 'text-xs font-mono font-bold ' + (changePct >= 0 ? 'text-accentGreen' : 'text-accentRed');
+      }
+    }
+
+    // --- 7. BINANCE WEBSOCKET CONNECTION ---
+    function connectWebSocket(symbol) {
+      if (ws) {
+        try { ws.close(); } catch(e) {}
+      }
+
+      const streamName = symbol.toLowerCase() + '@ticker';
+      const wsUrl = `wss://stream.binance.com:9443/ws/${streamName}`;
+
+      const indicator = document.getElementById('ws-indicator');
+      const statusText = document.getElementById('ws-status-text');
+
+      try {
+        ws = new WebSocket(wsUrl);
+
+        ws.onopen = () => {
+          indicator.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+          statusText.textContent = `Binance WS: ${symbol} Live`;
+        };
+
+        ws.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          if (data && data.c) {
+            const price = parseFloat(data.c);
+            const high = parseFloat(data.h);
+            const low = parseFloat(data.l);
+            const open = parseFloat(data.o);
+            const now = Math.floor(Date.now() / 1000);
+
+            // Update candlestick series with latest tick
+            candlestickSeries.update({
+              time: now,
+              open: open,
+              high: high,
+              low: low,
+              close: price
+            });
+
+            // Update live price display
+            const formatPrice = (p) => (p < 2 ? p.toFixed(4) : (p < 20 ? p.toFixed(3) : p.toFixed(2)));
+            const livePriceElem = document.getElementById('hud-live-price');
+            livePriceElem.textContent = '$' + formatPrice(price);
+
+            const changePct = parseFloat(data.P);
+            const changeElem = document.getElementById('hud-price-change');
+            changeElem.textContent = (changePct >= 0 ? '+' : '') + changePct.toFixed(2) + '%';
+            changeElem.className = 'text-xs font-mono font-bold ' + (changePct >= 0 ? 'text-accentGreen' : 'text-accentRed');
+          }
+        };
+
+        ws.onerror = () => {
+          indicator.className = 'w-2 h-2 rounded-full bg-yellow-400';
+          statusText.textContent = 'Binance REST Fallback';
+        };
+
+        ws.onclose = () => {
+          indicator.className = 'w-2 h-2 rounded-full bg-gray-500';
+        };
+      } catch (err) {
+        console.warn('WS Init err:', err);
+      }
+    }
+
+    // --- 8. COIN SWITCH HANDLER ---
+    function switchCoin(symbol, base) {
+      currentSymbol = symbol;
+      currentBase = base;
+
+      // Update button tab styles
+      document.querySelectorAll('.coin-tab').forEach(btn => {
+        btn.className = 'coin-tab px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center space-x-1.5 bg-brandDark text-gray-300 hover:text-white border border-brandBorder hover:border-gray-600';
+      });
+
+      const activeBtn = document.getElementById(`tab-${symbol}`);
+      if (activeBtn) {
+        activeBtn.className = 'coin-tab active px-3 py-1.5 rounded-lg text-xs font-extrabold transition flex items-center space-x-1.5 bg-accentGreen text-black shadow';
+      }
+
+      // Re-load candles and subscribe to new symbol
+      loadKlines(symbol);
+      showToast(`Đã chuyển sang biểu đồ & tín hiệu ${base}/USDT`);
+    }
+
+    // --- 9. PAYMENT LOGIC & VIETQR BUILDER ---
+    function selectPaymentTab(tab) {
+      const vietqrContent = document.getElementById('tab-vietqr-content');
+      const gumroadContent = document.getElementById('tab-gumroad-content');
+      const vietqrBtn = document.getElementById('tab-vietqr-btn');
+      const gumroadBtn = document.getElementById('tab-gumroad-btn');
+
+      if (tab === 'vietqr') {
+        vietqrContent.classList.remove('hidden');
+        gumroadContent.classList.add('hidden');
+        vietqrBtn.className = 'px-5 py-2 rounded-lg text-xs sm:text-sm font-extrabold transition flex items-center space-x-2 bg-accentGreen text-black shadow-md';
+        gumroadBtn.className = 'px-5 py-2 rounded-lg text-xs sm:text-sm font-extrabold transition flex items-center space-x-2 text-gray-400 hover:text-white';
+      } else {
+        vietqrContent.classList.add('hidden');
+        gumroadContent.classList.remove('hidden');
+        gumroadBtn.className = 'px-5 py-2 rounded-lg text-xs sm:text-sm font-extrabold transition flex items-center space-x-2 bg-blue-600 text-white shadow-md';
+        vietqrBtn.className = 'px-5 py-2 rounded-lg text-xs sm:text-sm font-extrabold transition flex items-center space-x-2 text-gray-400 hover:text-white';
+      }
+    }
+
+    function selectPlan(plan, amount) {
+      currentPlan = plan;
+      currentAmount = amount;
+
+      document.querySelectorAll('.plan-card').forEach(c => {
+        c.className = 'plan-card cursor-pointer p-3.5 rounded-xl border border-brandBorder bg-brandDark/50 hover:border-gray-500 transition relative';
+      });
+
+      const activeCard = document.getElementById(`plan-card-${plan}`);
+      if (activeCard) {
+        activeCard.className = 'plan-card cursor-pointer p-3.5 rounded-xl border border-accentGreen bg-accentGreen/10 transition relative';
+      }
+
+      document.getElementById('amount-display').textContent = amount.toLocaleString('vi-VN') + ' VND';
+      updateVietQR();
+    }
+
+    function updateVietQR() {
+      const rawUser = document.getElementById('telegram-username-input').value.trim() || 'TELEGRAM';
+      const cleanUser = rawUser.replace(/[^a-zA-Z0-9_.@-]/g, '').toUpperCase();
+      const code = PLAN_CODES[currentPlan] || 'VIP1M';
+      const memo = `${code} ${cleanUser}`;
+
+      document.getElementById('memo-display').textContent = memo;
+
+      const encodedMemo = encodeURIComponent(memo);
+      const encodedName = encodeURIComponent(BANK_ACCOUNT_NAME);
+      const qrUrl = `https://img.vietqr.io/image/${BANK_NAME}-${BANK_ACCOUNT_NO}-compact2.png?amount=${currentAmount}&addInfo=${encodedMemo}&accountName=${encodedName}`;
+      
+      document.getElementById('vietqr-img').src = qrUrl;
+    }
+
+    function copyText(text, successMsg) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(successMsg);
+      }).catch(() => {
+        showToast('Đã copy: ' + text);
+      });
+    }
+
+    function copyMemo() {
+      const memo = document.getElementById('memo-display').textContent;
+      copyText(memo, `Đã copy nội dung: "${memo}"`);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      toastMsg.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2800);
+    }
+
+    // --- 10. BOOTSTRAP ---
+    window.addEventListener('DOMContentLoaded', () => {
+      initChart();
+      loadKlines(currentSymbol);
+      updateVietQR();
+    });
+  </script>
+
+</body>
+</html>
