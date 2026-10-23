@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/crypto", "destination": "/crypto/index.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/collections/:slug", "destination": "/collections/:slug.html" },
     { "source": "/curated/:slug", "destination": "/curated/:slug.html" },
