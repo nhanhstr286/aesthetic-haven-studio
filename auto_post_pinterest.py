@@ -135,12 +135,26 @@ def upload_pin(page, pin_data):
     page.goto('https://www.pinterest.com/pin-creation-tool/', wait_until='domcontentloaded')
     time.sleep(4)
     
-    # 2. Upload Ảnh
+    # 2. Upload Ảnh & Guardrail Khóa Tỉ lệ 2:3 (1000x1500px)
     img_path = pin_data['image']
     if not os.path.exists(img_path):
         raise FileNotFoundError(f"Không tìm thấy file ảnh: {img_path}")
         
-    print(f"Đang tải ảnh: {img_path}")
+    from PIL import Image
+    with Image.open(img_path) as im:
+        if im.size != (1000, 1500):
+            print(f"⚠️ Phát hiện ảnh {img_path} sai tỉ lệ ({im.size}). Đang tự động khóa 2:3 (1000x1500px)...")
+            w, h = im.size
+            scale = max(1000 / w, 1500 / h)
+            new_w, new_h = int(round(w * scale)), int(round(h * scale))
+            im_resized = im.resize((new_w, new_h), Image.Resampling.LANCZOS)
+            left = (new_w - 1000) // 2
+            top = (new_h - 1500) // 2
+            im_cropped = im_resized.crop((left, top, left + 1000, top + 1500))
+            im_cropped.convert("RGB").save(img_path, "JPEG", quality=95)
+            print(f"Đã khóa tỉ lệ 1000x1500px chuẩn: {img_path}")
+
+    print(f"Đang tải ảnh: {img_path} (1000x1500px, 2:3 vertical)")
     file_input = page.wait_for_selector('input[type="file"]', timeout=15000)
     file_input.set_input_files(img_path)
     time.sleep(3)
@@ -206,8 +220,21 @@ def upload_pin(page, pin_data):
 
     time.sleep(1)
 
-    # 5. Điền Liên kết (Link)
-    print("Điền Link...")
+    # 5. Điền Liên kết (Link) với Pre-flight HTTP verification
+    target_link = pin_data.get('link', 'https://agentwell.agency')
+    try:
+        import urllib.request
+        req = urllib.request.Request(target_link, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=5) as probe:
+            if probe.status == 200:
+                print(f"[PRE-FLIGHT] Link {target_link} trả về HTTP 200 OK.")
+            else:
+                print(f"[PRE-FLIGHT WARNING] Link trả về HTTP {probe.status}, fallback to homepage.")
+                target_link = 'https://agentwell.agency'
+    except Exception as e:
+        print(f"[PRE-FLIGHT WARNING] Không probe được link ({e}), giữ link gốc hoặc fallback.")
+
+    print(f"Điền Link: {target_link}...")
     link_filled = False
     link_selectors = [
         '[data-test-id="pin-draft-link"] input',
@@ -220,7 +247,7 @@ def upload_pin(page, pin_data):
         el = page.query_selector(sel)
         if el and el.is_visible():
             el.click()
-            el.fill(pin_data['link'])
+            el.fill(target_link)
             link_filled = True
             print(f"Đã điền Link với selector: {sel}")
             break

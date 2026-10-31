@@ -6,7 +6,8 @@
     { "source": "/crypto", "destination": "/crypto/index.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/collections/:slug", "destination": "/collections/:slug.html" },
-    { "source": "/curated/:slug", "destination": "/curated/:slug.html" },
+    { "source": "/curated", "destination": "/#decor" },
+    { "source": "/curated/:slug", "destination": "/api/curated?slug=:slug" },
     { "source": "/public/(.*)", "destination": "/$1" }
   ],
   "headers": [

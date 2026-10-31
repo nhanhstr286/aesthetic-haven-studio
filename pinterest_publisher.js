@@ -248,7 +248,31 @@ async function publishPin(pinItem) {
       }
     }
 
-    // 6. Điền Link Đích
+    // 6. Điền Link Đích (Pre-flight HTTP 200 check with auto-fallback)
+    let finalLink = pinItem.destination_link;
+    console.log(`[PRE-FLIGHT] Kiểm tra HTTP status cho Link Đích: ${finalLink}...`);
+    try {
+      const probeRes = await fetch(finalLink, { method: 'GET', redirect: 'follow' });
+      if (probeRes.status === 200) {
+        console.log(`      -> Link đạt HTTP 200 OK. Đủ điều kiện xuất bản.`);
+      } else {
+        console.warn(`      -> CẢNH BÁO: Link trả về HTTP ${probeRes.status}! Kích hoạt fallback affiliate.`);
+        if (pinItem.asin) {
+          finalLink = `https://www.amazon.com/dp/${pinItem.asin}?tag=aesthetic08d8-20`;
+          console.log(`      -> Fallback sang link Amazon trực tiếp: ${finalLink}`);
+        } else {
+          finalLink = 'https://agentwell.agency';
+        }
+      }
+    } catch (probeErr) {
+      console.warn(`      -> Không thể probe link (${probeErr.message}). Fallback an toàn sang link Amazon/Home.`);
+      if (pinItem.asin) {
+        finalLink = `https://www.amazon.com/dp/${pinItem.asin}?tag=aesthetic08d8-20`;
+      } else {
+        finalLink = 'https://agentwell.agency';
+      }
+    }
+
     const linkSelectors = [
       '[data-test-id="pin-draft-link"] input',
       'input[id*="link"]',
@@ -260,8 +284,8 @@ async function publishPin(pinItem) {
       const el = await page.$(sel);
       if (el && await el.isVisible()) {
         await el.click();
-        await el.fill(pinItem.destination_link);
-        console.log(`      -> Đã điền Destination Link: ${pinItem.destination_link}`);
+        await el.fill(finalLink);
+        console.log(`      -> Đã điền Destination Link: ${finalLink}`);
         break;
       }
     }
