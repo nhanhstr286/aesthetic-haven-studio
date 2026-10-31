@@ -2,6 +2,13 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/curated/upsimples-11x14-picture-frame-wall-decor-photo-fra",
+      "destination": "/curated/solid-walnut-wood-magsafe-wireless-charging-stand-",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/crypto", "destination": "/crypto/index.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
