@@ -183,23 +183,35 @@ async function publishPin(pinItem) {
   }
 
   const page = await context.newPage();
-  page.setDefaultTimeout(40000);
+  page.setDefaultTimeout(60000);
 
   try {
-    // 2. Mở công cụ tạo Pin
-    console.log('[2/6] Đang mở trang tạo Pin: https://www.pinterest.com/pin-creation-tool/...');
-    await page.goto('https://www.pinterest.com/pin-creation-tool/', { waitUntil: 'domcontentloaded', timeout: 35000 });
-    await page.waitForTimeout(4000);
+    // 2. Mở công cụ tạo Pin (timeout 60s, commit wait)
+    console.log('[2/6] Đang mở trang tạo Pin: https://www.pinterest.com/pin-creation-tool/ (timeout 60s, commit wait)...');
+    await page.goto('https://www.pinterest.com/pin-creation-tool/', { waitUntil: 'commit', timeout: 60000 });
+    await page.waitForTimeout(3000);
 
-    // Kiểm tra đăng nhập
-    const loginBtn = await page.$('[data-test-id="simple-login-button"], button:has-text("Đăng nhập")');
-    if (loginBtn) {
-      throw new Error('Phiên đăng nhập Pinterest không khả dụng. Vui lòng kiểm tra lại cookie xác thực.');
+    // Kiểm tra đăng nhập và redirect về /login
+    const curUrl = page.url();
+    const loginBtn = await page.$('[data-test-id="simple-login-button"], button:has-text("Đăng nhập"), button:has-text("Log in")');
+    if (curUrl.includes('/login') || loginBtn) {
+      const alertMsg = '⚠️ [CẢNH BÁO] Phiên đăng nhập Pinterest không khả dụng (bị redirect về /login). Vui lòng đăng nhập lại trên Chrome!';
+      console.error(alertMsg);
+      if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
+        try {
+          await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: process.env.TELEGRAM_CHAT_ID, text: alertMsg })
+          });
+        } catch {}
+      }
+      throw new Error(alertMsg);
     }
 
-    // 3. Upload ảnh Pin
+    // 3. Upload ảnh Pin với timeout 60s
     console.log(`[3/6] Upload ảnh: ${path.basename(imageFullPath)} (${(fs.statSync(imageFullPath).size / 1024).toFixed(1)} KB)...`);
-    const fileInput = await page.waitForSelector('input[type="file"]', { timeout: 15000 });
+    const fileInput = await page.waitForSelector('input[type="file"]', { timeout: 60000 });
     await fileInput.setInputFiles(imageFullPath);
     await page.waitForTimeout(3000);
 

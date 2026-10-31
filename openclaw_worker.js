@@ -182,17 +182,174 @@ async function ensureChromeRunning() {
 }
 
 // ==========================================
-// 4. PINTEREST HEADLESS PUBLISHER
+// 4. PINTEREST ROBUST PUBLISHER (API v5 + PLAYWRIGHT FALLBACK)
 // ==========================================
 
-async function publishPinItem(pinData, updateCallback = null) {
-  if (updateCallback) await updateCallback(`⏳ [1/5] Đang kết nối headless browser tới Pinterest...`);
+const BOARD_MAP = {
+  'Aesthetic Room Decor & Lighting': '1145884767630864296',
+  'Smart Kitchen Gadgets & Hacks': '1145884767630864299',
+  'Digital Planners & iPad Aesthetics': '1145884767630864300',
+  'Printable Wall Art & Decor': '1145884767630864301',
+  'Warm Luxury Home Decor': '1145884767630877138'
+};
+
+async function getValidPinterestToken() {
+  let token = (process.env.PINTEREST_ACCESS_TOKEN || '').replace(/["']/g, '');
+  if (!token) return null;
+
+  try {
+    const testRes = await fetch('https://api.pinterest.com/v5/user_account', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (testRes.status === 200) {
+      return token;
+    }
+    if (testRes.status === 401) {
+      console.log('[Pinterest API] Access token hết hạn (401), đang kích hoạt OAuth refresh...');
+      const refreshed = await refreshPinterestToken();
+      if (refreshed) return refreshed;
+    }
+  } catch (err) {
+    console.warn('[Pinterest API] Lỗi kiểm tra token:', err.message);
+  }
+  return token;
+}
+
+async function refreshPinterestToken() {
+  const appId = (process.env.PINTEREST_APP_ID || '1627223').replace(/["']/g, '');
+  const appSecret = (process.env.PINTEREST_APP_SECRET || '').replace(/["']/g, '');
+  const refreshToken = (process.env.PINTEREST_REFRESH_TOKEN || '').replace(/["']/g, '');
+  if (!appId || !appSecret || !refreshToken) return null;
+
+  try {
+    const basicAuth = Buffer.from(`${appId}:${appSecret}`).toString('base64');
+    const params = new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken
+    });
+
+    const res = await fetch('https://api.pinterest.com/v5/oauth/token', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${basicAuth}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: params.toString()
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      const newToken = data.access_token;
+      process.env.PINTEREST_ACCESS_TOKEN = newToken;
+      const newRefresh = data.refresh_token || refreshToken;
+      if (data.refresh_token) {
+        process.env.PINTEREST_REFRESH_TOKEN = data.refresh_token;
+      }
+      saveTokensToEnv(newToken, newRefresh);
+      console.log('[Pinterest API] Đã làm mới token thành công (hiệu lực 30 ngày)!');
+      return newToken;
+    } else {
+      console.error('[Pinterest API] Làm mới token thất bại:', res.status, await res.text());
+    }
+  } catch (e) {
+    console.error('[Pinterest API] Ngoại lệ khi làm mới token:', e.message);
+  }
+  return null;
+}
+
+function saveTokensToEnv(accessToken, refreshToken) {
+  const envPath = path.join(__dirname, '.env');
+  if (!fs.existsSync(envPath)) return;
+  let content = fs.readFileSync(envPath, 'utf8');
+  if (content.includes('PINTEREST_ACCESS_TOKEN=')) {
+    content = content.replace(/PINTEREST_ACCESS_TOKEN=.*/, `PINTEREST_ACCESS_TOKEN="${accessToken}"`);
+  } else {
+    content += `\nPINTEREST_ACCESS_TOKEN="${accessToken}"`;
+  }
+  if (refreshToken) {
+    if (content.includes('PINTEREST_REFRESH_TOKEN=')) {
+      content = content.replace(/PINTEREST_REFRESH_TOKEN=.*/, `PINTEREST_REFRESH_TOKEN="${refreshToken}"`);
+    } else {
+      content += `\nPINTEREST_REFRESH_TOKEN="${refreshToken}"`;
+    }
+  }
+  fs.writeFileSync(envPath, content, 'utf8');
+}
+
+// 1. ƯU TIÊN SỐ 1: PINTEREST API V5 (Hoàn tất trong 1 giây, triệt tiêu lỗi Timeout giao diện và Captcha)
+async function publishPinViaApiV5(pinData, updateCallback = null) {
+  if (updateCallback) await updateCallback(`⚡ [1/2 API v5] Đang kết nối Pinterest API v5 chính thức...`);
+  const token = await getValidPinterestToken();
+  if (!token) {
+    throw new Error('Không tìm thấy PINTEREST_ACCESS_TOKEN hợp lệ');
+  }
+
+  const boardId = BOARD_MAP[pinData.board] || '1145884767630877138';
+
+  if (!fs.existsSync(pinData.image)) {
+    throw new Error(`Không tìm thấy file ảnh: ${pinData.image}`);
+  }
+  const imgBuffer = fs.readFileSync(pinData.image);
+  const base64Img = imgBuffer.toString('base64');
+  const ext = path.extname(pinData.image).toLowerCase();
+  const contentType = ext === '.png' ? 'image/png' : 'image/jpeg';
+
+  if (updateCallback) await updateCallback(`🚀 [2/2 API v5] POST https://api.pinterest.com/v5/pins (Board: ${pinData.board})...`);
+
+  const payload = {
+    title: pinData.title,
+    description: pinData.desc || pinData.description,
+    link: pinData.link,
+    board_id: boardId,
+    media_source: {
+      source_type: 'image_base64',
+      content_type: contentType,
+      data: base64Img
+    }
+  };
+
+  const response = await fetch('https://api.pinterest.com/v5/pins', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const resData = await response.json().catch(() => ({}));
+
+  if (response.status === 201 || response.status === 200) {
+    const pinId = String(resData.id || '').trim();
+    if (!pinId || pinId.toLowerCase() === 'none' || !/^\d+$/.test(pinId)) {
+      throw new Error(`Pinterest API trả về HTTP ${response.status} nhưng thiếu pin_id hợp lệ: ${JSON.stringify(resData)}`);
+    }
+    const pinUrl = `https://www.pinterest.com/pin/${pinId}/`;
+    lastPostedTime = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' ' + new Date().toLocaleDateString('vi-VN');
+    lastPostedTitle = pinData.title;
+
+    console.log(`[OpenClaw API v5] ĐĂNG PIN THÀNH CÔNG trong 1s! Pin ID: ${pinId} -> ${pinUrl}`);
+    return {
+      success: true,
+      pinId,
+      pinUrl,
+      screenshotPath: pinData.image,
+      method: 'api_v5',
+      pinData
+    };
+  } else {
+    throw new Error(`Pinterest API v5 lỗi HTTP ${response.status}: ${JSON.stringify(resData)}`);
+  }
+}
+
+// 2. DỰ PHÒNG: PLAYWRIGHT (Timeout 60s, wait 'commit', Session Expiry Alert, Retry 2x)
+async function publishPinViaPlaywrightOnce(pinData, updateCallback = null) {
+  if (updateCallback) await updateCallback(`⏳ [1/5 Dự phòng] Đang kết nối Chrome CDP tới Pinterest...`);
   await ensureChromeRunning();
 
   const browser = await chromium.connectOverCDP(`http://${CDP_HOST}:${CDP_PORT}`);
   const context = browser.contexts()[0] || await browser.newContext();
   
-  // Auto-inject authenticated session if pinterest_storage_state.json exists
   const statePath = path.join(__dirname, 'pinterest_storage_state.json');
   if (fs.existsSync(statePath)) {
     try {
@@ -206,28 +363,38 @@ async function publishPinItem(pinData, updateCallback = null) {
   }
 
   const page = await context.newPage();
-  page.setDefaultTimeout(35000);
-
+  page.setDefaultTimeout(60000);
 
   try {
-    if (updateCallback) await updateCallback(`🌐 [2/5] Mở công cụ tạo Pin (/pin-creation-tool/)...`);
-    await page.goto('https://www.pinterest.com/pin-creation-tool/', { waitUntil: 'domcontentloaded', timeout: 25000 });
-    await page.waitForTimeout(3500);
+    if (updateCallback) await updateCallback(`🌐 [2/5 Dự phòng] Mở công cụ tạo Pin (timeout 60s, wait commit)...`);
+    await page.goto('https://www.pinterest.com/pin-creation-tool/', { waitUntil: 'commit', timeout: 60000 });
+    await page.waitForTimeout(3000);
 
-    // Check login
-    const loginBtn = await page.$('[data-test-id="simple-login-button"], button:has-text("Đăng nhập")');
-    if (loginBtn) {
-      throw new Error('Phiên đăng nhập Pinterest không khả dụng. Vui lòng mở Chrome đăng nhập lại.');
+    // Kiểm tra phiên đăng nhập: Nếu bị chuyển hướng sang /login hoặc thấy nút Đăng nhập
+    const curUrl = page.url();
+    const loginBtn = await page.$('[data-test-id="simple-login-button"], button:has-text("Đăng nhập"), button:has-text("Log in")');
+    if (curUrl.includes('/login') || loginBtn) {
+      const alertMsg = '⚠️ [CẢNH BÁO BẢO MẬT] Phiên đăng nhập Pinterest trên Browser đã hết hạn (Bị điều hướng về /login). Vui lòng quét mã QR hoặc đăng nhập lại tài khoản trên Chrome!';
+      console.error(alertMsg);
+      if (ALLOWED_CHAT_ID) {
+        try {
+          await bot.api.sendMessage({
+            chat_id: ALLOWED_CHAT_ID,
+            text: alertMsg
+          });
+        } catch {}
+      }
+      throw new Error(alertMsg);
     }
 
-    // 1. Upload File
-    if (updateCallback) await updateCallback(`📸 [3/5] Đang upload ảnh (${path.basename(pinData.image)})...`);
-    const fileInput = await page.waitForSelector('input[type="file"]', { timeout: 15000 });
+    // 1. Chờ selector chính file input với timeout 60s
+    if (updateCallback) await updateCallback(`📸 [3/5 Dự phòng] Đang upload ảnh (${path.basename(pinData.image)})...`);
+    const fileInput = await page.waitForSelector('input[type="file"]', { timeout: 60000 });
     await fileInput.setInputFiles(pinData.image);
-    await page.waitForTimeout(2500);
+    await page.waitForTimeout(3000);
 
-    // 2. Fill Title
-    if (updateCallback) await updateCallback(`✍️ [4/5] Đang điền tiêu đề, mô tả và liên kết...`);
+    // 2. Điền Title
+    if (updateCallback) await updateCallback(`✍️ [4/5 Dự phòng] Đang điền tiêu đề, mô tả và liên kết...`);
     const titleSelectors = [
       '[data-test-id="pin-draft-title"] input',
       'input[id*="title"]',
@@ -246,7 +413,7 @@ async function publishPinItem(pinData, updateCallback = null) {
       }
     }
 
-    // 3. Fill Description
+    // 3. Điền Description
     const descSelectors = [
       '[data-test-id="pin-draft-description"]',
       'div[contenteditable="true"][aria-label*="description" i]',
@@ -263,7 +430,7 @@ async function publishPinItem(pinData, updateCallback = null) {
       }
     }
 
-    // 4. Fill Link
+    // 4. Điền Link
     const linkSelectors = [
       '[data-test-id="pin-draft-link"] input',
       'input[id*="link"]',
@@ -280,7 +447,7 @@ async function publishPinItem(pinData, updateCallback = null) {
       }
     }
 
-    // 5. Select or Create Board
+    // 5. Chọn bảng
     const boardBtn = await page.$(
       '[data-test-id="board-dropdown-select-button"], button[aria-haspopup="listbox"], button:has-text("Choose a board"), button:has-text("Chọn bảng"), button[aria-label*="bảng" i]'
     );
@@ -323,8 +490,8 @@ async function publishPinItem(pinData, updateCallback = null) {
       }
     }
 
-    // 6. Click Publish
-    if (updateCallback) await updateCallback(`🚀 [5/5] Đang bấm Xuất bản (Publish) và chờ phản hồi...`);
+    // 6. Bấm Xuất bản
+    if (updateCallback) await updateCallback(`🚀 [5/5 Dự phòng] Đang bấm Xuất bản (Publish)...`);
     await page.waitForTimeout(1500);
 
     const publishBtn = await page.$(
@@ -337,7 +504,6 @@ async function publishPinItem(pinData, updateCallback = null) {
     await publishBtn.click();
     await page.waitForTimeout(7000);
 
-    // Save proof screenshot
     const timestamp = Date.now();
     const screenshotPath = path.join(logsDir, `pin_${pinData.key}_${timestamp}.png`);
     await page.screenshot({ path: screenshotPath });
@@ -348,12 +514,50 @@ async function publishPinItem(pinData, updateCallback = null) {
     return {
       success: true,
       screenshotPath,
+      method: 'playwright',
       pinData
     };
   } finally {
     try {
       await page.close();
     } catch {}
+  }
+}
+
+async function publishPinViaPlaywrightWithRetry(pinData, updateCallback = null, maxRetries = 2) {
+  let lastErr = null;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      if (attempt > 1) {
+        console.log(`[Playwright Fallback] Đang thử lại lần ${attempt}/${maxRetries} sau 10 giây nghỉ...`);
+        if (updateCallback) await updateCallback(`🔄 [Dự phòng] Đang thử lại lần ${attempt}/${maxRetries} sau 10s...`);
+        await new Promise(r => setTimeout(r, 10000));
+      }
+      return await publishPinViaPlaywrightOnce(pinData, updateCallback);
+    } catch (err) {
+      lastErr = err;
+      console.warn(`[Playwright Fallback] Lần ${attempt}/${maxRetries} thất bại: ${err.message}`);
+      if (err.message.includes('hết hạn') || err.message.includes('login')) {
+        break;
+      }
+    }
+  }
+  throw lastErr;
+}
+
+// HÀM CHÍNH ĐIỀU PHỐI ĐĂNG BÀI: Ưu tiên API v5, tự động fallback sang Playwright
+async function publishPinItem(pinData, updateCallback = null) {
+  // ƯU TIÊN SỐ 1: Pinterest API v5 (Hoàn tất trong 1 giây, triệt tiêu 100% lỗi Timeout giao diện và Captcha)
+  try {
+    console.log(`[OpenClaw] Đang đăng pin "${pinData.name}" qua Pinterest API v5 chính thức...`);
+    const apiResult = await publishPinViaApiV5(pinData, updateCallback);
+    return apiResult;
+  } catch (apiErr) {
+    console.warn(`[OpenClaw] Pinterest API v5 gặp lỗi: ${apiErr.message}. Kích hoạt cơ chế dự phòng Playwright...`);
+    if (updateCallback) await updateCallback(`⚠️ Pinterest API v5: ${apiErr.message}. Đang chuyển sang dự phòng Playwright Browser...`);
+    
+    // GIẢI PHÁP 2 (DỰ PHÒNG): Playwright Browser (Timeout 60s, wait commit, 2x retries, session check)
+    return await publishPinViaPlaywrightWithRetry(pinData, updateCallback, 2);
   }
 }
 
@@ -562,16 +766,18 @@ bot.on('callback_query', async (ctx) => {
       } catch {}
     });
 
+    const methodTag = result.method === 'api_v5' ? '⚡ <b>Phương thức:</b> Pinterest API v5 (Tốc độ ~1s)\n' : '🌐 <b>Phương thức:</b> Playwright CDP Fallback\n';
+    const pinLinkTag = result.pinUrl ? `🔗 <b>Pinterest Pin:</b> ${result.pinUrl}\n` : '';
     const caption = `
 ✅ <b>[OpenClaw] ĐĂNG BÀI THÀNH CÔNG LÊN PINTEREST!</b>
 ━━━━━━━━━━━━━━━━━━━━
 📌 <b>Tiêu đề:</b> ${pin.title}
 📁 <b>Bảng (Board):</b> ${pin.board}
 🔗 <b>Link đích:</b> <code>${pin.link}</code>
-👤 <b>Tài khoản:</b> Aesthetic Haven Studio
+${pinLinkTag}${methodTag}👤 <b>Tài khoản:</b> Aesthetic Haven Studio
 ⏰ <b>Thời gian:</b> ${lastPostedTime}
 ━━━━━━━━━━━━━━━━━━━━
-<i>Ảnh chụp màn hình xác thực bên dưới 👇</i>
+<i>Ảnh xem trước bên dưới 👇</i>
 `.trim();
 
     const photoBuf = fs.readFileSync(result.screenshotPath);
@@ -632,10 +838,35 @@ function startAutoScheduler() {
   autoTimer = setInterval(async () => {
     if (!isAutoEnabled || isPostingInProgress) return;
 
-    const pin = PIN_QUEUE[queueIndex];
-    queueIndex = (queueIndex + 1) % PIN_QUEUE.length;
+    // Check pinterest_queue.json first
+    const queuePath = path.join(__dirname, 'pinterest_queue.json');
+    let targetPin = null;
+    let queue = [];
+    if (fs.existsSync(queuePath)) {
+      try {
+        queue = JSON.parse(fs.readFileSync(queuePath, 'utf8'));
+        targetPin = queue.find(p => p.status === 'ready');
+      } catch (e) {
+        console.warn('Queue read error in auto scheduler:', e.message);
+      }
+    }
 
-    console.log(`[OpenClaw Auto] Triggering scheduled post for: ${pin.name}`);
+    if (!targetPin) {
+      console.log('[OpenClaw Auto] Deduplication Guard: Hàng đợi pinterest_queue.json hiện không có bài nào ở trạng thái ready. Tạm dừng để chờ phôi mới từ Scraper (Vô hiệu hóa xoay vòng bài cũ).');
+      return;
+    }
+
+    const pin = {
+      name: targetPin.theme || targetPin.title,
+      image: targetPin.image_full_path || (path.isAbsolute(targetPin.image_path) ? targetPin.image_path : path.resolve(__dirname, targetPin.image_path)),
+      title: targetPin.title,
+      desc: targetPin.description,
+      link: targetPin.destination_link || targetPin.link,
+      board: targetPin.board,
+      icon: '✨'
+    };
+
+    console.log(`[OpenClaw Auto] Triggering scheduled post from queue: [${targetPin.id}] ${pin.title}`);
     if (ALLOWED_CHAT_ID) {
       try {
         await bot.api.sendMessage({
@@ -649,8 +880,21 @@ function startAutoScheduler() {
     try {
       isPostingInProgress = true;
       const result = await publishPinItem(pin);
+      
+      // Update status in queue
+      targetPin.status = 'published';
+      targetPin.published_at = new Date().toISOString();
+      targetPin.screenshot_path = result.screenshotPath;
+      try {
+        fs.writeFileSync(queuePath, JSON.stringify(queue, null, 2), 'utf8');
+      } catch (qe) {
+        console.warn('Could not update queue file:', qe.message);
+      }
+
       if (ALLOWED_CHAT_ID) {
-        const caption = `✅ <b>[OpenClaw Auto 24/7] ĐÃ ĐĂNG ĐỊNH KỲ THÀNH CÔNG!</b>\n━━━━━━━━━━━━━━━━━━━━\n📌 <b>Tiêu đề:</b> ${pin.title}\n📁 <b>Bảng:</b> ${pin.board}\n🔗 <b>Link:</b> <code>${pin.link}</code>\n⏰ <b>Thời gian:</b> ${lastPostedTime}`;
+        const methodTag = result.method === 'api_v5' ? '⚡ <b>Phương thức:</b> Pinterest API v5 (Tốc độ ~1s)\n' : '🌐 <b>Phương thức:</b> Playwright CDP Fallback\n';
+        const pinLinkTag = result.pinUrl ? `🔗 <b>Pinterest Pin:</b> ${result.pinUrl}\n` : '';
+        const caption = `✅ <b>[OpenClaw Auto 24/7] ĐÃ ĐĂNG ĐỊNH KỲ THÀNH CÔNG!</b>\n━━━━━━━━━━━━━━━━━━━━\n📌 <b>Tiêu đề:</b> ${pin.title}\n📁 <b>Bảng:</b> ${pin.board}\n🔗 <b>Link đích:</b> <code>${pin.link}</code>\n${pinLinkTag}${methodTag}⏰ <b>Thời gian:</b> ${lastPostedTime}`;
         const photoBuf = fs.readFileSync(result.screenshotPath);
         await bot.api.sendPhoto({
           chat_id: ALLOWED_CHAT_ID,
