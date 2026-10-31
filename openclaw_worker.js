@@ -25,45 +25,45 @@ if (!BOT_TOKEN) {
 
 const bot = new Bot(BOT_TOKEN);
 
-// Queue of 4 Core Q4 Holiday & Winter Season Pinterest Pins
+// Queue of 4 Core Q4 Holiday & Winter Season Pinterest Pins (1-to-1 Synced with Verified Catalog)
 const PIN_QUEUE = [
   {
     key: 'decor',
-    name: 'Cozy Bedroom Essentials for Winter',
+    name: '24" Travertine Inspired Table Lamp',
     image: path.join(__dirname, 'pin1.jpg'),
-    title: 'Cozy Bedroom Essentials for Winter | Warm Minimalist Holiday Sanctuary',
-    desc: 'Transform your winter bedroom into the ultimate cozy haven with layered warm amber lighting, plush textures, and calming bedside essentials. Discover restorative evening sanctuary styling tips at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
-    link: 'https://agentwell.agency#decor',
-    board: 'Aesthetic Room Decor & Lighting',
+    title: '24" Travertine Inspired Table Lamp | Warm Luxury Home Decor',
+    desc: 'Creating a grounded home starts with tactile surfaces and organic tones. The 24" Travertine Inspired Table Lamp introduces a quiet architectural presence to quiet corners, shaping the mood through diffused light.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
+    link: 'https://agentwell.agency/curated/24-travertine-inspired-table-lamp-for-living-room-',
+    board: 'Warm Luxury Home Decor',
     icon: '✨'
   },
   {
     key: 'kitchen',
-    name: 'Aesthetic Holiday Gift Guide',
+    name: 'bella Fits-Anywhere 2-Slice Slim Toaster',
     image: path.join(__dirname, 'pin2.jpg'),
-    title: 'Aesthetic Holiday Gift Guide | Curated Warm Kitchen & Home Finds Under $50',
-    desc: 'Gift something they will actually cherish and use daily. From matte gooseneck kettles to minimalist stone organizers, explore our curated holiday gift guide for lovers of intentional, warm aesthetic living.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
-    link: 'https://agentwell.agency#smart-kitchen',
+    title: 'bella Fits-Anywhere™ 2-Slice Slim Toaster | Smart Kitchen Gadgets & Hacks',
+    desc: 'Designed specifically for streamlined, uncluttered countertops, the bella Fits-Anywhere™ toaster marries a sleek, narrow footprint with an extra-wide toast slot. Minimalist matte oat finish for intentional living.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
+    link: 'https://agentwell.agency/curated/bella-fits-anywhere-2-slice-slim-toaster',
     board: 'Smart Kitchen Gadgets & Hacks',
     icon: '🎁'
   },
   {
     key: 'planner',
-    name: 'Minimalist Christmas Gifts',
+    name: 'Solid Walnut MagSafe Charging Stand',
     image: path.join(__dirname, 'pin3.jpg'),
-    title: 'Minimalist Christmas Gifts | Digital Planner & Mindful Lifestyle Dashboard',
-    desc: 'Give the gift of peace, intentionality, and calm organization. Our warm aesthetic digital daily planner for iPad & GoodNotes helps reset daily routines ahead of the new year. Download your copy instantly at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
-    link: 'https://agentwell.agency#digital-planners',
+    title: 'Solid Walnut MagSafe Charging Stand & Minimalist Desk Organizer',
+    desc: 'Give the gift of peace, intentionality, and calm organization. Handcrafted American solid walnut MagSafe charging stand for iPhone & AirPods with integrated cable management.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
+    link: 'https://agentwell.agency/curated/solid-walnut-wood-magsafe-wireless-charging-stand-',
     board: 'Digital Planners & iPad Aesthetics',
     icon: '🎄'
   },
   {
     key: 'wallart',
-    name: 'Warm & Cozy Living Room Makeover',
+    name: 'Natural Solid Oak Picture Frames Set',
     image: path.join(__dirname, 'pin4.jpg'),
-    title: 'Warm & Cozy Living Room Makeover | Scandinavian Holiday Art & Neutral Decor',
-    desc: 'Give your living room walls an instant festive winter glow with neutral printable wall art gallery sets and subtle organic ceramics. Simple, clutter-free Scandinavian holiday styling made effortless at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
-    link: 'https://agentwell.agency#wall-art',
+    title: 'Natural Solid Oak Picture Frames Set | Scandinavian Wall Art & Decor',
+    desc: 'Give your living room walls an instant festive winter glow with natural solid wood gallery frames and subtle organic ceramics. Simple, clutter-free Scandinavian styling made effortless.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas',
+    link: 'https://agentwell.agency/curated/lyyyxgyp-12x16-picture-frame-set-of-3-natural-soli',
     board: 'Printable Wall Art & Decor',
     icon: '🕯️'
   }
@@ -545,8 +545,37 @@ async function publishPinViaPlaywrightWithRetry(pinData, updateCallback = null, 
   throw lastErr;
 }
 
+// Cơ chế "PAGE-FIRST, PIN-AFTER": Bắt buộc kiểm tra HTTP 200 trước khi gửi API đăng Pin
+async function verifyLandingPageProbe(url) {
+  if (!url || !url.includes('/curated/')) return true;
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: { 'User-Agent': 'OpenClaw-Gatekeeper/1.0' }
+    });
+    if (res.status !== 200) {
+      throw new Error(`Landing page probe failed with HTTP status ${res.status}`);
+    }
+    const body = await res.text();
+    if (body.includes('404: NOT_FOUND') || body.includes('NOT_FOUND')) {
+      throw new Error(`Landing page returned Vercel 404 NOT_FOUND error`);
+    }
+    return true;
+  } catch (err) {
+    throw new Error(`[PAGE-FIRST GATE BLOCKED] ${url}: ${err.message}`);
+  }
+}
+
 // HÀM CHÍNH ĐIỀU PHỐI ĐĂNG BÀI: Ưu tiên API v5, tự động fallback sang Playwright
 async function publishPinItem(pinData, updateCallback = null) {
+  // BƯỚC 1: CƠ CHẾ "PAGE-FIRST, PIN-AFTER" (CÓ TRANG MỚI ĐƯỢC ĐĂNG PIN)
+  if (pinData.link && pinData.link.includes('/curated/')) {
+    if (updateCallback) await updateCallback(`🔍 [Page-First Gate] Kiểm tra HTTP 200 trang đích: ${pinData.link}...`);
+    console.log(`[OpenClaw] Đang gửi HTTP GET probe tới ${pinData.link}...`);
+    await verifyLandingPageProbe(pinData.link);
+    console.log(`[OpenClaw] ✅ Landing page xác nhận HTTP 200 OK! Được phép đăng Pin.`);
+  }
+
   // ƯU TIÊN SỐ 1: Pinterest API v5 (Hoàn tất trong 1 giây, triệt tiêu 100% lỗi Timeout giao diện và Captcha)
   try {
     console.log(`[OpenClaw] Đang đăng pin "${pinData.name}" qua Pinterest API v5 chính thức...`);

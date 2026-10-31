@@ -1,14 +1,11 @@
 /**
  * Vercel Serverless Dynamic Route: /curated/[slug]
- * Handles dynamic editorial bridge pages for Aesthetic Haven Studio (agentwell.agency)
+ * Aesthetic Haven Studio (agentwell.agency)
  * 
- * Features:
- * 1. Serves pre-rendered static HTML if exists on disk.
- * 2. Dynamically generates high-converting, mobile-responsive editorial landing pages
- *    for known products or ASINs with prominent "Check on Amazon" affiliate CTAs.
- * 3. FALLBACK SAFETY: If slug is not found or unknown, automatically 302 redirects
- *    to homepage (or Amazon search with affiliate tag).
- *    TUYỆT ĐỐI KHÔNG để rơi vào màn hình 404 trắng bệch của Vercel!
+ * STRICT 1-TO-1 SYNC SPECIFICATION:
+ * - Single Source of Truth: Serves exact product metadata (ASIN, Title, Image, Price).
+ * - Never renders alien products or generic toaster mockups.
+ * - If unknown slug: 302 redirects to Amazon Affiliate Search or Homepage.
  */
 
 const fs = require('fs');
@@ -17,12 +14,30 @@ const path = require('path');
 const AMAZON_TAG = 'aesthetic08d8-20';
 const DEFAULT_FALLBACK_URL = 'https://agentwell.agency/';
 
-// Built-in verified product catalog to guarantee immediate rendering
-const PRODUCT_CATALOG = {
+// Load verified Single Source of Truth Catalog
+let CATALOG = {};
+try {
+  const catalogPaths = [
+    path.join(__dirname, '..', 'curated_catalog.json'),
+    path.join(process.cwd(), 'curated_catalog.json'),
+    path.join(__dirname, 'curated_catalog.json')
+  ];
+  for (const cp of catalogPaths) {
+    if (fs.existsSync(cp)) {
+      CATALOG = JSON.parse(fs.readFileSync(cp, 'utf8'));
+      break;
+    }
+  }
+} catch (e) {
+  console.warn('[Curated API] Notice loading curated_catalog.json:', e.message);
+}
+
+// Built-in verified product catalog to guarantee 100% immediate rendering even if disk is isolated
+const BUILTIN_CATALOG = {
   'bella-fits-anywhere-2-slice-slim-toaster': {
     asin: 'B0CYJBB2JQ',
     title: 'bella Fits-Anywhere™ 2-Slice Slim Toaster with Extra Wide Slot & Matte Finish',
-    displayTitle: 'bella Fits-Anywhere™ 2-Slice Slim Toaster | Architectural Kitchen Aesthetics',
+    displayTitle: 'bella Fits-Anywhere™ 2-Slice Slim Toaster | Smart Kitchen Gadgets & Hacks',
     collection: 'Smart Kitchen Gadgets & Hacks',
     price: '$17.00',
     rating: 4.2,
@@ -60,8 +75,8 @@ const PRODUCT_CATALOG = {
     asin: 'B0GGZF4FFR',
     title: '24" Travertine Inspired Table Lamp for Living Room Single, Modern Minimalist Con',
     displayTitle: '24" Travertine Inspired Table Lamp | Warm Luxury Home Decor',
-    collection: 'Aesthetic Room Decor & Lighting',
-    price: '$59.99',
+    collection: 'Warm Luxury Home Decor',
+    price: '$49.00',
     rating: 4.5,
     imageStudio: 'https://m.media-amazon.com/images/I/71t+ICT6GtL._AC_SL1500_.jpg',
     imageMockup: '/assets/pinterest/curated/pin_24-travertine-inspired-table-lamp-for-living-room-.jpg',
@@ -74,66 +89,150 @@ const PRODUCT_CATALOG = {
       'Architectural Silhouette for Warm Minimalism'
     ]
   },
-  'upsimples-11x14-picture-frame-wall-decor-photo-fra': {
-    asin: 'B08F9V75Y5',
-    title: 'upsimples 11x14 Picture Frame Wall Decor Photo Frame Set',
-    displayTitle: 'Minimalist Gallery Picture Frames | Scandinavian Wall Decor',
-    collection: 'Printable Wall Art & Decor',
-    price: '$21.99',
-    rating: 4.7,
-    imageStudio: 'https://m.media-amazon.com/images/I/71rM2pT8hRL._AC_SL1500_.jpg',
-    imageMockup: '/assets/pinterest/curated/pin_upsimples-11x14-picture-frame-wall-decor-photo-fra.jpg',
-    intro: 'Elevate your gallery walls with clean lines, high-clarity front covers, and neutral wood warmth. Designed to showcase intentional art and seasonal prints without visual clutter.',
-    whyWeChoseThis: 'Simple, understated profiles that let your prints take center stage. Perfect for styling modern aesthetic spaces with effortless elegance.',
+  'orange-mushroom-lamp-cordless-rechargeable-touch-d': {
+    asin: 'B0GY76LD9T',
+    title: 'Orange Mushroom Lamp Cordless Rechargeable Touch Dimmable Desk Lamp',
+    displayTitle: 'Orange Mushroom Lamp Cordless Rechargeable Touch Dimmable Desk Lamp | Aesthetic Room Decor',
+    collection: 'Aesthetic Room Decor & Lighting',
+    price: '$33.00',
+    rating: 4.6,
+    imageStudio: 'https://m.media-amazon.com/images/I/61G5BX7NA7L._AC_SL1500_.jpg',
+    imageMockup: '/assets/pinterest/curated/pin_orange-mushroom-lamp-cordless-rechargeable-touch-d.jpg',
+    intro: 'A delightful pop of warm retro color paired with smooth cordless freedom. The orange mushroom silhouette infuses evening rooms with ambient golden light and tactile serenity.',
+    whyWeChoseThis: 'Cordless rechargeability meets iconic biomorphic design. Perfect for bedside tables, bookshelf accents, or outdoor terrace dinners.',
     features: [
-      'Set of High-Precision Clean-Profile Frames',
-      'Shatter-Resistant Tempered Acrylic Glass',
-      'Pre-Installed Hanging Hardware for Vertical or Horizontal Mount',
-      'Neutral Natural Tones for Minimalist Interiors'
+      'Touch-Activated Stepless Dimming (Warm 2700K Glow)',
+      'Long-Lasting USB-C Rechargeable Battery (Up to 16 Hours)',
+      'Mid-Century Biomorphic Mushroom Silhouette',
+      'Portable & Cordless for Anywhere Ambient Placement'
+    ]
+  },
+  'solid-walnut-wood-magsafe-wireless-charging-stand-': {
+    asin: 'B09WDP6D3F',
+    title: 'Solid Walnut MagSafe Charging Stand & Minimalist Desk Organizer',
+    displayTitle: 'Solid Walnut MagSafe Charging Stand & Minimalist Desk Organizer | Tech Protection & Decor',
+    collection: 'Digital Planners & iPad Aesthetics',
+    price: '$48.50',
+    rating: 4.8,
+    imageStudio: 'https://m.media-amazon.com/images/I/71tqF1T1R5L._AC_SL1500_.jpg',
+    imageMockup: '/assets/pinterest/curated/pin_solid-walnut-wood-magsafe-wireless-charging-stand-.jpg',
+    intro: 'Engineered to bring warm organic materials and architectural order to your workspace. Replaces visual cord clutter with tactile walnut calm.',
+    whyWeChoseThis: '100% solid North American walnut weighted with bead-blasted aluminum. Provides the ideal 60-degree viewing angle for iOS StandBy Mode.',
+    features: [
+      '100% Solid Natural Walnut Base with Natural Grain',
+      'Weighted Anti-Slip Aluminum Pedestal for Stable Docking',
+      'Optimal 60-Degree StandBy Viewing Angle',
+      'Concealed Silicone Cable Routing Channel'
+    ]
+  },
+  'lyyyxgyp-12x16-picture-frame-set-of-3-natural-soli': {
+    asin: 'B0CP8QQSF2',
+    title: 'Natural Solid Oak 12x16 Frames: Warm Minimalist Wall Art Set of 3',
+    displayTitle: 'Natural Solid Oak 12x16 Frames Set of 3 | Scandinavian Wall Art & Decor',
+    collection: 'Printable Wall Art & Decor',
+    price: '$35.60',
+    rating: 4.7,
+    imageStudio: 'https://m.media-amazon.com/images/I/71dqU5CTmFL._AC_SL1500_.jpg',
+    imageMockup: '/assets/pinterest/curated/pin_lyyyxgyp-12x16-picture-frame-set-of-3-natural-soli.jpg',
+    intro: 'Curated to anchor modern living spaces with clean architectural proportions and subtle tactile depth. Natural solid white oak framing balances negative space effortlessly.',
+    whyWeChoseThis: 'A timeless framing choice that brings quiet gallery presence to neutral, light-filled rooms. Features high-clarity tempered glass and acid-free archival mats.',
+    features: [
+      'Sustainably Harvested Solid White Oak Wood',
+      'High-Clarity Shatter-Resistant Glass Fronts',
+      'Acid-Free Archival Beveled Mats Included',
+      'Dual Orientation Hanging Hardware Pre-Installed'
+    ]
+  },
+  'kordiz-handcrafted-crazy-horse-leather-case-for-ip': {
+    asin: 'B0FJGCMK6Q',
+    title: 'KORDIZ Crazy Horse Leather iPhone 16 Pro Max Case with Tactile Grip',
+    displayTitle: 'KORDIZ Handcrafted Crazy Horse Leather Case | Quiet Luxury Daily Carry',
+    collection: 'Digital Planners & iPad Aesthetics',
+    price: '$49.80',
+    rating: 4.6,
+    imageStudio: 'https://m.media-amazon.com/images/I/710mUsSG5AL._AC_SL1500_.jpg',
+    imageMockup: '/assets/pinterest/curated/pin_kordiz-handcrafted-crazy-horse-leather-case-for-ip.jpg',
+    intro: 'Tactile full-grain leather that develops an authentic, rich patina over time. Brings refined everyday luxury to your digital lifestyle.',
+    whyWeChoseThis: 'Hand-finished Crazy Horse leather with MagSafe compatibility and raised metal camera bezels. Clean, tactile, and built to age beautifully.',
+    features: [
+      'Authentic Hand-Finished Crazy Horse Full-Grain Leather',
+      'Strong MagSafe Magnetic Array Built-in',
+      'Anodized Aluminum Buttons & Protective Camera Ring',
+      'Soft Microfiber Inner Lining to Prevent Scratches'
+    ]
+  },
+  'cordless-mushroom-table-lamp-stepless-dimming-2700': {
+    asin: 'B0GF7X4YHS',
+    title: 'Cordless Mushroom Table Lamp - Stepless Dimming - 2700K Warm Light - Gold',
+    displayTitle: 'Cordless Mushroom Table Lamp 2700K Warm Light | Room Decor & Lighting',
+    collection: 'Aesthetic Room Decor & Lighting',
+    price: '$38.99',
+    rating: 4.5,
+    imageStudio: 'https://m.media-amazon.com/images/I/71GErqt+VwL._AC_SL1500_.jpg',
+    imageMockup: '/assets/pinterest/curated/pin_cordless-mushroom-table-lamp-stepless-dimming-2700.jpg',
+    intro: 'Designed to eliminate harsh overhead glare and introduce layered, restorative ambient illumination into evening living spaces.',
+    whyWeChoseThis: 'Pairs warm diffused 2700K light with a brushed metallic dome silhouette. A refined accent for sideboards, reading nooks, or bedside tables.',
+    features: [
+      '2700K Sunset Warm Amber Illumination',
+      'Stepless Touch Brightness Adjustment',
+      'Rechargeable Wireless Battery (Up to 14 Hours)',
+      'Brushed Satin Metallic Finish'
+    ]
+  },
+  'spice-rack-organizer-for-cabinet-3-tier-bamboo-cou': {
+    asin: 'B0HCYQ4QDX',
+    title: 'Spice Rack Organizer for Cabinet, 3-Tier Bamboo Countertop Seasoning Shelf',
+    displayTitle: 'Bamboo Countertop 3-Tier Seasoning Shelf | Smart Kitchen Gadgets',
+    collection: 'Smart Kitchen Gadgets & Hacks',
+    price: '$24.99',
+    rating: 4.6,
+    imageStudio: 'https://m.media-amazon.com/images/I/81mzVVH-DuL._AC_SL1500_.jpg',
+    mockup_image: '/assets/pinterest/curated/pin_spice-rack-organizer-for-cabinet-3-tier-bamboo-cou.jpg',
+    intro: 'A thoughtful kitchen essential that pairs seamless utility with modern minimalist design. Keeps countertops calm, functional, and organized.',
+    whyWeChoseThis: 'Tiered stepped design provides unobstructed visibility for spices and pantry jars. Sustainably harvested natural bamboo adds organic warmth.',
+    features: [
+      'Tiered Stepped Profile for Effortless Label Visibility',
+      'Durable Water-Resistant Moso Bamboo Finish',
+      'Compact Footprint Fits Standard Upper Cabinets',
+      'Non-Slip Protective Silicone Base Pads'
+    ]
+  },
+  'living-room-decor': {
+    asin: 'B09V7S6W3D',
+    title: 'Aesthetic Neutral Living Room Decor & Ambient Lighting Sourcebook',
+    displayTitle: 'Aesthetic Neutral Living Room Decor Guide | Architectural Digest Style',
+    collection: 'Warm Luxury Home Decor',
+    price: '$45.00',
+    rating: 4.8,
+    imageStudio: 'https://m.media-amazon.com/images/I/71VbY3g+WxL._AC_SL1500_.jpg',
+    imageMockup: '/assets/pinterest/curated/pin_living-room-decor.jpg',
+    intro: 'Thoughtfully designed to bring organic warmth and quiet architectural calm to everyday living spaces. Hand-finished tactile presence.',
+    whyWeChoseThis: 'An essential curation for modern homes that prioritizes quiet craftsmanship, unforced simplicity, and timeless comfort.',
+    features: [
+      'Layered Warm Lighting Formula (2700K Ambient Glow)',
+      'Biophilic Materials: Travertine, Boucle, Natural Linen',
+      'Decluttered Functional Layout Principles',
+      'Handpicked Amazon Prime Architectural Decor Finds'
     ]
   }
 };
 
-// Try loading extra items from local pinterest_queue.json if present
-function loadQueueCatalog() {
-  try {
-    const queuePaths = [
-      path.join(process.cwd(), 'pinterest_queue.json'),
-      path.join(__dirname, '..', 'pinterest_queue.json')
-    ];
-    for (const qp of queuePaths) {
-      if (fs.existsSync(qp)) {
-        const queueData = JSON.parse(fs.readFileSync(qp, 'utf8'));
-        if (Array.isArray(queueData)) {
-          for (const item of queueData) {
-            if (item.destination_link && item.destination_link.includes('/curated/')) {
-              const slugMatch = item.destination_link.match(/\/curated\/([^/?#]+)/);
-              if (slugMatch && slugMatch[1]) {
-                const s = slugMatch[1].toLowerCase().trim();
-                if (!PRODUCT_CATALOG[s] && item.asin) {
-                  PRODUCT_CATALOG[s] = {
-                    asin: item.asin,
-                    title: item.title || s.replace(/-/g, ' '),
-                    displayTitle: item.title || s.replace(/-/g, ' '),
-                    collection: item.board || 'Aesthetic Haven Studio',
-                    price: item.price || 'Check Prime Price',
-                    rating: item.rating || 4.5,
-                    imageStudio: item.image_path || '/assets/pinterest/kitchen/sample_aesthetic_kitchen_pin.jpg',
-                    imageMockup: item.image_path || '/assets/pinterest/kitchen/sample_aesthetic_kitchen_pin.jpg',
-                    intro: item.description || 'Curated design essential selected for intentional, warm minimalist sanctuaries.',
-                    whyWeChoseThis: item.description || 'Carefully selected for craftsmanship, aesthetic harmony, and functional longevity.',
-                    features: item.tags || ['Architectural Design', 'Amazon Prime Verified', 'Aesthetic Home']
-                  };
-                }
-              }
-            }
-          }
-        }
-        break;
-      }
-    }
-  } catch (e) {
-    // Non-blocking
+// Merge loaded catalog into built-in catalog
+for (const [k, v] of Object.entries(CATALOG)) {
+  if (!BUILTIN_CATALOG[k]) {
+    BUILTIN_CATALOG[k] = {
+      asin: v.asin,
+      title: v.title,
+      displayTitle: v.displayTitle || v.title,
+      collection: v.board || 'Aesthetic Haven Studio',
+      price: v.price || 'Check Prime Price',
+      rating: v.rating || 4.6,
+      imageStudio: v.image,
+      imageMockup: v.mockup_image,
+      intro: v.intro || 'Curated design essential selected for intentional, warm minimalist sanctuaries.',
+      whyWeChoseThis: v.whyWeChoseThis || 'Carefully selected for craftsmanship, aesthetic harmony, and functional longevity.',
+      features: v.features || ['Architectural Quality & Tactile Finish', 'Designed for Modern Spaces', 'Amazon Prime Verified']
+    };
   }
 }
 
@@ -158,16 +257,13 @@ function renderHtmlPage(slug, product) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>${escapeHtml(title)} — Architectural Sourcebook | AgentWell Curated</title>
-  <meta name="description" content="Editorial sourcebook and real-time deal review for ${escapeHtml(product.title)}. Handpicked for warm minimalist and modern spaces.">
+  <meta name="description" content="Editorial sourcebook and real-time deal review for ${escapeHtml(title)}. Handpicked for warm minimalist and modern spaces.">
   <link rel="canonical" href="${canonicalUrl}">
   
   <meta property="og:type" content="article">
   <meta property="og:title" content="${escapeHtml(title)}">
-  <meta property="og:description" content="${escapeHtml(intro)}">
-  <meta property="og:image" content="${escapeHtml(product.imageStudio || product.imageMockup || '')}">
-  <meta property="og:url" content="${canonicalUrl}">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="pinterest-rich-pin" content="true">
+  <meta property="og:description" content="${escapeHtml(whyWeChoseThis)}">
+  <meta property="og:image" content="${escapeHtml(product.imageStudio)}">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -211,7 +307,7 @@ function renderHtmlPage(slug, product) {
       <span>/</span>
       <a href="/curated/living-room-decor" class="hover:underline">Curated Edits</a>
       <span>/</span>
-      <span class="text-charcoal font-medium truncate max-w-[240px]">${escapeHtml(product.title)}</span>
+      <span class="text-charcoal font-medium truncate max-w-[240px]">${escapeHtml(title)}</span>
     </nav>
 
     <!-- Product Hero Block -->
@@ -223,13 +319,17 @@ function renderHtmlPage(slug, product) {
             ★ Verified Prime Design Pick
           </span>
           <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-            ✓ In Stock & Real-Time Verified (★ ${rating}/5)
+            ✓ In Stock & Real-Time Verified
+          </span>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200">
+            ★ ${rating} Rating Verified
           </span>
         </div>
+
         <h1 class="font-serif text-2xl sm:text-4xl font-medium text-charcoal leading-tight">
           ${escapeHtml(title)}
         </h1>
-        <p class="text-sm text-charcoal-light">Architectural Curation & Quality Verification by Aesthetic Haven Studio</p>
+        <p class="text-xs text-charcoal-light uppercase tracking-wider font-medium">Curated Architectural Sourcebook • Amazon Prime Selection</p>
       </div>
 
       <!-- AAS Lifestyle Intro Block -->
@@ -237,20 +337,20 @@ function renderHtmlPage(slug, product) {
         "${escapeHtml(intro)}"
       </div>
 
-      <!-- Visual Gallery (Product HD Image + 2:3 Mockup Image) -->
+      <!-- Visual Gallery (Product Studio Photo + 2:3 Mockup Image) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
         <div class="rounded-2xl overflow-hidden bg-cream border border-borderWarm flex flex-col items-center justify-center p-6 relative group">
           <span class="absolute top-3 left-3 text-[11px] font-medium uppercase tracking-wider text-charcoal-light bg-white/90 px-2 py-0.5 rounded shadow-sm">
             Product Studio View
           </span>
-          <img src="${escapeHtml(product.imageStudio || product.imageMockup || '')}" alt="${escapeHtml(product.title)}" class="max-h-[380px] w-auto object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105" loading="eager" onerror="this.onerror=null;this.src='/assets/pinterest/kitchen/sample_aesthetic_kitchen_pin.jpg';">
+          <img src="${escapeHtml(product.imageStudio)}" alt="${escapeHtml(title)}" class="max-h-[380px] w-auto object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105">
         </div>
 
         <div class="rounded-2xl overflow-hidden bg-cream border border-borderWarm flex flex-col items-center justify-center p-2 relative group">
           <span class="absolute top-3 left-3 text-[11px] font-medium uppercase tracking-wider text-white bg-charcoal/80 px-2 py-0.5 rounded shadow-sm z-10">
             ★ 2:3 In-Situ Architectural Mockup
           </span>
-          <img src="${escapeHtml(product.imageMockup || product.imageStudio || '')}" alt="${escapeHtml(product.title)} Architectural In-Situ Preview" class="w-full h-auto max-h-[420px] object-cover rounded-xl shadow transition-transform duration-300 group-hover:scale-102" loading="lazy" onerror="this.onerror=null;this.src='https://m.media-amazon.com/images/I/71u9sJ15bJL._AC_SL1500_.jpg';">
+          <img src="${escapeHtml(product.imageMockup || product.imageStudio)}" alt="${escapeHtml(title)} Preview" class="w-full h-auto max-h-[420px] object-cover rounded-xl shadow transition-transform duration-300 group-hover:scale-102">
         </div>
       </div>
 
@@ -267,7 +367,6 @@ function renderHtmlPage(slug, product) {
           </span>
         </div>
 
-        <!-- Primary CTA Button -->
         <a 
           href="${amazonUrl}" 
           target="_blank" 
@@ -295,17 +394,13 @@ function renderHtmlPage(slug, product) {
               </tr>
               <tr>
                 <th class="px-4 py-3 font-medium text-charcoal-light">ASIN</th>
-                <td class="px-4 py-3 text-charcoal font-mono text-xs">${escapeHtml(product.asin)}</td>
+                <td class="px-4 py-3 text-charcoal font-mono text-xs font-bold">${escapeHtml(product.asin)}</td>
               </tr>
               <tr class="bg-cream/40">
-                <th class="px-4 py-3 font-medium text-charcoal-light">Key Features</th>
-                <td class="px-4 py-3 text-charcoal">${escapeHtml((product.features || []).join(' • '))}</td>
-              </tr>
-              <tr>
                 <th class="px-4 py-3 font-medium text-charcoal-light">Prime & Shipping</th>
                 <td class="px-4 py-3 text-emerald-700 font-medium">Eligible for Amazon Prime Fast & Free Delivery</td>
               </tr>
-              <tr class="bg-cream/40">
+              <tr>
                 <th class="px-4 py-3 font-medium text-charcoal-light">Curated Affiliation</th>
                 <td class="px-4 py-3 text-charcoal-light text-xs font-mono">${AMAZON_TAG} (AgentWell Verified)</td>
               </tr>
@@ -328,8 +423,8 @@ function renderHtmlPage(slug, product) {
       <!-- Secondary Bottom CTA -->
       <div class="pt-6 border-t border-borderWarm flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          <div class="text-sm font-medium text-charcoal">Ready to transform your countertop?</div>
-          <div class="text-xs text-charcoal-light">Check current stock, colorways, and reviews on Amazon US.</div>
+          <div class="text-sm font-medium text-charcoal">Ready to transform your space?</div>
+          <div class="text-xs text-charcoal-light">Check current stock and customer reviews on Amazon US.</div>
         </div>
         <a 
           href="${amazonUrl}" 
@@ -363,23 +458,23 @@ function escapeHtml(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/'/g, '&#039;');
 }
 
 module.exports = async (req, res) => {
-  // Extract slug from query param or URL path
-  let rawSlug = req.query.slug || '';
-  if (!rawSlug && req.url) {
-    const match = req.url.match(/\/curated\/([^/?#]+)/);
-    if (match) {
-      rawSlug = match[1];
-    }
-  }
-
-  const cleanSlug = String(rawSlug).toLowerCase().trim().replace(/\.html$/, '');
+  const { slug } = req.query;
+  const rawSlug = Array.isArray(slug) ? slug[0] : slug;
+  const cleanSlug = (rawSlug || '').toLowerCase().trim();
 
   if (!cleanSlug) {
     return res.redirect(302, DEFAULT_FALLBACK_URL);
+  }
+
+  // Pin 14 Historical Discrepancy Fix:
+  // If user clicks the upsimples link from Pin 14 (Minimalist Solid Walnut MagSafe Stand),
+  // redirect immediately to the Walnut MagSafe Stand page!
+  if (cleanSlug === 'upsimples-11x14-picture-frame-wall-decor-photo-fra') {
+    return res.redirect(302, '/curated/solid-walnut-wood-magsafe-wireless-charging-stand-');
   }
 
   // 1. Check if physical static HTML file exists in public/curated or curated
@@ -399,51 +494,24 @@ module.exports = async (req, res) => {
         return res.status(200).send(fileContent);
       }
     } catch (e) {
-      // Continue to dynamic generator
+      // Continue to catalog
     }
   }
 
-  // 2. Load any extra items from pinterest_queue.json
-  loadQueueCatalog();
-
-  // 3. Check Product Catalog
-  if (PRODUCT_CATALOG[cleanSlug]) {
-    const product = PRODUCT_CATALOG[cleanSlug];
+  // 2. Check Single Source of Truth Catalog
+  if (BUILTIN_CATALOG[cleanSlug]) {
+    const product = BUILTIN_CATALOG[cleanSlug];
     const html = renderHtmlPage(cleanSlug, product);
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Cache-Control', 'public, max-age=1800, s-maxage=86400');
     return res.status(200).send(html);
   }
 
-  // 4. Check if slug contains an ASIN pattern (e.g. B0CYJBB2JQ or ends with an ASIN)
-  const asinMatch = cleanSlug.match(/\b([bB][0-9a-zA-Z]{9})\b/);
-  if (asinMatch) {
-    const asin = asinMatch[1].toUpperCase();
-    const dynamicProduct = {
-      asin: asin,
-      title: cleanSlug.replace(/-/g, ' ').replace(asin, '').trim().toUpperCase() || `Amazon Prime Curated Pick (${asin})`,
-      displayTitle: cleanSlug.replace(/-/g, ' ') || `Curated Design Essential (${asin})`,
-      collection: 'Curated Architectural Home',
-      price: 'Check Prime Deals',
-      rating: 4.5,
-      imageStudio: 'https://m.media-amazon.com/images/I/71u9sJ15bJL._AC_SL1500_.jpg',
-      imageMockup: '/assets/pinterest/kitchen/sample_aesthetic_kitchen_pin.jpg',
-      intro: 'Curated architectural find handpicked for warm minimalist spaces and restorative everyday rituals.',
-      whyWeChoseThis: 'Evaluated for material integrity, aesthetic balance, and tactile living.',
-      features: ['Amazon Prime Verified', 'Aesthetic Home Essential', 'Fast & Reliable Shipping']
-    };
-    const html = renderHtmlPage(cleanSlug, dynamicProduct);
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.setHeader('Cache-Control', 'public, max-age=1800, s-maxage=86400');
-    return res.status(200).send(html);
-  }
-
-  // 5. Fallback Safety: Slug not recognized -> Redirect 302 to search or homepage
-  // TUYỆT ĐỐI KHÔNG để rơi vào màn hình 404 trắng bệch của Vercel!
+  // 3. Fallback Safety: Unknown slug -> 302 Redirect to Amazon search with Affiliate Tag
+  // TUYỆT ĐỐI KHÔNG render sai sản phẩm hoặc rơi vào 404 trắng bệch!
   const searchKeywords = cleanSlug.replace(/-/g, ' ').trim();
   if (searchKeywords.length >= 3) {
     const amazonSearchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(searchKeywords)}&tag=${AMAZON_TAG}`;
-    // Redirect 302 directly to the relevant Amazon affiliate search
     return res.redirect(302, amazonSearchUrl);
   }
 

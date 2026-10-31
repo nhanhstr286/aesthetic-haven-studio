@@ -51,33 +51,33 @@ PINS = [
     {
         "id": 1,
         "image": str(WORKSPACE_DIR / "pin1.jpg"),
-        "title": "Cozy Bedroom Essentials for Winter | Warm Minimalist Holiday Sanctuary",
-        "desc": "Transform your winter bedroom into the ultimate cozy haven with layered warm amber lighting, plush textures, and calming bedside essentials. Discover restorative evening sanctuary styling tips at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
-        "link": "https://agentwell.agency#decor",
-        "board": "Aesthetic Room Decor & Lighting"
+        "title": "24\" Travertine Inspired Table Lamp | Warm Luxury Home Decor",
+        "desc": "Creating a grounded home starts with tactile surfaces and organic tones. The 24\" Travertine Inspired Table Lamp introduces a quiet architectural presence to quiet corners, shaping the mood through diffused light.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
+        "link": "https://agentwell.agency/curated/24-travertine-inspired-table-lamp-for-living-room-",
+        "board": "Warm Luxury Home Decor"
     },
     {
         "id": 2,
         "image": str(WORKSPACE_DIR / "pin2.jpg"),
-        "title": "Aesthetic Holiday Gift Guide | Curated Warm Kitchen & Home Finds Under $50",
-        "desc": "Gift something they will actually cherish and use daily. From matte gooseneck kettles to minimalist stone organizers, explore our curated holiday gift guide for lovers of intentional, warm aesthetic living.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
-        "link": "https://agentwell.agency#smart-kitchen",
+        "title": "bella Fits-Anywhere™ 2-Slice Slim Toaster | Smart Kitchen Gadgets & Hacks",
+        "desc": "Slim space-saving profile, minimalist tactile matte finish, and integrated cord management. Refine your kitchen countertop aesthetics with quiet architectural order.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
+        "link": "https://agentwell.agency/curated/bella-fits-anywhere-2-slice-slim-toaster",
         "board": "Smart Kitchen Gadgets & Hacks"
     },
     {
         "id": 3,
         "image": str(WORKSPACE_DIR / "pin3.jpg"),
-        "title": "Minimalist Christmas Gifts | Digital Planner & Mindful Lifestyle Dashboard",
-        "desc": "Give the gift of peace, intentionality, and calm organization. Our warm aesthetic digital daily planner for iPad & GoodNotes helps reset daily routines ahead of the new year. Download your copy instantly at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
-        "link": "https://agentwell.agency#digital-planners",
+        "title": "Solid Walnut MagSafe Charging Stand & Minimalist Desk Organizer",
+        "desc": "Give the gift of peace, intentionality, and calm organization. Handcrafted American solid walnut MagSafe charging stand for iPhone & AirPods with integrated cable management.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
+        "link": "https://agentwell.agency/curated/solid-walnut-wood-magsafe-wireless-charging-stand-",
         "board": "Digital Planners & iPad Aesthetics"
     },
     {
         "id": 4,
         "image": str(WORKSPACE_DIR / "pin4.jpg"),
-        "title": "Warm & Cozy Living Room Makeover | Scandinavian Holiday Art & Neutral Decor",
-        "desc": "Give your living room walls an instant festive winter glow with neutral printable wall art gallery sets and subtle organic ceramics. Simple, clutter-free Scandinavian holiday styling made effortless at Aesthetic Haven Studio.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
-        "link": "https://agentwell.agency#wall-art",
+        "title": "Natural Solid Oak Picture Frames Set | Scandinavian Wall Art & Decor",
+        "desc": "Give your living room walls an instant festive winter glow with natural solid wood gallery frames and subtle organic ceramics. Simple, clutter-free Scandinavian styling made effortless.\n\n#cozydecor #holidaygifts #homedecorideas #warmminimalism #christmasgiftideas",
+        "link": "https://agentwell.agency/curated/lyyyxgyp-12x16-picture-frame-set-of-3-natural-soli",
         "board": "Printable Wall Art & Decor"
     }
 ]
@@ -441,6 +441,24 @@ def upload_pin(pin_data, playwright_page=None):
     print(f"\n=======================================================")
     print(f"📌 Đang xử lý Pin {pin_data['id']}: {pin_data['title'][:60]}...")
     print(f"=======================================================")
+
+    # BƯỚC 0: CƠ CHẾ "PAGE-FIRST, PIN-AFTER" (CÓ TRANG MỚI ĐƯỢC ĐĂNG PIN)
+    dest_link = pin_data.get("link", "")
+    if "/curated/" in dest_link:
+        print(f"🔍 [Page-First Gate] Gửi HTTP probe kiểm tra trang đích: {dest_link}...")
+        try:
+            probe_resp = requests.get(dest_link, headers={"User-Agent": "OpenClaw-Gatekeeper/1.0"}, timeout=10)
+            if probe_resp.status_code != 200 or "404: NOT_FOUND" in probe_resp.text:
+                err_msg = f"❌ [PAGE-FIRST GATE BLOCKED] Trang đích {dest_link} trả về HTTP {probe_resp.status_code} hoặc 404 NOT_FOUND! HỦY BỎ đăng Pin."
+                print(err_msg)
+                send_telegram_alert(err_msg)
+                return {"status": "ABORTED", "reason": err_msg}
+            print(f"✅ [Page-First Gate] Trang đích đã sẵn sàng (HTTP 200 OK). Được phép đăng Pin.")
+        except Exception as probe_err:
+            err_msg = f"❌ [PAGE-FIRST GATE BLOCKED] Không thể kết nối tới {dest_link}: {probe_err}. HỦY BỎ đăng Pin."
+            print(err_msg)
+            send_telegram_alert(err_msg)
+            return {"status": "ABORTED", "reason": err_msg}
 
     # 1. ƯU TIÊN SỐ 1: PINTEREST API V5
     try:
