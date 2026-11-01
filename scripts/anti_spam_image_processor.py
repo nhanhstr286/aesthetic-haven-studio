@@ -1,38 +1,78 @@
 #!/usr/bin/env python3
 """
-Aesthetic Haven Studio - Anti-Spam Image Processing Pipeline
-Designed for Pinterest 2:3 ratio (1000x1500px) automation & n8n integration.
-
-Bypasses Pinterest duplicate detection algorithms by:
-1. Resizing & smart center-cropping to exact 1000x1500 (2:3 aspect ratio).
-2. Applying an aesthetic warm luxury border (#FAF8F5 / #EAE6DF).
-3. Overlaying minimalist Serif typography ("Warm Living Setup", "Aesthetic Haven Studio").
-4. Completely stripping previous EXIF/IPTC/XMP camera & Canva/Adobe metadata.
-5. Introducing imperceptible micro-chromatic variance to generate a brand new perceptual hash (pHash/dHash).
-6. Ingesting fresh digital signature & copyright metadata.
+Aesthetic Haven Studio - Minimalist Visual Guardrail & Anti-Spam Pipeline
+Strictly adheres to the MINIMALIST VISUAL GUARDRAIL:
+1. 100% Full-bleed 2:3 ratio (1000x1500px) or 9:16 - Zero borders.
+2. ZERO graphic containers: No dark cards, no product card boxes, no fake buttons, no long technical text.
+3. Hero Focus: Lifestyle in-use photography is preserved with natural depth, light, and negative space.
+4. Optional Text Overlay: Max 1 short hook (strictly under 5 words), placed at <=10% top or >=90% bottom edge,
+   with subtle drop-shadow (rgba 0,0,0,0.3) and NO background boxes/containers.
+5. EXIF/metadata sanitized and micro-chromatic variance applied to shift perceptual hashes (dHash/pHash).
 """
 
 import os
 import sys
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import argparse
 import hashlib
 import json
 import urllib.request
 import io
+import re
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageEnhance
 
 TARGET_WIDTH = 1000
 TARGET_HEIGHT = 1500
-BORDER_WIDTH = 28
-BORDER_COLOR = (250, 248, 245)      # #FAF8F5 (Warm cream)
-INNER_LINE_COLOR = (234, 230, 223)  # #EAE6DF (Soft border)
-CHARCOAL = (31, 31, 31)             # #1F1F1F
-CHARCOAL_MUTED = (98, 94, 89)       # #625E59
-TERRACOTTA = (184, 93, 67)          # #B85D43
+
+FORBIDDEN_PATTERNS = [
+    r"explore sourcebook",
+    r"check deals",
+    r"tap here",
+    r"click here",
+    r"buy now",
+    r"tap to get",
+    r"claim free",
+    r"architectural quality",
+    r"tactile finish",
+    r"sanctuary edit"
+]
+
+def validate_minimalist_guardrail(hook_text: str = None) -> str:
+    """
+    Validates hook text against minimalist visual guardrails.
+    Rejects text exceeding 4 words or containing spammy CTA keywords.
+    """
+    if not hook_text:
+        return ""
+    
+    clean_text = hook_text.strip()
+    if not clean_text:
+        return ""
+
+    # Check forbidden phrases
+    lower_text = clean_text.lower()
+    for pattern in FORBIDDEN_PATTERNS:
+        if re.search(pattern, lower_text):
+            raise ValueError(
+                f"[GUARDRAIL REJECTED] Text '{clean_text}' contains prohibited button/card text matching pattern: {pattern}."
+            )
+
+    # Word count check: Under 5 words (strictly max 4 words)
+    words = clean_text.split()
+    if len(words) >= 5:
+        # Auto-conform by taking first 4 words or reject if inappropriate
+        concise_hook = " ".join(words[:4])
+        print(f"[GUARDRAIL WARNING] Hook text '{clean_text}' exceeded word limit ({len(words)} words >= 5). Trimmed to: '{concise_hook}'")
+        return concise_hook
+
+    return clean_text
 
 def get_font(font_names, size):
-    """Attempt to load serif and sans fonts across Windows and Linux environments."""
+    """Attempt to load serif or sans fonts across Windows and Linux environments."""
     search_paths = [
         "C:/Windows/Fonts",
         "/usr/share/fonts/truetype",
@@ -47,7 +87,6 @@ def get_font(font_names, size):
                     return ImageFont.truetype(full_path, size)
                 except Exception:
                     continue
-        # Also check current directory
         if os.path.exists(font_name):
             try:
                 return ImageFont.truetype(font_name, size)
@@ -99,104 +138,96 @@ def download_image(url_or_path):
 def process_image(
     input_source,
     output_path=None,
-    title="Warm Living Setup",
-    subtitle="Aesthetic Haven Studio • Curated Living",
-    badge="SANCTUARY EDIT",
-    alter_pixels=True
+    hook_text=None,
+    position="bottom",  # "top" (top 10%) or "bottom" (bottom 10%)
+    alter_pixels=True,
+    **kwargs  # Ignore legacy arguments like badge, subtitle gracefully
 ):
     """
-    Main processing pipeline:
-    - Strips original EXIF
-    - Crops to 1000x1500
-    - Applies aesthetic warm border
-    - Applies minimalist serif typography overlay
-    - Micro-alters color tone to ensure fresh perceptual hash
-    - Injects clean digital signature
+    Main processing pipeline enforcing MINIMALIST VISUAL GUARDRAIL:
+    1. Strips all EXIF/metadata.
+    2. 100% Full-bleed center crop to 2:3 ratio (1000x1500) - NO BORDERS.
+    3. Micro-chromatic variance to shift perceptual hash without visual artifacts.
+    4. ZERO cards, ZERO boxes, ZERO fake buttons.
+    5. At most 1 short Hook (under 5 words), placed at top 10% or bottom 10% with subtle drop shadow.
     """
+    # 1. Guardrail Validation
+    valid_hook = validate_minimalist_guardrail(hook_text)
+
+    # 2. Ingest Image
     raw_img, original_sha256 = download_image(input_source)
     orig_dhash = calculate_dhash(raw_img)
 
-    # 1. Strip ALL metadata by extracting pure RGB pixel buffer
+    # 3. Strip all metadata by re-rasterizing pure RGB buffer
     img_rgb = Image.new("RGB", raw_img.size)
     img_rgb.paste(raw_img)
 
-    # 2. Resize and Center-Crop to exact Pinterest 2:3 ratio (1000x1500)
+    # 4. Resize and Center-Crop to exact Pinterest 2:3 ratio (1000x1500) - Full Bleed
     canvas = ImageOps.fit(img_rgb, (TARGET_WIDTH, TARGET_HEIGHT), Image.Resampling.LANCZOS)
 
-    # 3. Micro-alteration to guarantee fresh perceptual hash & bypass duplicate detection
+    # 5. Micro-alteration & Warm Interior Color Grading (+15% Contrast, Warmth/Temperature calibration)
     if alter_pixels:
-        # Subtle imperceptible contrast + warmth shift (shifts pHash without hurting visuals)
-        enhancer = ImageEnhance.Color(canvas)
-        canvas = enhancer.enhance(1.02)
-        # Slight micro-gamma warmth
-        r, g, b = canvas.split()
-        r = r.point(lambda i: min(255, int(i * 1.008)))
-        b = b.point(lambda i: max(0, int(i * 0.995)))
-        canvas = Image.merge("RGB", (r, g, b))
+        import numpy as np
+        arr = np.array(canvas, dtype=np.float32)
+        arr[:, :, 0] = np.clip(arr[:, :, 0] * 1.05 + 3.0, 0, 255)  # Warm red/amber boost
+        arr[:, :, 1] = np.clip(arr[:, :, 1] * 1.02 + 1.0, 0, 255)  # Soft cream
+        arr[:, :, 2] = np.clip(arr[:, :, 2] * 0.93 - 2.0, 0, 255)  # Anti-cold grey cast
+        warm_canvas = Image.fromarray(arr.astype(np.uint8))
+        
+        # Contrast +15%
+        canvas = ImageEnhance.Contrast(warm_canvas).enhance(1.15)
+        # Saturation +12%
+        canvas = ImageEnhance.Color(canvas).enhance(1.12)
+        # Sharpness
+        canvas = ImageEnhance.Sharpness(canvas).enhance(1.20)
 
-    # 4. Apply Warm Border (#FAF8F5) with Inner Hairline (#EAE6DF)
-    draw = ImageDraw.Draw(canvas)
-    # Outer border
-    draw.rectangle([(0, 0), (TARGET_WIDTH - 1, BORDER_WIDTH)], fill=BORDER_COLOR)
-    draw.rectangle([(0, TARGET_HEIGHT - BORDER_WIDTH), (TARGET_WIDTH - 1, TARGET_HEIGHT - 1)], fill=BORDER_COLOR)
-    draw.rectangle([(0, 0), (BORDER_WIDTH, TARGET_HEIGHT - 1)], fill=BORDER_COLOR)
-    draw.rectangle([(TARGET_WIDTH - BORDER_WIDTH, 0), (TARGET_WIDTH - 1, TARGET_HEIGHT - 1)], fill=BORDER_COLOR)
-    
-    # Inner subtle hairline accent
-    inner_inset = BORDER_WIDTH + 6
-    draw.rectangle(
-        [(inner_inset, inner_inset), (TARGET_WIDTH - inner_inset - 1, TARGET_HEIGHT - inner_inset - 1)],
-        outline=INNER_LINE_COLOR,
-        width=1
-    )
+    # 6. Apply Minimalist Kinfolk Typography (IF hook provided) - NO BOXES, NO CONTAINERS
+    if valid_hook:
+        font_hook = get_font(["segoeuil.ttf", "georgia.ttf", "arial.ttf"], 36)
+        
+        # Prepare transparent overlay layer for text with drop-shadow
+        text_layer = Image.new("RGBA", (TARGET_WIDTH, TARGET_HEIGHT), (0, 0, 0, 0))
+        draw_text = ImageDraw.Draw(text_layer)
 
-    # 5. Editorial Minimalist Serif Overlay Card (Bottom Third)
-    card_margin_x = 64
-    card_h = 240
-    card_y = TARGET_HEIGHT - card_h - BORDER_WIDTH - 30
-    card_w = TARGET_WIDTH - (card_margin_x * 2)
+        # Measure text
+        bbox = draw_text.textbbox((0, 0), valid_hook, font=font_hook)
+        text_w = bbox[2] - bbox[0]
+        text_h = bbox[3] - bbox[1]
 
-    # Glassmorphism/Cream Card
-    card_layer = Image.new("RGBA", (TARGET_WIDTH, TARGET_HEIGHT), (0, 0, 0, 0))
-    card_draw = ImageDraw.Draw(card_layer)
-    card_draw.rounded_rectangle(
-        [(card_margin_x, card_y), (card_margin_x + card_w, card_y + card_h)],
-        radius=20,
-        fill=(250, 248, 245, 238),     # 93% opaque warm cream
-        outline=(234, 230, 223, 255),
-        width=2
-    )
-    canvas = Image.alpha_composite(canvas.convert("RGBA"), card_layer).convert("RGB")
-    draw = ImageDraw.Draw(canvas)
+        # Left margin or center depending on position
+        if position == "top":
+            pos_x = 60
+            pos_y = 65
+        else:
+            pos_x = (TARGET_WIDTH - text_w) // 2
+            pos_y = int(TARGET_HEIGHT * 0.91)
 
-    # Typography
-    font_badge = get_font(["segoeuib.ttf", "arialbd.ttf", "DejaVuSans-Bold.ttf"], 18)
-    font_title = get_font(["georgiab.ttf", "georgia.ttf", "timesbd.ttf", "DejaVuSerif-Bold.ttf"], 44)
-    font_subtitle = get_font(["segoeui.ttf", "arial.ttf", "DejaVuSans.ttf"], 22)
+        # Subtle diffuse drop-shadow
+        shadow_offset = 2
+        draw_text.text(
+            (pos_x + shadow_offset, pos_y + shadow_offset),
+            valid_hook,
+            fill=(15, 12, 10, 180),
+            font=font_hook
+        )
 
-    # Draw Badge
-    badge_text = f"✨ {badge.upper()}"
-    draw.text((card_margin_x + 32, card_y + 26), badge_text, fill=TERRACOTTA, font=font_badge)
+        # Main text (monochrome ivory clean #FFFDF5)
+        draw_text.text(
+            (pos_x, pos_y),
+            valid_hook,
+            fill=(255, 253, 245, 250),
+            font=font_hook
+        )
 
-    # Draw Title (Serif)
-    draw.text((card_margin_x + 32, card_y + 60), title, fill=CHARCOAL, font=font_title)
+        canvas = Image.alpha_composite(canvas.convert("RGBA"), text_layer).convert("RGB")
 
-    # Draw Subtitle
-    draw.text((card_margin_x + 32, card_y + 128), subtitle, fill=CHARCOAL_MUTED, font=font_subtitle)
-
-    # Bottom Studio URL / Footnote
-    brand_foot = "AESTHETIC HAVEN STUDIO • AGENTWELL.AGENCY"
-    font_brand = get_font(["segoeuib.ttf", "arialbd.ttf"], 15)
-    draw.text((card_margin_x + 32, card_y + 180), brand_foot, fill=(140, 133, 123), font=font_brand)
-
-    # 6. Save without any old EXIF, inject fresh signature
+    # 7. Save without EXIF
     if output_path is None:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output_path = f"processed_pin_{timestamp}.jpg"
 
     os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
     
-    # Save clean buffer
     buffer = io.BytesIO()
     canvas.save(
         buffer,
@@ -216,25 +247,26 @@ def process_image(
     result = {
         "status": "success",
         "output_file": os.path.abspath(output_path),
-        "target_resolution": f"{TARGET_WIDTH}x{TARGET_HEIGHT} (2:3 Pinterest Ratio)",
+        "target_resolution": f"{TARGET_WIDTH}x{TARGET_HEIGHT} (100% Full-Bleed 2:3)",
+        "guardrail_status": "PASSED (Minimalist: No cards, No boxes, No fake buttons)",
+        "hook_text": valid_hook if valid_hook else None,
         "original_sha256": original_sha256,
         "new_sha256": new_sha256,
         "original_dhash": orig_dhash,
         "new_dhash": new_dhash,
         "hash_altered": (original_sha256 != new_sha256) and (orig_dhash != new_dhash),
-        "title": title,
-        "subtitle": subtitle,
         "timestamp": datetime.now().isoformat()
     }
     return result
 
 def main():
-    parser = argparse.ArgumentParser(description="Aesthetic Haven Studio Anti-Spam Image Processor")
+    parser = argparse.ArgumentParser(description="Aesthetic Haven Studio Minimalist Image Processor")
     parser.add_argument("--url", "-u", required=True, help="Input image URL or local path")
     parser.add_argument("--out", "-o", default="public/assets/pinterest/curated_pin_output.jpg", help="Output file path")
-    parser.add_argument("--title", "-t", default="Warm Living Setup", help="Minimalist serif headline")
-    parser.add_argument("--subtitle", "-s", default="Curated Living & Warm Spaces • Aesthetic Haven Studio", help="Subtitle")
-    parser.add_argument("--badge", "-b", default="SANCTUARY EDIT", help="Badge text")
+    parser.add_argument("--hook", "--title", "-t", default=None, help="Short Hook under 5 words (optional)")
+    parser.add_argument("--position", "-p", choices=["top", "bottom"], default="bottom", help="Hook position: top or bottom 10%")
+    parser.add_argument("--subtitle", "-s", default=None, help="[DEPRECATED - Ignored by Guardrail]")
+    parser.add_argument("--badge", "-b", default=None, help="[DEPRECATED - Ignored by Guardrail]")
     parser.add_argument("--json", action="store_true", help="Output JSON for n8n code node")
 
     args = parser.parse_args()
@@ -243,31 +275,30 @@ def main():
         res = process_image(
             input_source=args.url,
             output_path=args.out,
-            title=args.title,
-            subtitle=args.subtitle,
-            badge=args.badge
+            hook_text=args.hook,
+            position=args.position
         )
         if args.json:
             print(json.dumps(res, indent=2))
         else:
             print("\n=======================================================")
-            print("✨ AESTHETIC HAVEN STUDIO - ANTI-SPAM PROCESSOR")
+            print("✨ AESTHETIC HAVEN STUDIO - MINIMALIST VISUAL GUARDRAIL")
             print("=======================================================")
             print(f"Status:            {res['status']}")
+            print(f"Guardrail:         {res['guardrail_status']}")
             print(f"Output File:       {res['output_file']}")
             print(f"Resolution:        {res['target_resolution']}")
+            print(f"Hook Text:         {res['hook_text']}")
             print(f"Original SHA256:   {res['original_sha256'][:16]}...")
             print(f"New SHA256:        {res['new_sha256'][:16]}...")
-            print(f"Original dHash:    {res['original_dhash']}")
-            print(f"New dHash:         {res['new_dhash']}")
             print(f"Visual Hash Shift: {'SUCCESS (Anti-Spam Active)' if res['hash_altered'] else 'Identical'}")
             print("=======================================================\n")
     except Exception as e:
-        err = {"status": "error", "message": str(e)}
+        err = {"status": "error", "message": str(e), "guardrail_rejected": True}
         if args.json:
             print(json.dumps(err, indent=2))
         else:
-            print(f"Error: {e}", file=sys.stderr)
+            print(f"[ERROR / REJECTED] {e}", file=sys.stderr)
         sys.exit(1)
 
 if __name__ == "__main__":

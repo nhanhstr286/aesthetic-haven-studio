@@ -1,324 +1,230 @@
+#!/usr/bin/env python3
+"""
+Aesthetic Haven Studio - 30 Pinterest Pin Generator
+Strict adherence to the MINIMALIST VISUAL GUARDRAIL:
+1. 100% Full-bleed 2:3 ratio (1000x1500px).
+2. ZERO boxes, ZERO cards, ZERO fake buttons, ZERO long text blocks.
+3. Lifestyle photo hero focus with natural lighting.
+4. Hook strictly <= 4 words, placed at top 7% or bottom 91%, drop-shadow (rgba 0,0,0,0.3).
+"""
+
 import os
 import urllib.request
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageOps
+from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageEnhance, ImageFilter
+import numpy as np
 
 BASE_DIR = os.path.dirname(__file__)
 
-# 16 Pin Configurations for Expansion to 30 Pins
 PINS_16 = [
-    # --- DECOR (decor_pin_06 -> 09) ---
+    # DECOR
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "decor"),
         "filename": "decor_pin_06.jpg",
-        "url": "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🌾 WABI-SABI BEDROOM",
-        "title": "Wabi-Sabi Bedroom\nStyling Secrets",
-        "subtitle": "Earthy linen textures, ceramic vessels & soft diffused 2700K ambient lighting.",
-        "cta": "Tap to get the free guide →",
-        "domain": "agentwell.agency#decor"
+        "url": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&h=1800&q=85",
+        "hook": "Wabi-Sabi Bedroom Style",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "decor"),
         "filename": "decor_pin_07.jpg",
         "url": "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🌙 SUNSET AMBIENCE",
-        "title": "The Sunset Glow\nEvening Routine",
-        "subtitle": "Layering cordless mushroom lamps and amber glass globes for zero eyestrain.",
-        "cta": "Tap to get the free guide →",
-        "domain": "agentwell.agency#decor"
+        "hook": "Sunset Glow Evening",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "decor"),
         "filename": "decor_pin_08.jpg",
         "url": "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🌿 MINDFUL ENTRYWAY",
-        "title": "Aesthetic Japandi\nEntryway Console",
-        "subtitle": "Sculptural wooden consoles, ceramic catchalls & warm welcoming light.",
-        "cta": "Tap to get the free guide →",
-        "domain": "agentwell.agency#decor"
+        "hook": "Aesthetic Japandi Console",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "decor"),
         "filename": "decor_pin_09.jpg",
         "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🏺 ORGANIC TEXTURES",
-        "title": "Sculptural Ceramic\n& Travertine Decor",
-        "subtitle": "How to balance stone textures, matte ceramics, and negative space effortlessly.",
-        "cta": "Tap to get the free guide →",
-        "domain": "agentwell.agency#decor"
+        "hook": "Sculptural Ceramic Decor",
+        "position": "bottom"
     },
 
-    # --- KITCHEN (kitchen_pin_04 -> 07) ---
+    # KITCHEN
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "kitchen"),
         "filename": "kitchen_pin_04.jpg",
         "url": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "💡 KITCHEN LIGHTING",
-        "title": "Under-Cabinet\nWarm Glow Hack",
-        "subtitle": "Rechargeable warm strip lights that transform counters into a luxury lounge.",
-        "cta": "Tap to get the free cheatsheet →",
-        "domain": "agentwell.agency#kitchen"
+        "hook": "Under-Cabinet Warm Glow",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "kitchen"),
         "filename": "kitchen_pin_05.jpg",
         "url": "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🌾 PANTRY RESET",
-        "title": "Aesthetic Glass\nPantry Organization",
-        "subtitle": "Clean unified jars, custom minimalist waterproof labels & zero visual noise.",
-        "cta": "Tap to get the free cheatsheet →",
-        "domain": "agentwell.agency#kitchen"
+        "hook": "Glass Pantry Organization",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "kitchen"),
         "filename": "kitchen_pin_06.jpg",
         "url": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "✨ SINK COUNTER RESET",
-        "title": "Sink Area Zen\nStone Organization",
-        "subtitle": "Keep sink borders dry and gorgeous with instant water-absorbing stone trays.",
-        "cta": "Tap to get the free cheatsheet →",
-        "domain": "agentwell.agency#kitchen"
+        "hook": "Stone Sink Organization",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "kitchen"),
         "filename": "kitchen_pin_07.jpg",
         "url": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🍵 MINDFUL TEA STATION",
-        "title": "Minimalist Matcha\n& Tea Counter Station",
-        "subtitle": "Handmade ceramic chawan, bamboo whisk stands & compact induction warmers.",
-        "cta": "Tap to get the free cheatsheet →",
-        "domain": "agentwell.agency#kitchen"
+        "hook": "Minimalist Matcha Station",
+        "position": "bottom"
     },
 
-    # --- PLANNERS (planner_pin_04 -> 07) ---
+    # PLANNERS
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "planners"),
         "filename": "planner_pin_04.jpg",
         "url": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "☕ MORNING JOURNALING",
-        "title": "Morning Intentionality\n& Brain Dump Layout",
-        "subtitle": "Clear morning anxiety in 5 minutes with structured digital journaling spreads.",
-        "cta": "Tap to get free sample →",
-        "domain": "agentwell.agency#planners"
+        "hook": "Morning Intentional Journaling",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "planners"),
         "filename": "planner_pin_05.jpg",
-        "url": "https://images.unsplash.com/photo-1512314889357-e157c22f938d?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🎯 GOAL TRACKING",
-        "title": "Project Roadmap\n& Milestone Tracker",
-        "subtitle": "Break big dreams into effortless weekly sprints with clickable hyperlinked tabs.",
-        "cta": "Tap to get free sample →",
-        "domain": "agentwell.agency#planners"
+        "url": "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&h=1800&q=85",
+        "hook": "Digital Habit Dashboard",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "planners"),
         "filename": "planner_pin_06.jpg",
-        "url": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "💳 FINANCIAL WELLNESS",
-        "title": "Mindful Budget\n& Expense Reset",
-        "subtitle": "Transform your relationship with money through peaceful, clutter-free budgeting.",
-        "cta": "Tap to get free sample →",
-        "domain": "agentwell.agency#planners"
+        "url": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&h=1800&q=85",
+        "hook": "Sunday Reset Checklist",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "planners"),
         "filename": "planner_pin_07.jpg",
-        "url": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🌿 HOLISTIC WELLNESS",
-        "title": "Wellness & Sleep\nHabit Tracker Spreads",
-        "subtitle": "Connect sleep quality, hydration, and daily movement in one peaceful spread.",
-        "cta": "Tap to get free sample →",
-        "domain": "agentwell.agency#planners"
+        "url": "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1200&h=1800&q=85",
+        "hook": "Minimalist Financial Tracker",
+        "position": "bottom"
     },
 
-    # --- WALL ART (wallart_pin_04 -> 07) ---
+    # WALLART
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "wallart"),
         "filename": "wallart_pin_04.jpg",
         "url": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🖌️ ZEN BRUSHWORK",
-        "title": "Japandi Abstract\nInk Brushwork Prints",
-        "subtitle": "Minimalist sumi-e inspired brush strokes bringing organic tranquility to walls.",
-        "cta": "Tap to download free print →",
-        "domain": "agentwell.agency#wallart"
+        "hook": "Neutral Botanical Prints",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "wallart"),
         "filename": "wallart_pin_05.jpg",
-        "url": "https://images.unsplash.com/photo-1582561424760-0321d75e81fa?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🏛️ ARCHITECTURAL ARCHES",
-        "title": "Warm Terracotta\nArchitectural Curves",
-        "subtitle": "Warm plaster arches, terracotta geometry & calming Mediterranean earth tones.",
-        "cta": "Tap to download free print →",
-        "domain": "agentwell.agency#wallart"
+        "url": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&h=1800&q=85",
+        "hook": "Aesthetic Gallery Grid",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "wallart"),
         "filename": "wallart_pin_06.jpg",
-        "url": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🍃 BOTANICAL LINE ART",
-        "title": "Minimalist Botanical\nEucalyptus Line Art",
-        "subtitle": "Graceful continuous line botanicals rendered on warm textured linen-tone paper.",
-        "cta": "Tap to download free print →",
-        "domain": "agentwell.agency#wallart"
+        "url": "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1200&h=1800&q=85",
+        "hook": "Architectural Arch Art",
+        "position": "bottom"
     },
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "wallart"),
         "filename": "wallart_pin_07.jpg",
-        "url": "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&h=1800&q=85",
-        "category_badge": "🕊️ EDITORIAL TYPOGRAPHY",
-        "title": "Mindful Typography\n& Affirmation Posters",
-        "subtitle": "Gentle daily mantras set in timeless editorial typography for your workspace.",
-        "cta": "Tap to download free print →",
-        "domain": "agentwell.agency#wallart"
+        "url": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1200&h=1800&q=85",
+        "hook": "Mindful Editorial Typography",
+        "position": "bottom"
     }
 ]
 
-# Fonts setup (Windows system fonts)
 FONT_DIR = "C:/Windows/Fonts"
-font_title = ImageFont.truetype(os.path.join(FONT_DIR, "georgiab.ttf"), 66)
-font_subtitle = ImageFont.truetype(os.path.join(FONT_DIR, "segoeui.ttf"), 28)
-font_badge = ImageFont.truetype(os.path.join(FONT_DIR, "segoeuib.ttf"), 20)
-font_brand = ImageFont.truetype(os.path.join(FONT_DIR, "segoeuib.ttf"), 22)
-font_cta = ImageFont.truetype(os.path.join(FONT_DIR, "segoeuib.ttf"), 26)
-font_url = ImageFont.truetype(os.path.join(FONT_DIR, "segoeui.ttf"), 20)
+try:
+    font_hook = ImageFont.truetype(os.path.join(FONT_DIR, "georgiab.ttf"), 46)
+except Exception:
+    font_hook = ImageFont.load_default()
 
 TARGET_SIZE = (1000, 1500)
+
+def enhance_warm_interior(image: Image.Image) -> Image.Image:
+    """
+    Applies Warm Interior color grading:
+    - Warmth/Temperature: boost red/amber tones, reduce cold grey/blue cast
+    - Contrast: +15%
+    - Saturation: +12%
+    - Sharpness: +20% & UnsharpMask
+    - Ambient 2700K sunlight glow
+    """
+    base = image.convert("RGB")
+    arr = np.array(base, dtype=np.float32)
+    arr[:, :, 0] = np.clip(arr[:, :, 0] * 1.05 + 3.0, 0, 255)
+    arr[:, :, 1] = np.clip(arr[:, :, 1] * 1.02 + 1.0, 0, 255)
+    arr[:, :, 2] = np.clip(arr[:, :, 2] * 0.93 - 2.0, 0, 255)
+    warm_img = Image.fromarray(arr.astype(np.uint8))
+
+    sat_img = ImageEnhance.Color(warm_img).enhance(1.12)
+    con_img = ImageEnhance.Contrast(sat_img).enhance(1.15)
+    sharp_img = ImageEnhance.Sharpness(con_img).enhance(1.20)
+    sharp_img = sharp_img.filter(ImageFilter.UnsharpMask(radius=2, percent=130, threshold=3))
+
+    tw, th = TARGET_SIZE
+    flare = Image.new("RGBA", (tw, th), (0, 0, 0, 0))
+    f_draw = ImageDraw.Draw(flare)
+    poly = [(-50, -50), (int(tw * 0.75), -50), (tw + 50, int(th * 0.8)), (-50, int(th * 0.3))]
+    f_draw.polygon(poly, fill=(255, 235, 185, 38))
+    glow = Image.new("RGBA", (tw, th), (0, 0, 0, 0))
+    g_draw = ImageDraw.Draw(glow)
+    g_draw.ellipse([(-tw // 4, -th // 4), (int(tw * 0.8), int(th * 0.5))], fill=(255, 240, 195, 35))
+    ambient = Image.alpha_composite(flare, glow).filter(ImageFilter.GaussianBlur(radius=80))
+
+    return Image.alpha_composite(sharp_img.convert("RGBA"), ambient).convert("RGB")
 
 def generate_single_pin(cfg):
     os.makedirs(cfg["output_dir"], exist_ok=True)
     out_path = os.path.join(cfg["output_dir"], cfg["filename"])
-    print(f"Generating Pin: {cfg['filename']} -> {out_path}...")
+    hook = cfg.get("hook", "").strip()
+    words = hook.split()
+    if len(words) >= 5:
+        hook = " ".join(words[:4])
 
-    # 1. Fetch Image with Fallback
+    print(f"Generating Minimalist Pin: {cfg['filename']} (Hook: '{hook}')...")
+
     req = urllib.request.Request(cfg["url"], headers={"User-Agent": "Mozilla/5.0"})
     try:
         with urllib.request.urlopen(req, timeout=25) as resp:
             raw_img = Image.open(resp).convert("RGB")
     except Exception as e:
-        print(f"  [Notice] Fallback canvas for {cfg['filename']}: {e}")
+        print(f"  [Fallback canvas] {cfg['filename']}: {e}")
         raw_img = Image.new("RGB", TARGET_SIZE, color=(244, 240, 234))
 
-    # 2. Resize and Center-Crop
+    # 1. 100% Full-Bleed 2:3 crop (1000x1500)
     img = ImageOps.fit(raw_img, TARGET_SIZE, Image.Resampling.LANCZOS)
 
-    # 3. Soft Warm Gradient Overlays
-    overlay = Image.new("RGBA", TARGET_SIZE, (0, 0, 0, 0))
-    draw_overlay = ImageDraw.Draw(overlay)
+    # 2. Kinfolk Typography directly on image (NO box, NO card)
+    if hook:
+        text_layer = Image.new("RGBA", TARGET_SIZE, (0, 0, 0, 0))
+        draw_text = ImageDraw.Draw(text_layer)
 
-    # Top dark gradient
-    for y in range(450):
-        alpha = int(140 * (1.0 - (y / 450.0) ** 1.3))
-        draw_overlay.line([(0, y), (1000, y)], fill=(20, 18, 16, alpha))
+        bbox = draw_text.textbbox((0, 0), hook, font=font_hook)
+        text_w = bbox[2] - bbox[0]
 
-    # Bottom dark gradient
-    for y in range(1500 - 350, 1500):
-        factor = (y - (1500 - 350)) / 350.0
-        alpha = int(170 * (factor ** 1.2))
-        draw_overlay.line([(0, y), (1000, y)], fill=(18, 16, 14, alpha))
-
-    # Center card (Glassmorphic Warm Editorial)
-    card_top = 100
-    card_left = 60
-    card_right = 940
-    card_bottom = 580
-
-    card_overlay = Image.new("RGBA", TARGET_SIZE, (0, 0, 0, 0))
-    draw_card = ImageDraw.Draw(card_overlay)
-    draw_card.rounded_rectangle(
-        [(card_left, card_top), (card_right, card_bottom)],
-        radius=28,
-        fill=(250, 248, 245, 230), # #FAF8F5 with 90% opacity
-        outline=(234, 230, 223, 240),
-        width=2
-    )
-
-    # Merge overlays
-    img = Image.alpha_composite(img.convert("RGBA"), overlay)
-    img = Image.alpha_composite(img, card_overlay)
-
-    # 4. Draw Typography & Badges
-    draw = ImageDraw.Draw(img)
-
-    # Brand watermark
-    draw.text((card_left + 40, card_top + 36), "AESTHETIC HAVEN STUDIO", fill=(140, 130, 120), font=font_brand)
-
-    # Category Pill Badge
-    badge_text = cfg["category_badge"]
-    badge_bbox = font_badge.getbbox(badge_text)
-    bw = badge_bbox[2] - badge_bbox[0] + 28
-    bh = badge_bbox[3] - badge_bbox[1] + 16
-    bx = card_right - 40 - bw
-    by = card_top + 30
-    draw.rounded_rectangle(
-        [(bx, by), (bx + bw, by + bh)],
-        radius=12,
-        fill=(192, 112, 83, 35),
-        outline=(192, 112, 83, 160),
-        width=1
-    )
-    draw.text((bx + 14, by + 6), badge_text, fill=(160, 80, 55), font=font_badge)
-
-    # Separator line
-    draw.line([(card_left + 40, card_top + 78), (card_right - 40, card_top + 78)], fill=(234, 230, 223), width=1)
-
-    # Headline (Georgia Bold)
-    title_y = card_top + 105
-    for line in cfg["title"].split("\n"):
-        draw.text((card_left + 40, title_y), line, fill=(31, 31, 31), font=font_title)
-        title_y += 76
-
-    # Subtitle (Segoe UI)
-    subtitle_y = title_y + 16
-    words = cfg["subtitle"].split(" ")
-    curr_line = ""
-    for w in words:
-        test_line = f"{curr_line} {w}".strip()
-        bbox = font_subtitle.getbbox(test_line)
-        if (bbox[2] - bbox[0]) < (card_right - card_left - 80):
-            curr_line = test_line
+        pos_x = (TARGET_SIZE[0] - text_w) // 2
+        if cfg.get("position") == "top":
+            pos_y = int(TARGET_SIZE[1] * 0.07)
         else:
-            draw.text((card_left + 40, subtitle_y), curr_line, fill=(90, 85, 80), font=font_subtitle)
-            subtitle_y += 38
-            curr_line = w
-    if curr_line:
-        draw.text((card_left + 40, subtitle_y), curr_line, fill=(90, 85, 80), font=font_subtitle)
+            pos_y = int(TARGET_SIZE[1] * 0.91)
 
-    # Floating CTA Badge
-    cta_bottom = 1420
-    cta_top = 1330
-    cta_left = 80
-    cta_right = 920
+        shadow_offset = 2
+        draw_text.text((pos_x + shadow_offset, pos_y + shadow_offset), hook, fill=(15, 12, 10, 180), font=font_hook)
+        draw_text.text((pos_x, pos_y), hook, fill=(255, 252, 245, 250), font=font_hook)
 
-    cta_overlay = Image.new("RGBA", TARGET_SIZE, (0, 0, 0, 0))
-    draw_cta = ImageDraw.Draw(cta_overlay)
-    draw_cta.rounded_rectangle(
-        [(cta_left, cta_top), (cta_right, cta_bottom)],
-        radius=26,
-        fill=(31, 31, 31, 235),
-        outline=(240, 235, 225, 60),
-        width=1
-    )
-    img = Image.alpha_composite(img, cta_overlay)
-    draw = ImageDraw.Draw(img)
+        img = Image.alpha_composite(img.convert("RGBA"), text_layer)
 
-    # CTA text & domain
-    draw.text((cta_left + 40, cta_top + 28), cfg["cta"], fill=(250, 248, 245), font=font_cta)
-
-    domain_str = cfg.get("domain", "agentwell.agency")
-    d_bbox = font_url.getbbox(domain_str)
-    dw = d_bbox[2] - d_bbox[0]
-    draw.text((cta_right - 40 - dw, cta_top + 33), domain_str, fill=(180, 175, 170), font=font_url)
-
-    # 5. Save JPEG
-    final_img = img.convert("RGB")
-    final_img.save(out_path, "JPEG", quality=92, optimize=True)
-    print(f"  Successfully saved: {out_path} ({os.path.getsize(out_path):,} bytes)")
+    # 3. Apply Warm Interior Color Grading (+15% Contrast, Warmth calibration)
+    final_img = enhance_warm_interior(img)
+    final_img.save(out_path, "JPEG", quality=95, optimize=True)
+    print(f"Saved: {out_path} [1000x1500, Full-Bleed Warm Kinfolk]")
 
 if __name__ == "__main__":
-    print(f"Starting batch generation of {len(PINS_16)} Pins...")
-    for idx, pin_cfg in enumerate(PINS_16, 1):
-        print(f"[{idx}/{len(PINS_16)}]")
-        generate_single_pin(pin_cfg)
-    print("\nAll 16 Pins generated successfully!")
+    for pin in PINS_16:
+        generate_single_pin(pin)
+    print("\n[SUCCESS] Expansion Pins generated under Minimalist Visual Guardrail!")
