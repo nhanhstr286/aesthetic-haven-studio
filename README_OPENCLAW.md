@@ -39,7 +39,7 @@ Hệ thống được thiết kế với giao diện nút bấm hoàn chỉnh (R
 
 File `.env` nằm tại thư mục gốc:
 ```env
-TELEGRAM_BOT_TOKEN=8897196611:AAEADLqGGjz2V0SRXdX9PmaC2Za9AFiA9ps
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
 TELEGRAM_CHAT_ID=7970044894
 CDP_PORT=9222
 CDP_HOST=127.0.0.1

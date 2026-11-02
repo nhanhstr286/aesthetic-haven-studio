@@ -35,7 +35,7 @@ if ENGINE_ENV.exists():
 
 CHROME_PATH = os.getenv("CHROME_PATH", r'C:\Program Files\Google\Chrome\Application\chrome.exe')
 USER_DATA_DIR = os.getenv("CHROME_USER_DATA_DIR", str(WORKSPACE_DIR / 'chrome_user_data'))
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "8897196611:AAEADLqGGjz2V0SRXdX9PmaC2Za9AFiA9ps")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "7970044894")
 
 # Verified Board IDs on live Pinterest account (nhanhstr286)
@@ -258,185 +258,13 @@ def publish_pin_via_api_v5(pin_data: dict) -> dict:
         raise RuntimeError(f"API v5 returned HTTP {resp.status_code}: {resp.text}")
 
 # =============================================================================
-# 4. PRIORITY 2: PLAYWRIGHT BROWSER FALLBACK (TIMEOUT 60S, COMMIT, RETRY 2X)
+# 4. 100% PINTEREST API V5 PUBLISHER (NO PLAYWRIGHT BROWSER FALLBACK)
 # =============================================================================
 
-def ensure_chrome_running():
-    import urllib.request
-    try:
-        with urllib.request.urlopen('http://127.0.0.1:9222/json/version', timeout=2) as resp:
-            print("Chrome CDP is already active on port 9222.")
-            return None
-    except Exception:
-        pass
-
-    print("Starting Chrome with remote debugging on port 9222...")
-    cmd = [
-        CHROME_PATH,
-        '--remote-debugging-port=9222',
-        '--remote-allow-origins=*',
-        f'--user-data-dir={USER_DATA_DIR}'
-    ]
-    proc = subprocess.Popen(cmd)
-    for i in range(15):
-        time.sleep(1)
-        try:
-            with urllib.request.urlopen('http://127.0.0.1:9222/json/version', timeout=1) as resp:
-                print(f"Chrome started successfully (PID: {proc.pid})")
-                return proc
-        except Exception:
-            pass
-    print("Warning: Timed out waiting for Chrome CDP port.")
-    return proc
-
-def upload_pin_playwright_once(page, pin_data):
-    """Executes single Playwright publish attempt with 60s timeout and session checks."""
-    page.set_default_timeout(60000)
-
-    # 1. Chuyển tới công cụ tạo Pin với timeout 60s và wait commit
-    print(f"   [Playwright] Navigating to /pin-creation-tool/ (timeout 60s, commit wait)...")
-    page.goto('https://www.pinterest.com/pin-creation-tool/', wait_until='commit', timeout=60000)
-    time.sleep(3)
-
-    # Kiểm tra phiên đăng nhập (phát hiện redirect về /login)
-    cur_url = page.url
-    login_btn = (
-        page.query_selector('[data-test-id="simple-login-button"]') or
-        page.query_selector('button:has-text("Đăng nhập")') or
-        page.query_selector('button:has-text("Log in")')
-    )
-    if '/login' in cur_url or login_btn:
-        alert_msg = "⚠️ [CẢNH BÁO BẢO MẬT] Phiên đăng nhập Pinterest trên Browser đã hết hạn (Redirect /login). Vui lòng đăng nhập lại tài khoản trên Chrome!"
-        print(f"\n{alert_msg}\n")
-        send_telegram_alert(alert_msg)
-        raise RuntimeError("Pinterest session expired. Redirected to /login.")
-
-    # 2. Upload file ảnh với timeout 60s
-    img_path = pin_data['image']
-    ensure_vertical_aspect_ratio(img_path)
-    print(f"   [Playwright] Uploading image: {img_path}...")
-    file_input = page.wait_for_selector('input[type="file"]', timeout=60000)
-    file_input.set_input_files(img_path)
-    time.sleep(3)
-
-    # 3. Điền Tiêu đề
-    print("   [Playwright] Filling Title...")
-    title_selectors = [
-        '[data-test-id="pin-draft-title"] input',
-        'input[id*="title"]',
-        'textarea[id*="title"]',
-        'input[placeholder*="title" i]',
-        'input[placeholder*="tiêu đề" i]',
-        'textarea[placeholder*="title" i]',
-        'textarea[placeholder*="tiêu đề" i]'
-    ]
-    for sel in title_selectors:
-        el = page.query_selector(sel)
-        if el and el.is_visible():
-            el.click()
-            el.fill(pin_data['title'])
-            break
-
-    # 4. Điền Mô tả
-    print("   [Playwright] Filling Description...")
-    desc_selectors = [
-        '[data-test-id="pin-draft-description"]',
-        'div[contenteditable="true"][aria-label*="description" i]',
-        'div[contenteditable="true"][aria-label*="mô tả" i]',
-        'div[contenteditable="true"]',
-        'textarea[id*="description"]'
-    ]
-    for sel in desc_selectors:
-        el = page.query_selector(sel)
-        if el and el.is_visible():
-            el.click()
-            el.fill(pin_data['desc'])
-            break
-
-    # 5. Điền Link Đích
-    print("   [Playwright] Filling Link...")
-    link_selectors = [
-        '[data-test-id="pin-draft-link"] input',
-        'input[id*="link"]',
-        'input[placeholder*="link" i]',
-        'input[placeholder*="liên kết" i]',
-        'input[placeholder*="URL" i]'
-    ]
-    for sel in link_selectors:
-        el = page.query_selector(sel)
-        if el and el.is_visible():
-            el.click()
-            el.fill(pin_data['link'])
-            break
-
-    # 6. Chọn Bảng
-    print(f"   [Playwright] Selecting Board: {pin_data['board']}...")
-    board_btn = (
-        page.query_selector('[data-test-id="board-dropdown-select-button"]') or
-        page.query_selector('button[aria-haspopup="listbox"]') or
-        page.query_selector('button:has-text("Choose a board")') or
-        page.query_selector('button:has-text("Chọn bảng")') or
-        page.query_selector('button[aria-label*="bảng" i]')
-    )
-    if board_btn:
-        board_btn.click()
-        time.sleep(1.5)
-        search_input = (
-            page.query_selector('[data-test-id="board-search-input"] input') or
-            page.query_selector('input[placeholder*="Search" i]') or
-            page.query_selector('input[placeholder*="Tìm kiếm" i]')
-        )
-        if search_input and search_input.is_visible():
-            search_input.fill(pin_data['board'])
-            time.sleep(1.2)
-        board_item = page.query_selector(f'div[title="{pin_data["board"]}"]')
-        if board_item and board_item.is_visible():
-            board_item.click()
-            time.sleep(1.5)
-
-    # 7. Nhấn Publish
-    print("   [Playwright] Clicking Publish button...")
-    publish_btn = (
-        page.query_selector('[data-test-id="board-dropdown-save-button"]') or
-        page.query_selector('button[data-test-id="publish-button"]') or
-        page.query_selector('button:has-text("Publish")') or
-        page.query_selector('button:has-text("Xuất bản")') or
-        page.query_selector('button:has-text("Save")')
-    )
-    if not publish_btn:
-        raise RuntimeError("Publish button not found.")
-    publish_btn.click()
-    time.sleep(7)
-
-    post_screenshot = str(WORKSPACE_DIR / f"pin{pin_data['id']}_published.png")
-    page.screenshot(path=post_screenshot)
-    print(f"✅ [Playwright Fallback] Pin {pin_data['id']} đăng thành công! Proof: {post_screenshot}")
-    return {"status": "SUCCESS", "method": "playwright", "screenshot": post_screenshot}
-
-def upload_pin_playwright_with_retry(page, pin_data, max_retries=2):
-    """Executes Playwright fallback with 2 retries and 10s backoff."""
-    last_err = None
-    for attempt in range(1, max_retries + 1):
-        try:
-            if attempt > 1:
-                print(f"🔄 [Playwright] Thử lại lần {attempt}/{max_retries} sau 10 giây nghỉ...")
-                time.sleep(10)
-            return upload_pin_playwright_once(page, pin_data)
-        except Exception as e:
-            last_err = e
-            print(f"⚠️ [Playwright Attempt {attempt} Failed]: {e}")
-            if "session expired" in str(e).lower() or "/login" in str(e):
-                break
-    raise last_err
-
-# =============================================================================
-# 5. MASTER DISPATCHER: API V5 (PRIORITY 1) -> PLAYWRIGHT (FALLBACK)
-# =============================================================================
-
-def upload_pin(pin_data, playwright_page=None):
+def upload_pin(pin_data):
     """
-    Attempts Priority 1: Pinterest API v5.
-    If fails, falls back to Priority 2: Playwright CDP browser.
+    Publishes pin 100% via official Pinterest API v5.
+    Never falls back to Playwright browser automation.
     """
     print(f"\n=======================================================")
     print(f"📌 Đang xử lý Pin {pin_data['id']}: {pin_data['title'][:60]}...")
@@ -460,26 +288,16 @@ def upload_pin(pin_data, playwright_page=None):
             send_telegram_alert(err_msg)
             return {"status": "ABORTED", "reason": err_msg}
 
-    # 1. ƯU TIÊN SỐ 1: PINTEREST API V5
+    # ĐĂNG TRỰC TIẾP QUA PINTEREST API V5
     try:
-        print("⚡ [Ưu tiên 1] Đang gửi yêu cầu trực tiếp qua Pinterest API v5...")
+        print("⚡ Đang gửi yêu cầu trực tiếp qua Pinterest API v5...")
         result = publish_pin_via_api_v5(pin_data)
         return result
     except Exception as api_err:
-        print(f"⚠️ [API v5 Lỗi]: {api_err}")
-        print("🌐 [Dự phòng 2] Đang kích hoạt cơ chế Playwright Browser (Timeout 60s, commit wait, retry 2x)...")
-
-    # 2. DỰ PHÒNG: PLAYWRIGHT BROWSER
-    if playwright_page is None:
-        from playwright.sync_api import sync_playwright
-        with sync_playwright() as p:
-            ensure_chrome_running()
-            browser = p.chromium.connect_over_cdp('http://localhost:9222')
-            context = browser.contexts[0]
-            page = context.pages[0] if context.pages else context.new_page()
-            return upload_pin_playwright_with_retry(page, pin_data, max_retries=2)
-    else:
-        return upload_pin_playwright_with_retry(playwright_page, pin_data, max_retries=2)
+        err_msg = f"❌ [API v5 Lỗi]: {api_err}"
+        print(err_msg)
+        send_telegram_alert(err_msg)
+        return {"status": "FAILED", "error": str(api_err)}
 
 def main():
     print("========================================================")
