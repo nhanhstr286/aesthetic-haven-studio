@@ -38,8 +38,51 @@ FORBIDDEN_PATTERNS = [
     r"claim free",
     r"architectural quality",
     r"tactile finish",
-    r"sanctuary edit"
+    r"sanctuary edit",
+    r"agentwell\.agency",
+    r"agentwell",
+    r"#decor",
+    r"https?://",
+    r"#[a-zA-Z0-9_]+"
 ]
+
+def clean_watermarks_and_borders(img: Image.Image) -> Image.Image:
+    """
+    Scans and crops edge watermarks, links, dark banner strips from borders.
+    """
+    w, h = img.size
+    arr = np.array(img.convert("RGB"))
+
+    # Bottom 12% check
+    bottom_h = int(h * 0.12)
+    bottom_slice = arr[h - bottom_h:, :, :]
+    row_means = np.mean(bottom_slice, axis=(1, 2))
+    row_stds = np.std(bottom_slice, axis=(1, 2))
+
+    detected_trim_y = h
+    for idx, (m, s) in enumerate(zip(row_means, row_stds)):
+        actual_y = (h - bottom_h) + idx
+        if m < 38 and s < 28:
+            detected_trim_y = min(detected_trim_y, actual_y)
+
+    # Top 6% check
+    top_h = int(h * 0.06)
+    top_slice = arr[:top_h, :, :]
+    top_row_means = np.mean(top_slice, axis=(1, 2))
+    top_row_stds = np.std(top_slice, axis=(1, 2))
+    detected_trim_top = 0
+    for idx in range(len(top_row_means) - 1, -1, -1):
+        if top_row_means[idx] < 38 and top_row_stds[idx] < 28:
+            detected_trim_top = max(detected_trim_top, idx + 1)
+
+    if detected_trim_y < h - 5 or detected_trim_top > 5:
+        img = img.crop((0, detected_trim_top, w, detected_trim_y))
+
+    # Safe margin trimming to remove border watermark noise
+    w, h = img.size
+    margin_y = int(h * 0.015)
+    margin_x = int(w * 0.015)
+    return img.crop((margin_x, margin_y, w - margin_x, h - margin_y))
 
 def validate_minimalist_guardrail(hook_text: str = None) -> str:
     """
@@ -162,8 +205,11 @@ def process_image(
     img_rgb = Image.new("RGB", raw_img.size)
     img_rgb.paste(raw_img)
 
-    # 4. Resize and Center-Crop to exact Pinterest 2:3 ratio (1000x1500) - Full Bleed
-    canvas = ImageOps.fit(img_rgb, (TARGET_WIDTH, TARGET_HEIGHT), Image.Resampling.LANCZOS)
+    # 4. Clean foreign watermarks, links, and dark border strips
+    img_clean = clean_watermarks_and_borders(img_rgb)
+
+    # 5. Resize and Center-Crop to exact Pinterest 2:3 ratio (1000x1500) - Full Bleed
+    canvas = ImageOps.fit(img_clean, (TARGET_WIDTH, TARGET_HEIGHT), Image.Resampling.LANCZOS)
 
     # 5. Micro-alteration & Warm Interior Color Grading (+15% Contrast, Warmth/Temperature calibration)
     if alter_pixels:

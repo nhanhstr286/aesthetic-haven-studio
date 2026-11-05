@@ -34,7 +34,7 @@ PINS_16 = [
     {
         "output_dir": os.path.join(BASE_DIR, "public", "assets", "pinterest", "decor"),
         "filename": "decor_pin_08.jpg",
-        "url": "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=1200&h=1800&q=85",
+        "url": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&h=1800&q=85",
         "hook": "Aesthetic Japandi Console",
         "position": "bottom"
     },

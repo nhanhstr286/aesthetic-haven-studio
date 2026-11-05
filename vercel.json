@@ -10,6 +10,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/mina", "destination": "/mina/index.html" },
     { "source": "/crypto", "destination": "/crypto/index.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/collections/:slug", "destination": "/collections/:slug.html" },
