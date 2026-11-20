@@ -27,3 +27,7 @@ chrome_test/
 __pycache__/
 *.pyc
 
+
+# Browser session data (contains login cookies, never commit)
+pinterest_storage_state.json
+*storage_state*.json
