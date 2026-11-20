@@ -114,7 +114,7 @@ module.exports = async (req, res) => {
     // 4. Return success response to frontend
     return res.status(200).json({
       success: true,
-      message: 'Thank you! Your guide is on its way.',
+      message: 'Thank you! Your email has been saved.',
       sheetSynced,
       lead: {
         name: cleanName,

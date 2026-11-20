@@ -189,7 +189,7 @@
         </a>
 
         <!-- AutoPilot Engine Nav Pill -->
-        <a href="#autopilot-engine" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-600 hover:text-white transition-all duration-200 shadow-sm" title="Pinterest AutoPilot Engine ($39)">
+        <a href="#autopilot-engine" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full whitespace-nowrap text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-600 hover:text-white transition-all duration-200 shadow-sm" title="Pinterest AutoPilot Engine ($39)">
           <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
           <span>AutoPilot $39</span>
         </a>
@@ -279,7 +279,7 @@
     <!-- Category 1: Aesthetic Room Decor & Lighting -->
     <div id="decor" class="scroll-mt-24"></div>
     <section id="section-room-decor" class="category-section mb-12 sm:mb-16">
-      <div class="flex items-center justify-between mb-5 border-b border-borderWarm pb-3">
+      <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 mb-5 border-b border-borderWarm pb-3">
         <div class="flex items-center gap-2">
           <span class="text-terracotta text-lg">✨</span>
           <h2 class="font-serif text-xl sm:text-2xl font-medium tracking-tight text-charcoal">
@@ -665,7 +665,7 @@
     <!-- Category 2: Smart Kitchen Gadgets & Hacks -->
     <div id="kitchen" class="scroll-mt-24"></div>
     <section id="section-smart-kitchen" class="category-section mb-12 sm:mb-16">
-      <div class="flex items-center justify-between mb-5 border-b border-borderWarm pb-3">
+      <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 mb-5 border-b border-borderWarm pb-3">
         <div class="flex items-center gap-2">
           <span class="text-olive text-lg">🍳</span>
           <h2 class="font-serif text-xl sm:text-2xl font-medium tracking-tight text-charcoal">
@@ -682,12 +682,8 @@
 
         <div class="flex flex-col md:flex-row items-center gap-6 lg:gap-8 relative z-10">
           <!-- Product Image Container -->
-          <a 
-            href="https://amzn.to/4zzEs1h" 
-            target="_blank" 
-            rel="noopener noreferrer nofollow" 
+          <div
             class="block relative w-full md:w-5/12 flex-shrink-0 aspect-[4/3] md:aspect-square rounded-xl overflow-hidden bg-[#EFECE6] border border-borderWarm/90 shadow-sm"
-            aria-label="View Retro Electric Gooseneck Kettle on Amazon"
           >
             <img 
               src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80" 
@@ -710,7 +706,7 @@
                 ★ 4.8 (2,410+)
               </span>
             </div>
-          </a>
+          </div>
 
           <!-- Product Details & Conversion Area -->
           <div class="w-full md:w-7/12 flex flex-col justify-between space-y-3.5">
@@ -722,9 +718,9 @@
                 <span class="text-xs text-charcoal-light font-medium">• Morning Rituals</span>
               </div>
               <h3 class="font-serif text-xl sm:text-2xl font-medium text-charcoal leading-snug group-hover:text-olive transition-colors">
-                <a href="https://amzn.to/4zzEs1h" target="_blank" rel="noopener noreferrer nofollow" class="hover:underline">
+                <span>
                   Retro Electric Gooseneck Kettle (Matte Cream White)
-                </a>
+                </span>
               </h3>
               <p class="text-xs sm:text-sm text-charcoal-muted mt-2 leading-relaxed">
                 Precision pour-over spout, 1200W rapid boiling, auto shut-off, and minimalist matte Scandinavian finish for calm morning rituals.
@@ -764,17 +760,8 @@
                 <span class="text-[10px] text-charcoal-light/80 block mt-0.5 font-normal">(Price may vary on Amazon)</span>
               </div>
 
-              <a 
-                href="https://amzn.to/4zzEs1h" 
-                target="_blank" 
-                rel="noopener noreferrer nofollow" 
-                class="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold bg-charcoal text-cream hover:bg-olive active:scale-[0.98] transition-all duration-200 shadow-sm hover:shadow-warm-xl group/btn"
-                aria-label="View Retro Electric Gooseneck Kettle on Amazon">
-                <span>View on Amazon</span>
-                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </a>
+              <!-- TODO(owner): "View on Amazon" button removed for this product: it pointed to the mushroom lamp link (amzn.to/4zzEs1h).
+     Restore the button with the correct affiliate URL for this product. -->
             </div>
 
             <!-- In-Card Amazon Associates Disclosure -->
@@ -971,7 +958,7 @@
     <!-- Category 3: Digital Planners & iPad Aesthetics -->
     <div id="planners" class="scroll-mt-24"></div>
     <section id="section-digital-planners" class="category-section mb-12 sm:mb-16">
-      <div class="flex items-center justify-between mb-5 border-b border-borderWarm pb-3">
+      <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 mb-5 border-b border-borderWarm pb-3">
         <div class="flex items-center gap-2">
           <span class="text-sage text-lg">📱</span>
           <h2 class="font-serif text-xl sm:text-2xl font-medium tracking-tight text-charcoal">
@@ -988,12 +975,8 @@
 
         <div class="flex flex-col md:flex-row items-center gap-6 lg:gap-8 relative z-10">
           <!-- Product Image Container -->
-          <a 
-            href="https://amzn.to/4zzEs1h" 
-            target="_blank" 
-            rel="noopener noreferrer nofollow" 
+          <div
             class="block relative w-full md:w-5/12 flex-shrink-0 aspect-[4/3] md:aspect-square rounded-xl overflow-hidden bg-[#EFECE6] border border-borderWarm/90 shadow-sm"
-            aria-label="View Aesthetic Pastel Magnetic iPad Case on Amazon"
           >
             <img 
               src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80" 
@@ -1016,7 +999,7 @@
                 ★ 4.8 (3,620+)
               </span>
             </div>
-          </a>
+          </div>
 
           <!-- Product Details & Conversion Area -->
           <div class="w-full md:w-7/12 flex flex-col justify-between space-y-3.5">
@@ -1028,9 +1011,9 @@
                 <span class="text-xs text-charcoal-light font-medium">• Prime Available</span>
               </div>
               <h3 class="font-serif text-xl sm:text-2xl font-medium text-charcoal leading-snug group-hover:text-sage transition-colors">
-                <a href="https://amzn.to/4zzEs1h" target="_blank" rel="noopener noreferrer nofollow" class="hover:underline">
+                <span>
                   Aesthetic Pastel Magnetic iPad Case with Pencil Holder & Matching iPhone Cover
-                </a>
+                </span>
               </h3>
               <p class="text-xs sm:text-sm text-charcoal-muted mt-2 leading-relaxed">
                 Ultra-slim pastel protective folio case featuring a built-in Apple Pencil slot, multi-angle folding stand, and auto sleep/wake. Paired with minimalist shockproof aesthetics for your daily tech setup.
@@ -1070,17 +1053,8 @@
                 <span class="text-[10px] text-charcoal-light/80 block mt-0.5 font-normal">(Price may vary on Amazon)</span>
               </div>
 
-              <a 
-                href="https://amzn.to/4zzEs1h" 
-                target="_blank" 
-                rel="noopener noreferrer nofollow" 
-                class="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold bg-charcoal text-cream hover:bg-sage active:scale-[0.98] transition-all duration-200 shadow-sm hover:shadow-warm-xl group/btn"
-                aria-label="View Aesthetic Pastel Magnetic iPad Case on Amazon">
-                <span>View on Amazon</span>
-                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </a>
+              <!-- TODO(owner): "View on Amazon" button removed for this product: it pointed to the mushroom lamp link (amzn.to/4zzEs1h).
+     Restore the button with the correct affiliate URL for this product. -->
             </div>
 
             <!-- In-Card Amazon Associates Disclosure -->
@@ -1277,7 +1251,7 @@
     <!-- Category 4: Printable Wall Art & Decor -->
     <div id="wallart" class="scroll-mt-24"></div>
     <section id="section-wall-art" class="category-section mb-12 sm:mb-16">
-      <div class="flex items-center justify-between mb-5 border-b border-borderWarm pb-3">
+      <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 mb-5 border-b border-borderWarm pb-3">
         <div class="flex items-center gap-2">
           <span class="text-honey text-lg">🖼️</span>
           <h2 class="font-serif text-xl sm:text-2xl font-medium tracking-tight text-charcoal">
@@ -1294,12 +1268,8 @@
 
         <div class="flex flex-col md:flex-row items-center gap-6 lg:gap-8 relative z-10">
           <!-- Product Image Container -->
-          <a 
-            href="https://amzn.to/4zzEs1h" 
-            target="_blank" 
-            rel="noopener noreferrer nofollow" 
+          <div
             class="block relative w-full md:w-5/12 flex-shrink-0 aspect-[4/3] md:aspect-square rounded-xl overflow-hidden bg-[#EFECE6] border border-borderWarm/90 shadow-sm"
-            aria-label="View Solid Natural Oak Wood Frame on Amazon"
           >
             <img 
               src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80" 
@@ -1322,7 +1292,7 @@
                 ★ 4.7 (980+)
               </span>
             </div>
-          </a>
+          </div>
 
           <!-- Product Details & Conversion Area -->
           <div class="w-full md:w-7/12 flex flex-col justify-between space-y-3.5">
@@ -1334,9 +1304,9 @@
                 <span class="text-xs text-charcoal-light font-medium">• Essential Find</span>
               </div>
               <h3 class="font-serif text-xl sm:text-2xl font-medium text-charcoal leading-snug group-hover:text-honey transition-colors">
-                <a href="https://amzn.to/4zzEs1h" target="_blank" rel="noopener noreferrer nofollow" class="hover:underline">
+                <span>
                   Solid Natural Oak Wood Frame (12x16 with Mat)
-                </a>
+                </span>
               </h3>
               <p class="text-xs sm:text-sm text-charcoal-muted mt-2 leading-relaxed">
                 Crafted from 100% solid North American white oak with high-definition shatterproof plexiglass. Designed to display art prints and gallery walls seamlessly.
@@ -1376,17 +1346,8 @@
                 <span class="text-[10px] text-charcoal-light/80 block mt-0.5 font-normal">(Price may vary on Amazon)</span>
               </div>
 
-              <a 
-                href="https://amzn.to/4zzEs1h" 
-                target="_blank" 
-                rel="noopener noreferrer nofollow" 
-                class="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold bg-charcoal text-cream hover:bg-honey active:scale-[0.98] transition-all duration-200 shadow-sm hover:shadow-warm-xl group/btn"
-                aria-label="View Solid Natural Oak Wood Frame on Amazon">
-                <span>View on Amazon</span>
-                <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </a>
+              <!-- TODO(owner): "View on Amazon" button removed for this product: it pointed to the mushroom lamp link (amzn.to/4zzEs1h).
+     Restore the button with the correct affiliate URL for this product. -->
             </div>
 
             <!-- In-Card Amazon Associates Disclosure -->
@@ -1605,7 +1566,7 @@
             Join Studio
           </button>
         </form>
-        <p id="formFeedback" class="text-xs text-olive font-medium hidden">Thank you! Check your inbox for this week's aesthetic guide.</p>
+        <p id="formFeedback" class="text-xs text-olive font-medium hidden">Thank you! Your email has been saved.</p>
       </div>
     </section>
 
@@ -1968,10 +1929,10 @@
                 <svg class="w-4 h-4 flex-shrink-0 text-olive" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
                 </svg>
-                <span>✨ <strong>Thank you, ${escapeHtml(payload.name)}!</strong> Your free guide has been sent to <strong>${escapeHtml(payload.email)}</strong>.</span>
+                <span>✨ <strong>Thank you, ${escapeHtml(payload.name)}!</strong> Your email <strong>${escapeHtml(payload.email)}</strong> has been saved.</span>
               </div>
             `;
-            showToast('✨ Thank you! Check your inbox for the free guide.');
+            showToast('✨ Thank you! Your email has been saved.');
           } else {
             throw new Error(data.error || 'Submission failed');
           }
